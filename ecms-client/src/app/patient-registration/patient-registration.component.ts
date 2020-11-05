@@ -63,9 +63,9 @@ export class PatientRegistrationComponent implements OnInit {
 						let template= <File>files[0];
 						let formData= new FormData();
 						let file = formData.append('file', template, template.name)
-						createdUser = this.userService.createUser(data, file);
+						createdUser = this.userService.createPatient(data, file);
 					} else {
-						createdUser = this.userService.createUser(data);
+						createdUser = this.userService.createPatient(data);
 					}
 					createdUser.subscribe((response) => {
 						this.successfullRegistration = response;

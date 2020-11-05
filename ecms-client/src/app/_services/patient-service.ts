@@ -15,7 +15,7 @@ export class PatientService{
 		});
 	}
 
-	createUser(data, file = null): Observable<boolean> {
+	createPatient(data, file = null): Observable<boolean> {
 		delete data.repassword;
 		return this.http.put<boolean>('/api/patients/create', file, {params : data});
 	}
@@ -38,5 +38,15 @@ export class PatientService{
 
 	denyPatientRegistration(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('/api/patients/deny-patient/' + id);
+	}
+
+	listPatients(loadingError: (any) => Observable<any>): Observable<Patient[]> {
+		return this.http.get<Patient[]>('api/patients',{
+			headers: this.headerJson
+		}).pipe(catchError(loadingError));
+	}
+
+	deletePatient(id: number): Observable<boolean> {
+		return this.http.delete<boolean>('/api/patients/delete/' + id);
 	}
 }

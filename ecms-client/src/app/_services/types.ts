@@ -29,3 +29,14 @@ export enum Gender {
     Male = 'male',
     Female = 'female'
 }
+
+export interface Doctor {
+    id: number,
+    nativeName: string,
+    userName: string,
+    email: string,
+    gender: Gender,
+    birthday: Date,
+    startOfPractice: Date,
+    specializations: string[]
+}
