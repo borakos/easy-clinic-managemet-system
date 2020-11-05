@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
 import { PatientsComponent } from './patients/patients.component';
+import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
 import { AdminGuard } from './_guards/admin-guard';
 import { AuthGuard } from './_guards/auth-guard';
 import { OutsiderGuard } from './_guards/outsider-guard';
@@ -33,6 +34,12 @@ const routes: Routes = [
     {
         path:'doctors',
         component: DoctorsComponent,
+        canActivate: [AdminGuard]
+    },
+    
+    {
+        path:'pharmacies',
+        component: PharmaciestComponent,
         canActivate: [AdminGuard]
     },
     {

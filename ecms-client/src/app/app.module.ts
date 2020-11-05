@@ -25,6 +25,8 @@ import { PatientsRegistrationRequestComponent } from './patients-registration-re
 import { PatientsComponent } from './patients/patients.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorService } from './_services/doctor-service';
+import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
+import { PharmacyService } from './_services/pharmacy-service';
 
 @NgModule({
     declarations: [
@@ -36,7 +38,8 @@ import { DoctorService } from './_services/doctor-service';
         EditPatientsComponent,
         PatientsRegistrationRequestComponent,
         PatientsComponent,
-        DoctorsComponent
+        DoctorsComponent,
+        PharmaciestComponent
     ],
     imports: [
         BrowserModule,
@@ -59,6 +62,7 @@ import { DoctorService } from './_services/doctor-service';
         OutsiderGuard,
         PatientService,
         DoctorService,
+        PharmacyService,
         JWTService,
         HttpClient,
         {	

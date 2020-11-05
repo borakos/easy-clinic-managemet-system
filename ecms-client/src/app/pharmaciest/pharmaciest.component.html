@@ -1,0 +1,41 @@
+<h2>Pharmacies</h2>
+<br/>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<table *ngIf="pharmaciesObservable | async as pharmacies" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Support Delivery</th>
+            <th>Support Preorder</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let pharmacy of pharmacies">
+            <td>{{ pharmacy.name }}</td>
+            <td>{{ pharmacy.userName }}</td>
+            <td>{{ pharmacy.email }}</td>
+            <td *ngIf="pharmacy.supportDelivery; else noDelivery" class="text-center"><fa-icon [icon]="['fas', 'check']"></fa-icon></td>
+            <ng-template #noDelivery>
+                <td></td>
+            </ng-template>
+            <td *ngIf="pharmacy.supportPreOrder; else noPreorder" class="text-center"><fa-icon [icon]="['fas', 'check']"></fa-icon></td>
+            <ng-template #noPreorder>
+                <td></td>
+            </ng-template>
+            <td><a routerLink="/pharmacies/edit/{{ pharmacy.id }}"><fa-icon [icon]="['fas', 'cog']" style="color:blue"></fa-icon></a><a (click)="deletePharmacy(pharmacy.id)"><fa-icon [icon]="['fas', 'times']" style="color:red; float:right"></fa-icon></a></td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><a routerLink="/pharmacies/create/0"><fa-icon [icon]="['fas', 'plus']" style="color:green"></fa-icon></a></td>
+        </tr>
+    </tfoot>
+</table>

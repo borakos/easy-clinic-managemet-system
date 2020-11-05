@@ -40,3 +40,12 @@ export interface Doctor {
     startOfPractice: Date,
     specializations: string[]
 }
+
+export interface Pharmacy {
+    id: number,
+    name: string,
+    userName: string,
+    email: string,
+    supportDelivery: boolean,
+    supportPreOrder: boolean
+}

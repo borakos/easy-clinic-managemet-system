@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { Injectable } from "@angular/core";
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
-import { Patient, Gender, Doctor } from '../_services/types';
+import { Patient, Gender, Doctor, Pharmacy } from '../_services/types';
 
 @Injectable()
 export class FakeBackenInterceptor implements HttpInterceptor{
@@ -49,52 +49,28 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                 case url.endsWith('/patients/applicants') && method === 'GET': {
                     let patients: Patient[] = [];
                     patients.push( {
-                        id: 0,
-                        nativeName: 'Geza Alfoldi',
-                        userName: 'geza',
-                        email: 'geza@gmail.com',
-                        gender: Gender.Male,
-                        birthday: new Date(),
-                        weight: 84,
-                        address: 'Hungary, Budapest VII',
-                        hasMedicalData: true
+                        id: 0, nativeName: 'Geza Alfoldi', userName: 'geza',
+                        email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
+                        weight: 84, address: 'Hungary, Budapest VII', hasMedicalData: true
                     } as Patient);
                     patients.push( {
-                        id: 1,
-                        nativeName: 'Anna Alfoldi',
-                        userName: 'anna',
-                        email: 'anna@gmail.com',
-                        gender: Gender.Female,
-                        birthday: new Date(),
-                        weight: 60,
-                        address: 'Hungary, Sopron',
-                        hasMedicalData: false
+                        id: 1, nativeName: 'Anna Alfoldi', userName: 'anna',
+                        email: 'anna@gmail.com', gender: Gender.Female, birthday: new Date(),
+                        weight: 60, address: 'Hungary, Sopron', hasMedicalData: false
                     } as Patient);
                     return ok(patients);
                 }
                 case url.endsWith('/patients') && method === 'GET': {
                     let patients: Patient[] = [];
                     patients.push( {
-                        id: 0,
-                        nativeName: 'Geza Alfoldi',
-                        userName: 'geza',
-                        email: 'geza@gmail.com',
-                        gender: Gender.Male,
-                        birthday: new Date(),
-                        weight: 84,
-                        address: 'Hungary, Budapest VII',
-                        hasMedicalData: true
+                        id: 0, nativeName: 'Geza Alfoldi', userName: 'geza',
+                        email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
+                        weight: 84, address: 'Hungary, Budapest VII', hasMedicalData: true
                     } as Patient);
                     patients.push( {
-                        id: 1,
-                        nativeName: 'Anna Alfoldi',
-                        userName: 'anna',
-                        email: 'anna@gmail.com',
-                        gender: Gender.Female,
-                        birthday: new Date(),
-                        weight: 60,
-                        address: 'Hungary, Sopron',
-                        hasMedicalData: false
+                        id: 1, nativeName: 'Anna Alfoldi', userName: 'anna',
+                        email: 'anna@gmail.com', gender: Gender.Female, birthday: new Date(),
+                        weight: 60, address: 'Hungary, Sopron', hasMedicalData: false
                     } as Patient);
                     return ok(patients);
                 }
@@ -110,28 +86,35 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                 case url.endsWith('/doctors') && method === 'GET': {
                     let doctors: Doctor[] = [];
                     doctors.push( {
-                        id: 0,
-                        nativeName: 'Geza Alfoldi',
-                        userName: 'geza',
-                        email: 'geza@gmail.com',
-                        gender: Gender.Male,
-                        birthday: new Date(),
-                        startOfPractice: new Date(),
-                        specializations: []
+                        id: 0, nativeName: 'Dr. Geza Alfoldi', userName: 'geza',
+                        email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
+                        startOfPractice: new Date(), specializations: []
                     } as Doctor);
                     doctors.push( {
-                        id: 1,
-                        nativeName: 'Anna Alfoldi',
-                        userName: 'anna',
-                        email: 'anna@gmail.com',
-                        gender: Gender.Female,
-                        birthday: new Date(),
-                        startOfPractice: new Date(),
-                        specializations: []
+                        id: 1, nativeName: 'Dr. Anna Alfoldi', userName: 'anna',
+                        email: 'anna@gmail.com', gender: Gender.Female, birthday: new Date(),
+                        startOfPractice: new Date(), specializations: []
                     } as Doctor);
                     return ok(doctors);
                 }
                 case url.includes('/doctors/delete') && method === 'DELETE': {
+                    return error();
+                }
+                case url.endsWith('/pharmacies') && method === 'GET': {
+                    let pharmacies: Pharmacy[] = [];
+                    pharmacies.push( {
+                        id: 0, name: 'Virag gyogyszertar', userName: 'viraggy',
+                        email: 'info@viraggyogyszertar.com', supportDelivery: true,
+                        supportPreOrder: false
+                    } as Pharmacy);
+                    pharmacies.push( {
+                        id: 1, name: 'Beres gyogyszertar', userName: 'beresgy',
+                        email: 'info@beresgyogyszertar.com', supportDelivery: false,
+                        supportPreOrder: true
+                    } as Pharmacy);
+                    return ok(pharmacies);
+                }
+                case url.includes('/pharmacies/delete') && method === 'DELETE': {
                     return error();
                 }
                 default: return next.handle(request);
