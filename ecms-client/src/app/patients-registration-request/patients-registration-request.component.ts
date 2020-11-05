@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { PatientService } from '../_services/patient-service';
 import { Patient, Gender } from '../_services/types';
 
@@ -17,7 +17,14 @@ export class PatientsRegistrationRequestComponent implements OnInit {
     constructor(private patientService: PatientService) { }
 
     ngOnInit(): void {
-        this.patientsObservable = this.patientService.listApplicants();
+        this.patientsObservable = this.patientService.listApplicants(
+            (err) => {
+                console.error('Loading pendig registration requests', err);
+                this.error = 'Error ' + err.status + ': ' + err.error.message;
+                return of();
+            }
+        );
+        this.error = undefined;
     }
     
     acceptPatient(id: number): void {
