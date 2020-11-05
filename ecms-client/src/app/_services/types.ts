@@ -6,9 +6,26 @@ export interface User {
 }
 
 export enum UserRole {
-    Admin = "admin",
-    User = "user",
-    Patient = "patient",
-    Doctor = "doctor",
-    Pharmaciest = "pharmaciest"
+    Admin = 'admin',
+    User = 'user',
+    Patient = 'patient',
+    Doctor = 'doctor',
+    Pharmaciest = 'pharmaciest'
+}
+
+export interface Patient {
+    id: number,
+    nativeName: string,
+    userName: string,
+    email: string,
+    gender: Gender,
+    birthday: Date,
+    weight: number,
+    address: string,
+    hasMedicalData: boolean
+}
+
+export enum Gender {
+    Male = 'male',
+    Female = 'female'
 }

@@ -8,8 +8,8 @@ export class JWTService{
 	constructor(private jwtHelper:JwtHelperService){}
 
 	userIsAdmin(): boolean {
-		let token: string = localStorage.getItem("jwt");
-        if (token && !this.jwtHelper.isTokenExpired(token)) {
+        if (this.activeTokenIsValid()) {
+			let token: string = localStorage.getItem("jwt");
             return (this.jwtHelper.decodeToken(token) as User).role === UserRole.Admin;
         } else {
             return false;

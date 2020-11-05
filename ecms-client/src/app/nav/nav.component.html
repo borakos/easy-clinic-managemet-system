@@ -1,18 +1,18 @@
 <div class='main-nav col-sm-2'>
     <ul id="main-ul">
         <li>
-            <h3><i class="fa fa-user-o main-icons"></i> User</h3>
+            <h3><fa-icon [icon]="['far', 'user']"></fa-icon> User</h3>
             <ul>
-                <li><a routerLink=""><h5><i class="fa fa-id-card-o"></i> Settings</h5></a></li>
+                <li><a routerLink=""><h5><fa-icon [icon]="['far', 'id-card']"></fa-icon> Settings</h5></a></li>
             </ul>
         </li>
         <li *ngIf="userIsAdmin()">
-            <h3><i class="fa fa-user main-icons"></i> Admin</h3>
+            <h3><fa-icon [icon]="['fas', 'user']"></fa-icon> Admin</h3>
             <ul>
-                <li><a routerLink=""><h5><i class="fa fa-id-card-o"></i> Settings</h5></a></li>
+                <li><a routerLink="patients/handle-registration-requests"><h5><fa-icon [icon]="['fas', 'user-shield']"></fa-icon> Registration Requests</h5></a></li>
             </ul>
         </li>
 	</ul>
-	<div id="home" ><a routerLink=""><h2><i class="fa fa-home"></i></h2></a></div>
-    <div id="infos"><a id="logout" (click)="logout()"><h2><i class="fa fa-sign-out" aria-hidden="true"></i></h2></a></div>
+	<div id="home" ><a routerLink=""><h3><fa-icon [icon]="['fas', 'home']"></fa-icon></h3></a></div>
+    <div id="infos"><a id="logout" (click)="logout()"><h3><fa-icon [icon]="['fas', 'sign-out-alt']"></fa-icon></h3></a></div>
 </div>

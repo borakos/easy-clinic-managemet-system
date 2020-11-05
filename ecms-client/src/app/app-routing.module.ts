@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './app-login/app-login.component';
 import { HomeComponent } from './home/home.component';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
+import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
+import { AdminGuard } from './_guards/admin-guard';
 import { AuthGuard } from './_guards/auth-guard';
 import { OutsiderGuard } from './_guards/outsider-guard';
 
@@ -15,6 +17,11 @@ const routes: Routes = [
         path:'registration',
         component: PatientRegistrationComponent,
         canActivate: [OutsiderGuard]
+    },
+    {
+        path:'patients/handle-registration-requests',
+        component: PatientsRegistrationRequestComponent,
+        canActivate: [AdminGuard]
     },
     {
         path:'',

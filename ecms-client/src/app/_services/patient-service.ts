@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Patient } from './types';
 
 @Injectable()
 export class PatientService{
@@ -22,5 +23,19 @@ export class PatientService{
 		return this.http.get<boolean>('api/patients/free/' + userName,{
 			headers: this.headerJson
 		});
+	}
+
+	listApplicants():Observable<Patient[]>{
+		return this.http.get<Patient[]>('api/patients/applicants',{
+			headers: this.headerJson
+		});
+	}
+
+	acceptPatientRegistration(id: number):Observable<boolean>{
+		return this.http.get<boolean>('/api/patients/accept-patient/' + id);
+	}
+
+	denyPatientRegistration(id: number):Observable<boolean>{
+		return this.http.delete<boolean>('/api/patients/deny-patient/' + id);
 	}
 }

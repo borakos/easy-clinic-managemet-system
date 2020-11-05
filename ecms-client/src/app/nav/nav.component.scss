@@ -7,6 +7,7 @@
     z-index: 1;
     background: #6992a5; 
     height: 100vh;
+    padding: 0;
 }
 
 h3{
@@ -48,17 +49,20 @@ h5{
 
 li{
     list-style: none;
+    width: 100%;
 }
 
 ul{
     position: relative;
-    left: -20px;
+    left: -40px;
+    width: 100%;
 }
 
 #main-ul{
     position: relative;
     left: -30px;
     padding-top: 10px;
+    width: 100%;
 }
 
 i{
