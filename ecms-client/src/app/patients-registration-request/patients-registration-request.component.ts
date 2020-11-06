@@ -32,7 +32,7 @@ export class PatientsRegistrationRequestComponent implements OnInit {
         .subscribe(response => {}
         , err => {
             this.error = 'Error ' + err.status + ': ' + err.error.message;
-            console.log(err);
+            console.error('Accept patient', err);
         });
         this.error = undefined;
     }
@@ -42,7 +42,7 @@ export class PatientsRegistrationRequestComponent implements OnInit {
         .subscribe(response => {}
         , err => {
             this.error = 'Error ' + err.status + ': ' + err.error.message;
-            console.log(err);
+            console.error('Deny patient', err);
         });
         this.error = undefined;
     }

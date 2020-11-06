@@ -1,12 +1,13 @@
 <h2>Pharmacies</h2>
 <br/>
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-<table *ngIf="pharmaciesObservable | async as pharmacies" class="table table-striped table-hover">
+<table *ngIf="pharmaciesObservable | async as pharmacies; else loading" class="table table-striped table-hover">
     <thead>
         <tr>
             <th>Name</th>
             <th>User Name</th>
             <th>Email</th>
+            <th>Location</th>
             <th>Support Delivery</th>
             <th>Support Preorder</th>
             <th>Action</th>
@@ -17,6 +18,7 @@
             <td>{{ pharmacy.name }}</td>
             <td>{{ pharmacy.userName }}</td>
             <td>{{ pharmacy.email }}</td>
+            <td>{{ pharmacy.country }}, {{ pharmacy.city }}</td>
             <td *ngIf="pharmacy.supportDelivery; else noDelivery" class="text-center"><fa-icon [icon]="['fas', 'check']"></fa-icon></td>
             <ng-template #noDelivery>
                 <td></td>
@@ -35,7 +37,15 @@
             <td></td>
             <td></td>
             <td></td>
-            <td><a routerLink="/pharmacies/create/0"><fa-icon [icon]="['fas', 'plus']" style="color:green"></fa-icon></a></td>
+            <td></td>
+            <td><a routerLink="/pharmacies/edit/new"><fa-icon [icon]="['fas', 'plus']" style="color:green"></fa-icon></a></td>
         </tr>
     </tfoot>
 </table>
+<ng-template #loading>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>

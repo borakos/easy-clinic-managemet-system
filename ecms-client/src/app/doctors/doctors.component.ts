@@ -32,7 +32,7 @@ export class DoctorsComponent implements OnInit {
         .subscribe(response => {}
             , err => {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.log(err);
+                console.error('Delete doctor', err);
         });
         this.error = undefined;
     }

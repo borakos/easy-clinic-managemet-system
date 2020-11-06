@@ -21,6 +21,9 @@ export interface Patient {
     gender: Gender,
     birthday: Date,
     weight: number,
+    country: string,
+    city: string,
+    postalCode: number,
     address: string,
     hasMedicalData: boolean
 }
@@ -46,6 +49,10 @@ export interface Pharmacy {
     name: string,
     userName: string,
     email: string,
+    country: string,
+    city: string,
+    postalCode: number,
+    address: string,
     supportDelivery: boolean,
     supportPreOrder: boolean
 }

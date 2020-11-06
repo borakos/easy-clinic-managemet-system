@@ -49,4 +49,8 @@ export class PatientService{
 	deletePatient(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('/api/patients/delete/' + id);
 	}
+
+	getPatient(id: number): Observable<Patient> {
+		return this.http.get<Patient>('/api/patients/' + id);
+	}
 }

@@ -51,12 +51,14 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                     patients.push( {
                         id: 0, nativeName: 'Geza Alfoldi', userName: 'geza',
                         email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
-                        weight: 84, address: 'Hungary, Budapest VII', hasMedicalData: true
+                        weight: 84, country: 'Hungary', city: 'Budapest VII', postalCode: 8007,
+                        address: 'Kossuth u. 1.', hasMedicalData: true
                     } as Patient);
                     patients.push( {
                         id: 1, nativeName: 'Anna Alfoldi', userName: 'anna',
                         email: 'anna@gmail.com', gender: Gender.Female, birthday: new Date(),
-                        weight: 60, address: 'Hungary, Sopron', hasMedicalData: false
+                        weight: 60, country: 'Hungary', city: 'Sopron', postalCode: 9420,
+                        address: 'Kossuth u. 1.', hasMedicalData: false
                     } as Patient);
                     return ok(patients);
                 }
@@ -65,14 +67,24 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                     patients.push( {
                         id: 0, nativeName: 'Geza Alfoldi', userName: 'geza',
                         email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
-                        weight: 84, address: 'Hungary, Budapest VII', hasMedicalData: true
+                        weight: 84, country: 'Hungary', city: 'Budapest VII', postalCode: 8007,
+                        address: 'Kossuth u. 1.', hasMedicalData: true
                     } as Patient);
                     patients.push( {
                         id: 1, nativeName: 'Anna Alfoldi', userName: 'anna',
                         email: 'anna@gmail.com', gender: Gender.Female, birthday: new Date(),
-                        weight: 60, address: 'Hungary, Sopron', hasMedicalData: false
+                        weight: 60, country: 'Hungary', city: 'Sopron', postalCode: 9420,
+                        address: 'Kossuth u. 1.', hasMedicalData: false
                     } as Patient);
                     return ok(patients);
+                }
+                case url.includes('/patients/') && method === 'GET': {
+                    return ok({
+                        id: 0, nativeName: 'Geza Alfoldi', userName: 'geza',
+                        email: 'geza@gmail.com', gender: Gender.Male, birthday: new Date(),
+                        weight: 84, country: 'Hungary', city: 'Budapest VII', postalCode: 8007,
+                        address: 'Kossuth u. 1.', hasMedicalData: true
+                    } as Patient);
                 }
                 case url.includes('/patients/accept-patient') && method === 'GET': {
                     return ok();
@@ -105,12 +117,14 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                     pharmacies.push( {
                         id: 0, name: 'Virag gyogyszertar', userName: 'viraggy',
                         email: 'info@viraggyogyszertar.com', supportDelivery: true,
-                        supportPreOrder: false
+                        supportPreOrder: false, country: 'Hungary', city: 'Budapest VII',
+                        postalCode: 8007, address:'Kossuth u. 1.'
                     } as Pharmacy);
                     pharmacies.push( {
                         id: 1, name: 'Beres gyogyszertar', userName: 'beresgy',
                         email: 'info@beresgyogyszertar.com', supportDelivery: false,
-                        supportPreOrder: true
+                        supportPreOrder: true, country: 'Hungary', city: 'Sopron',
+                        postalCode: 9420, address:'Kossuth u. 1.'
                     } as Pharmacy);
                     return ok(pharmacies);
                 }

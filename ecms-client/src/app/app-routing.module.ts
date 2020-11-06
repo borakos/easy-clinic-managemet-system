@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './app-login/app-login.component';
 import { DoctorsComponent } from './doctors/doctors.component';
+import { EditPatientsComponent } from './edit-patients/edit-patients.component';
 import { HomeComponent } from './home/home.component';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
@@ -29,6 +30,11 @@ const routes: Routes = [
     {
         path:'patients',
         component: PatientsComponent,
+        canActivate: [AdminGuard]
+    },
+    {
+        path:'patients/edit/:id',
+        component: EditPatientsComponent,
         canActivate: [AdminGuard]
     },
     {

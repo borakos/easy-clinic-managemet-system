@@ -14,7 +14,7 @@ export class PatientRegistrationComponent implements OnInit {
 	error: string = undefined;
 	successfullRegistration: boolean = false;
 
-    constructor(private userService: PatientService, private router: Router) { }
+    constructor(private patientService: PatientService, private router: Router) { }
 
     ngOnInit(): void {
     }
@@ -54,7 +54,7 @@ export class PatientRegistrationComponent implements OnInit {
     registUser(form: NgForm, files) {
 		let data=form.value;
 		if(!this.passwordToShort(data.password) && !this.passwordNotMatch(data.password, data.repassword) && this.emailIsValid(data.email)){
-			this.userService.nameIsFree(data.userName).subscribe((response)=>{
+			this.patientService.nameIsFree(data.userName).subscribe((response)=>{
 				if(!response){
 					this.uniqueName = false;
 				}else{
@@ -63,20 +63,20 @@ export class PatientRegistrationComponent implements OnInit {
 						let template= <File>files[0];
 						let formData= new FormData();
 						let file = formData.append('file', template, template.name)
-						createdUser = this.userService.createPatient(data, file);
+						createdUser = this.patientService.createPatient(data, file);
 					} else {
-						createdUser = this.userService.createPatient(data);
+						createdUser = this.patientService.createPatient(data);
 					}
 					createdUser.subscribe((response) => {
 						this.successfullRegistration = response;
 					}, err => {
 						this.error = 'Error ' + err.status + ': ' + err.error.message;
-						console.log(err);
+						console.error('User registration', err);
 					});
 				}
 			},err=>{
 				this.error = 'Error ' + err.status + ': ' + err.error.message;
-				console.log(err);
+				console.error('User registration', err);
 			})
 		}
 		this.uniqueName = true;

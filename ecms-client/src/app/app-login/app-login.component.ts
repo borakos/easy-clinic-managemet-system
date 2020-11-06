@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
             } else {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
             }
-            console.log(err);
+            console.error('Login', err);
         });
     }
 }

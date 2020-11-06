@@ -31,7 +31,7 @@ export class PharmaciestComponent implements OnInit {
         .subscribe(response => {}
             , err => {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.log(err);
+                console.error('Delete pharmacy', err);
         });
         this.error = undefined;
     }
