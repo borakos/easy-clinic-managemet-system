@@ -1,33 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { PharmacyService } from '../_services/pharmacy-service';
+import { Pharmacy } from '../_services/types';
 import { ActivatedRoute } from '@angular/router';
-import { PatientService } from '../_services/patient-service';
-import { Patient } from '../_services/types';
-import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
+import { NgForm } from '@angular/forms';
 
 @Component({
-    selector: 'app-edit-patients',
-    templateUrl: './edit-patients.component.html',
-    styleUrls: ['./edit-patients.component.scss']
+    selector: 'app-edit-pharmacies',
+    templateUrl: './edit-pharmacies.component.html',
+    styleUrls: ['./edit-pharmacies.component.scss']
 })
-export class EditPatientsComponent implements OnInit {
+export class EditPharmaciesComponent implements OnInit {
 
     uniqueName: boolean = true;
     passwordIsEnabled: boolean = false;
-    patient: Patient;
+    pharmacy: Pharmacy;
     isUpdate: boolean = false;
-    error = undefined;
+	error = undefined;
+	supportDelivery: boolean = false;
+	supportPreOrder: boolean = false;
 
-    constructor(private patientService: PatientService, private route: ActivatedRoute, public location: Location) {
+    constructor(private pharmacyService: PharmacyService, private route: ActivatedRoute, public location: Location) {
         let id = Number(this.route.snapshot.params.id);
         if(!Number.isNaN(id)){
             this.isUpdate = true;
-            this.patientService.getPatient(id)
+            this.pharmacyService.getPharmacy(id)
             .subscribe(response => {
-                this.patient = response as Patient;
+				this.pharmacy = response as Pharmacy;
+				this.supportDelivery = this.pharmacy.supportDelivery;
+				this.supportPreOrder = this.pharmacy.supportPreOrder;
             }, err => {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Get patient', err);
+                console.error('Get pharmacy', err);
             });
             this.error = undefined;
         } else {
@@ -66,36 +70,31 @@ export class EditPatientsComponent implements OnInit {
 			return false;
 		}
 	}
-
-	fileIsSelected(files): boolean {
-		if(files.length > 0){
-			return true;
-		} else {
-			return false;
-		}
-    }
     
     invertPasswordVisibility(): void {
         this.passwordIsEnabled = !this.passwordIsEnabled;
-    }
+	}
 
-    registUser(form: NgForm, files) {
-        let data = form.value;
+	invertDeliverySupport(): void {
+        this.supportDelivery = !this.supportDelivery;
+	}
+
+	invertPreOrderSupport(): void {
+        this.supportPreOrder = !this.supportPreOrder;
+	}
+
+    registUser(form: NgForm) {
+		let data = form.value;
+		data.supportDelivery = this.supportDelivery;
+		data.supportPreOrder = this.supportPreOrder;
+		console.log(data)
 		if(!this.passwordIsEnabled || (!this.passwordToShort(data.password) && !this.passwordNotMatch(data.password, data.repassword)) && this.emailIsValid(data.email)){
-            this.patientService.nameIsFree(data.userName).subscribe((response)=>{
-				if(!response || (data.userName === '') && (data.userName !== this.patient?.userName)){
+            this.pharmacyService.nameIsFree(data.userName).subscribe((response)=>{
+				if(!response || (data.userName === '') && (data.userName !== this.pharmacy?.userName)){
 					this.uniqueName = false;
 				}else{
-					let createUser = undefined
-					if(this.fileIsSelected(files)){
-						let template= <File>files[0];
-						let formData= new FormData();
-						let file = formData.append('file', template, template.name)
-						createUser = this.patientService.createPatient(data, file);
-					} else {
-						createUser = this.patientService.createPatient(data);
-					}
-					createUser.subscribe((response) => {
+					let createPharmacy = this.pharmacyService.createPharmacy(data);
+					createPharmacy.subscribe((response) => {
                         this.location.back()
 					}, err => {
 						this.error = 'Error ' + err.status + ': ' + err.error.message;

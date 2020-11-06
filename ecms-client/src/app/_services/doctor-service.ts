@@ -15,9 +15,9 @@ export class DoctorService{
 		});
 	}
 
-	createDoctor(data, file = null): Observable<boolean> {
+	createDoctor(data): Observable<boolean> {
 		delete data.repassword;
-		return this.http.put<boolean>('/api/doctors/create', file, {params : data});
+		return this.http.put<boolean>('/api/doctors/create', null, {params : data});
 	}
 
 	nameIsFree(userName):Observable<boolean>{
@@ -34,5 +34,9 @@ export class DoctorService{
 
 	deleteDoctor(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('/api/doctors/delete/' + id);
+	}
+
+	getDoctor(id: number): Observable<Doctor> {
+		return this.http.get<Doctor>('/api/doctors/' + id);
 	}
 }

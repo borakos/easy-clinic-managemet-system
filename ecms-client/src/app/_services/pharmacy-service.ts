@@ -15,9 +15,9 @@ export class PharmacyService{
 		});
 	}
 
-	createPharmacy(data, file = null): Observable<boolean> {
+	createPharmacy(data): Observable<boolean> {
 		delete data.repassword;
-		return this.http.put<boolean>('/api/pharmacies/create', file, {params : data});
+		return this.http.put<boolean>('/api/pharmacies/create', null, {params : data});
 	}
 
 	nameIsFree(userName):Observable<boolean>{
@@ -34,5 +34,9 @@ export class PharmacyService{
 
 	deletePharmacy(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('/api/pharmacies/delete/' + id);
+	}
+
+	getPharmacy(id: number): Observable<Pharmacy> {
+		return this.http.get<Pharmacy>('/api/pharmacies/' + id);
 	}
 }

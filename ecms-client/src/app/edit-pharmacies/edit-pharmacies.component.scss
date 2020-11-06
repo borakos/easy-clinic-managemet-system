@@ -1,0 +1,34 @@
+@import '../../styles.scss';
+
+.registrationbox{
+    height: auto;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.hide{
+    display: none;
+}
+
+.save{
+    float: right;
+    margin-right: 0;
+}
+
+.cancel{
+    float: left;
+    margin: 8px 10px 10px 0;
+}
+
+.left{
+    float: left;
+    width: 49%;
+}
+
+.right{
+    float: right;
+    margin: 0;
+    width: 49%;
+}
+

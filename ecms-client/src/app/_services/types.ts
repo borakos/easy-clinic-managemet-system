@@ -10,7 +10,7 @@ export enum UserRole {
     User = 'user',
     Patient = 'patient',
     Doctor = 'doctor',
-    Pharmaciest = 'pharmaciest'
+    Pharmacy = 'pharmacy'
 }
 
 export interface Patient {

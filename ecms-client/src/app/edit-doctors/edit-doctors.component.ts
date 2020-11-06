@@ -1,33 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PatientService } from '../_services/patient-service';
-import { Patient } from '../_services/types';
+import { DoctorService } from '../_services/doctor-service';
+import { Doctor } from '../_services/types';
 import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-edit-patients',
-    templateUrl: './edit-patients.component.html',
-    styleUrls: ['./edit-patients.component.scss']
+    selector: 'app-edit-doctors',
+    templateUrl: './edit-doctors.component.html',
+    styleUrls: ['./edit-doctors.component.scss']
 })
-export class EditPatientsComponent implements OnInit {
+export class EditDoctorsComponent implements OnInit {
 
     uniqueName: boolean = true;
     passwordIsEnabled: boolean = false;
-    patient: Patient;
+    doctor: Doctor;
     isUpdate: boolean = false;
     error = undefined;
 
-    constructor(private patientService: PatientService, private route: ActivatedRoute, public location: Location) {
+
+    constructor(private doctorService: DoctorService, private route: ActivatedRoute, public location: Location) {
         let id = Number(this.route.snapshot.params.id);
         if(!Number.isNaN(id)){
             this.isUpdate = true;
-            this.patientService.getPatient(id)
+            this.doctorService.getDoctor(id)
             .subscribe(response => {
-                this.patient = response as Patient;
+                this.doctor = response as Doctor;
             }, err => {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Get patient', err);
+                console.error('Get doctor', err);
             });
             this.error = undefined;
         } else {
@@ -66,45 +67,29 @@ export class EditPatientsComponent implements OnInit {
 			return false;
 		}
 	}
-
-	fileIsSelected(files): boolean {
-		if(files.length > 0){
-			return true;
-		} else {
-			return false;
-		}
-    }
     
     invertPasswordVisibility(): void {
         this.passwordIsEnabled = !this.passwordIsEnabled;
     }
 
-    registUser(form: NgForm, files) {
+    registUser(form: NgForm) {
         let data = form.value;
 		if(!this.passwordIsEnabled || (!this.passwordToShort(data.password) && !this.passwordNotMatch(data.password, data.repassword)) && this.emailIsValid(data.email)){
-            this.patientService.nameIsFree(data.userName).subscribe((response)=>{
-				if(!response || (data.userName === '') && (data.userName !== this.patient?.userName)){
+            this.doctorService.nameIsFree(data.userName).subscribe((response)=>{
+				if(!response || (data.userName === '') && (data.userName !== this.doctor?.userName)){
 					this.uniqueName = false;
 				}else{
-					let createUser = undefined
-					if(this.fileIsSelected(files)){
-						let template= <File>files[0];
-						let formData= new FormData();
-						let file = formData.append('file', template, template.name)
-						createUser = this.patientService.createPatient(data, file);
-					} else {
-						createUser = this.patientService.createPatient(data);
-					}
+					let createUser = this.doctorService.createDoctor(data);
 					createUser.subscribe((response) => {
                         this.location.back()
 					}, err => {
 						this.error = 'Error ' + err.status + ': ' + err.error.message;
-						console.error('User registration', err);
+						console.error('Doctor registration', err);
 					});
 				}
 			},err=>{
 				this.error = 'Error ' + err.status + ': ' + err.error.message;
-				console.error('User registration', err);
+				console.error('Doctor registration', err);
 			})
 		}
 		this.uniqueName = true;

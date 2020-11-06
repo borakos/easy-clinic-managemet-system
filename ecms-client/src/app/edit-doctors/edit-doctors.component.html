@@ -1,13 +1,13 @@
-<h2>Edit Patient</h2>
-<form *ngIf="!isUpdate || patient; else loading" class="form-signin" #loginForm="ngForm" (ngSubmit)="registUser(loginForm, file.files)">
+<h2>Edit Doctor</h2>
+<form *ngIf="!isUpdate || doctor; else loading" class="form-signin" #loginForm="ngForm" (ngSubmit)="registUser(loginForm)">
     <div class="registrationbox col-sm-8">
         <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
         <div *ngIf="!uniqueName" class="alert alert-danger">User Name is invalid or already in use.</div>
         <h4 for="userName">Username</h4>
-        <input type="text" id="userName" name="userName" ngModel = {{patient?.userName}} class="form-control" placeholder="User Name" required autofocus>
+        <input type="text" id="userName" name="userName" ngModel = {{doctor?.userName}} class="form-control" placeholder="User Name" required autofocus>
         <br/>
         <h4 for="nativeName" >Native Name</h4>
-        <input type="text" id="nativeName" name="nativeName" ngModel = {{patient?.nativeName}} class="form-control" placeholder="Native Name" required>
+        <input type="text" id="nativeName" name="nativeName" ngModel = {{doctor?.nativeName}} class="form-control" placeholder="Native Name" required>
         <br/>
         <div *ngIf="passwordIsEnabled then passwordEnabled; else passwordDisabled"></div>
         <ng-template #passwordEnabled>
@@ -29,12 +29,12 @@
         <br/>
         <div *ngIf="!emailIsValid(email.value)" class="alert alert-danger">Email should look like: account@company.domain</div>
         <h4 for="email" >Email Address</h4>
-        <input #email type="email" id="email" name="email" ngModel = {{patient?.email}} class="form-control" placeholder="Email Address" required>
+        <input #email type="email" id="email" name="email" ngModel = {{doctor?.email}} class="form-control" placeholder="Email Address" required>
         <br/>
         <h4 for="gender" >Gender</h4>
         <div *ngIf="isUpdate then genderForUpdate; else genderForCreate"></div>
         <ng-template #genderForUpdate>
-            <select id="gender" name="gender" ngModel = {{patient?.gender}} class="form-control" required>
+            <select id="gender" name="gender" ngModel = {{doctor?.gender}} class="form-control" required>
                 <option value="male">Male</option>
                 <option value="felmale">Female</option>
             </select>
@@ -48,27 +48,10 @@
         </ng-template>
         <br/>
         <h4 for="birthday" >Birthday</h4>
-        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="birthday" name="birthday" ngModel = {{getDate(patient?.birthday)}} class="form-control" placeholder="Birthday" required>
+        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="birthday" name="birthday" ngModel = {{getDate(doctor?.birthday)}} class="form-control" placeholder="Birthday" required>
         <br/>
-        <h4 for="weight" >Weight (kg)</h4>
-        <input type="number" id="weight" name="weight" ngModel = {{patient?.weight}} class="form-control" placeholder="Weight (kg)" required>
-        <br/>
-        <h4 for="country" >Country</h4>
-        <input type="text" id="country" name="country" ngModel = {{patient?.country}} class="form-control" placeholder="Country" required>
-        <br/>
-        <h4 for="city" >City</h4>
-        <input type="text" id="city" name="city" ngModel = {{patient?.city}} class="form-control" placeholder="City" required>
-        <br/>
-        <h4 for="postalCode" >Postal Code</h4>
-        <input type="text" id="postalCode" name="postalCode" ngModel = {{patient?.postalCode}} class="form-control" placeholder="Postal Code" required>
-        <br/>
-        <h4 for="address" >Address</h4>
-        <input type="text" id="address" name="address" ngModel = {{patient?.address}} class="form-control" placeholder="Address" required>
-        <br/>
-        <h4 for="medicalReport" class="sr-only">Medical Report</h4>
-        <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>
-        <input #file type="file" accept=".zip,.rar,.7zip" id="file" name="file" placeholder="Browse Medical Report" class="hide">
-        <a class="btn btn-lg btn-info text-white btn-block" (click)="file.click()">Browse Medical Report</a>
+        <h4 for="startOfPractice" >Start of practice</h4>
+        <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="startOfPractice" name="startOfPractice" ngModel = {{getDate(doctor?.startOfPractice)}} class="form-control" placeholder="Start of practice" required>
         <br/>
         <a class="btn btn-lg btn-danger text-white btn-block col-sm-3 cancel" (click)="location.back()">Cancel <fa-icon [icon]="['fas', 'ban']"></fa-icon></a>
         <button class="btn btn-lg btn-success btn-block col-sm-3 save" type="submit">Save <fa-icon [icon]="['far', 'save']"></fa-icon></button>

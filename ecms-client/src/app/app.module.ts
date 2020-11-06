@@ -27,6 +27,9 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { DoctorService } from './_services/doctor-service';
 import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
 import { PharmacyService } from './_services/pharmacy-service';
+import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
+import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
+import { AdminSelfGuard } from './_guards/admin-self-guard';
 
 @NgModule({
     declarations: [
@@ -39,7 +42,9 @@ import { PharmacyService } from './_services/pharmacy-service';
         PatientsRegistrationRequestComponent,
         PatientsComponent,
         DoctorsComponent,
-        PharmaciestComponent
+        PharmaciestComponent,
+        EditDoctorsComponent,
+        EditPharmaciesComponent
     ],
     imports: [
         BrowserModule,
@@ -59,6 +64,7 @@ import { PharmacyService } from './_services/pharmacy-service';
         JwtHelperService,
         AuthGuard,
         AdminGuard,
+        AdminSelfGuard,
         OutsiderGuard,
         PatientService,
         DoctorService,
