@@ -30,6 +30,14 @@ import { PharmacyService } from './_services/pharmacy-service';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
 import { AdminSelfGuard } from './_guards/admin-self-guard';
+import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { MilitaryDateFormatter } from './_providers/military-date-provider';
 
 @NgModule({
     declarations: [
@@ -44,14 +52,23 @@ import { AdminSelfGuard } from './_guards/admin-self-guard';
         DoctorsComponent,
         PharmaciestComponent,
         EditDoctorsComponent,
-        EditPharmaciesComponent
+        EditPharmaciesComponent,
+        CustomCalendarComponent
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        CommonModule,
+        NgbModalModule,
         FontAwesomeModule,
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory
+        }),
         JwtModule.forRoot({
             config:{
                 throwNoTokenError: false,
@@ -71,6 +88,10 @@ import { AdminSelfGuard } from './_guards/admin-self-guard';
         PharmacyService,
         JWTService,
         HttpClient,
+        {
+            provide: CalendarDateFormatter,
+            useClass: MilitaryDateFormatter
+        },
         {	
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

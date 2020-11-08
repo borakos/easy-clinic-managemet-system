@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './app-login/app-login.component';
+import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPatientsComponent } from './edit-patients/edit-patients.component';
@@ -59,6 +60,10 @@ const routes: Routes = [
         path:'pharmacies/edit/:id',
         component: EditPharmaciesComponent,
         canActivate: [AdminSelfGuard]
+    },
+    {
+        path:'calendar',
+        component: CustomCalendarComponent
     },
     {
         path:'',
