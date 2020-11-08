@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JWTService } from '../_services/jwt-service';
 
 @Component({
     selector: 'app-login',
@@ -14,11 +14,10 @@ export class LoginComponent implements OnInit {
     invalidLogin: boolean;
     error: string;
 
-    constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService) { }
+    constructor(private http: HttpClient, private router: Router, private jwtService: JWTService) { }
 
     ngOnInit() {
-        let token: string = localStorage.getItem("jwt");
-        if (token && !this.jwtHelper.isTokenExpired(token)) {
+        if (this.jwtService.activeTokenIsValid()) {
             this.router.navigate(["/"]);
         }
     }
@@ -30,8 +29,7 @@ export class LoginComponent implements OnInit {
                 "Content-Type": "application/json"
             })
         }).subscribe(response => {
-            let token = (<any>response).token;
-            localStorage.setItem("jwt", token);
+            localStorage.setItem("jwt", (<any>response).token);
             this.invalidLogin = false;
             this.router.navigate(["/"]);
         }, err => {
@@ -41,7 +39,7 @@ export class LoginComponent implements OnInit {
             } else {
                 this.error = 'Error ' + err.status + ': ' + err.error.message;
             }
-            console.log(err);
+            console.error('Login', err);
         });
     }
 }

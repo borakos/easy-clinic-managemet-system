@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JWTService } from './_services/jwt-service';
 
 @Component({
     selector: 'app-root',
@@ -9,15 +9,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AppComponent {
     title = 'Easy Clinic Management System';
 
-    constructor(private jwtHelper:JwtHelperService){}
+    constructor(private jwtService: JWTService){}
 
     public isUserAuthenticated() {
-        let token: string = localStorage.getItem("jwt");
-        if (token && !this.jwtHelper.isTokenExpired(token)) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.jwtService.activeTokenIsValid();
     }
 
     public isRegistration(){

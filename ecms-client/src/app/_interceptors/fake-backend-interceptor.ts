@@ -1,7 +1,11 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { handleDoctorRequests } from './fake-backend-sub-cases/doctor-cases';
+import { handlePatientRequests } from './fake-backend-sub-cases/patient-cases';
+import { handlePharmacyRequests } from './fake-backend-sub-cases/pharmacy-cases';
+import { ok, error, unauthorized } from './fake-backend-sub-cases/responses';
 
 @Injectable()
 export class FakeBackenInterceptor implements HttpInterceptor{
@@ -9,7 +13,7 @@ export class FakeBackenInterceptor implements HttpInterceptor{
     constructor(){}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>{
-        const { url, method, headers, body } = request;
+        const { url, method, headers, body, params } = request;
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize())
@@ -21,44 +25,28 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                 case url.endsWith('/auth/login') && method === 'POST': {
                     let content = JSON.parse(body)
                     switch(content.userName){
-                        case 'valid' : return ok({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJyb2xlIjoidXNlciIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.mnh70acuKGZnYKF9NvNM9POryP4FD62p9FbSXC63MtA'});
+                        case 'patient' : return ok({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJyb2xlIjoicGF0aWVudCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.Vn0Tqs-coUcnDmRo0nRps2mEAB3dwoiS57dvClD-UD8'});
+                        case 'admin' : return ok({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxMjM0NDMyMTAiLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjoiTWlsYW4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.GxQYLEr0DpUQgt0f1gzEWPIuM_ccdyE4c2L3XVCCNC4'});
                         case 'error' : return error();
                         default:
                             return unauthorized();
                     }
                 }
-                case url.includes('/patients/free/') && method === 'GET': {
-                    let path = url.split('/');
-                    let name = path[path.length - 1]
-                    switch(name){
-                        case 'included' : return ok(false);
-                        case 'error' : return error();
-                        default:
-                            return ok(true)
-                    }
-                }
-                case url.endsWith('/patients/create') && method === 'POST': {
-                    let content = JSON.parse(body)
-                    switch(content.userName){
-                        case 'error' : return error();
-                        default:
-                            return ok(true);
-                    }
-                }
-                default: return next.handle(request);
             }
-        }
-
-        function ok(body?) {
-            return of(new HttpResponse({ status: 200, body }));
-        }
-
-        function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Unauthorised' } });
-        }
-
-        function error() {
-            return throwError({ status: 500, error: { message: 'Something is happened, this is sad.' } });
+            let result: Observable<HttpEvent<any>> = handlePatientRequests(request);
+            if(result){
+                return result;
+            }
+            result = handleDoctorRequests(request);
+            if(result){
+                return result;
+            }
+            result = handlePharmacyRequests(request);
+            if(result){
+                return result;
+            } else {
+                return next.handle(request);
+            }
         }
 	}
 }

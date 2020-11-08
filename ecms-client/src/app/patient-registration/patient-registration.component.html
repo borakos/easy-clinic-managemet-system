@@ -1,6 +1,6 @@
 <div *ngIf="successfullRegistration; then successBlock; else registrationBlock" class='container-fluid'></div>
 <ng-template #registrationBlock>
-    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="registUser(loginForm)">
+    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="registUser(loginForm, file.files)">
         <div class="registrationbox">
             <h2 class="form-signin-heading">Registration for patients</h2>
             <br/>
@@ -49,9 +49,11 @@
             <label for="address" class="sr-only">Address</label>
             <input type="text" id="address" name="address" ngModel class="form-control" placeholder="Address" required>
             <br/>
-            <!---<label for="medicalReport" class="sr-only">Medical Report</label>
-            <a class="btn btn-lg btn-info text-white btn-block">Upload Medical Report</a>
-            <br/>--->
+            <label for="medicalReport" class="sr-only">Medical Report</label>
+            <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>
+			<input #file type="file" accept=".zip,.rar,.7zip" id="file" name="file" placeholder="Browse Medical Report" class="hide">
+            <a class="btn btn-lg btn-info text-white btn-block" (click)="file.click()">Browse Medical Report</a>
+            <br/>
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
         </div>
     </form>

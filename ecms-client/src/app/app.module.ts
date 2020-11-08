@@ -2,6 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +17,19 @@ import { FormsModule } from '@angular/forms';
 import { FakeBackenInterceptor } from './_interceptors/fake-backend-interceptor';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { OutsiderGuard } from './_guards/outsider-guard';
-import { UserService } from './_services/user-service';
+import { AdminGuard } from './_guards/admin-guard';
+import { PatientService } from './_services/patient-service';
+import { JWTService } from './_services/jwt-service';
+import { EditPatientsComponent } from './edit-patients/edit-patients.component';
+import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
+import { PatientsComponent } from './patients/patients.component';
+import { DoctorsComponent } from './doctors/doctors.component';
+import { DoctorService } from './_services/doctor-service';
+import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
+import { PharmacyService } from './_services/pharmacy-service';
+import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
+import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
+import { AdminSelfGuard } from './_guards/admin-self-guard';
 
 @NgModule({
     declarations: [
@@ -22,13 +37,21 @@ import { UserService } from './_services/user-service';
         LoginComponent,
         HomeComponent,
         NavComponent,
-        PatientRegistrationComponent
+        PatientRegistrationComponent,
+        EditPatientsComponent,
+        PatientsRegistrationRequestComponent,
+        PatientsComponent,
+        DoctorsComponent,
+        PharmaciestComponent,
+        EditDoctorsComponent,
+        EditPharmaciesComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        FontAwesomeModule,
         JwtModule.forRoot({
             config:{
                 throwNoTokenError: false,
@@ -40,8 +63,13 @@ import { UserService } from './_services/user-service';
     providers: [
         JwtHelperService,
         AuthGuard,
+        AdminGuard,
+        AdminSelfGuard,
         OutsiderGuard,
-        UserService,
+        PatientService,
+        DoctorService,
+        PharmacyService,
+        JWTService,
         HttpClient,
         {	
             provide: HTTP_INTERCEPTORS,
@@ -56,7 +84,12 @@ import { UserService } from './_services/user-service';
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+    constructor(library: FaIconLibrary){
+        library.addIconPacks(fas, far);
+    }
+ }
 
 export function getToken(){
     return localStorage.getItem("currentUser");
