@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PharmacyService } from '../_services/pharmacy-service';
-import { Pharmacy } from '../_services/types';
+import { Pharmacy } from '../_providers/types';
 
 @Component({
     selector: 'app-pharmaciest',

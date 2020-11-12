@@ -1,7 +1,7 @@
 import { HttpEvent, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ok, error } from './responses';
-import { Pharmacy } from '../../_services/types';
+import { Pharmacy } from '../../_providers/types';
 
 export function handlePharmacyRequests(request: HttpRequest<any>): Observable<HttpEvent<any>> | undefined {
     const { url, method, headers, body, params } = request;

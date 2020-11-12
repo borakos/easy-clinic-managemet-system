@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Pharmacy } from './types';
+import { Pharmacy } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()

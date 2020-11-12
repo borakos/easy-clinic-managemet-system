@@ -3,7 +3,6 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours} from 'date-fns';
-import { DomSanitizer } from '@angular/platform-browser';
 
 const colors: any = {
     red: {
@@ -21,7 +20,6 @@ const colors: any = {
 };
 
 @Component({
-    encapsulation: ViewEncapsulation.None,
     selector: 'app-custom-calendar',
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './custom-calendar.component.html',
@@ -100,7 +98,7 @@ export class CustomCalendarComponent implements OnInit {
     activeDayIsOpen: boolean = true;
     refresh: Subject<any> = new Subject();
 
-    constructor(private modal: NgbModal, private sanitizer: DomSanitizer) { }
+    constructor(private modal: NgbModal) { }
 
     ngOnInit(): void {
     }

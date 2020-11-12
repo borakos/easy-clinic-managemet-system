@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PharmacyService } from '../_services/pharmacy-service';
-import { Pharmacy } from '../_services/types';
+import { Pharmacy } from '../_providers/types';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';

@@ -4,6 +4,7 @@
             <h3><fa-icon [icon]="['far', 'user']"></fa-icon> User</h3>
             <ul>
                 <li><a routerLink="{{ getPersonalRoute() }}"><h5><fa-icon [icon]="['far', 'id-card']"></fa-icon> Personal Settings</h5></a></li>
+                <li *ngIf="userIsPatientOrAdmin()"><a routerLink="patients/apply-to-appointment"><h5><fa-icon [icon]="['far', 'calendar-check']"></fa-icon> Make appointment</h5></a></li>
             </ul>
         </li>
         <li *ngIf="userIsAdmin()">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Doctor } from './types';
+import { Doctor } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -28,6 +28,12 @@ export class DoctorService{
 
 	listDoctors(loadingError: (any) => Observable<any>): Observable<Doctor[]> {
 		return this.http.get<Doctor[]>('api/doctors',{
+			headers: this.headerJson
+		}).pipe(catchError(loadingError));
+	}
+
+	listDoctorsWithFilter(loadingError: (any) => Observable<any>, filter: string = ''): Observable<Doctor[]> {
+		return this.http.post<Doctor[]>('api/doctors/list/filter', {filter: filter},{
 			headers: this.headerJson
 		}).pipe(catchError(loadingError));
 	}

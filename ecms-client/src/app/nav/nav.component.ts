@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JWTService } from '../_services/jwt-service';
-import { UserRole } from '../_services/types';
+import { UserRole } from '../_providers/types';
 
 @Component({
     selector: 'app-nav',
@@ -29,5 +29,9 @@ export class NavComponent implements OnInit {
 
     userIsAdmin(): boolean {
         return this.jwtService.userIsAdmin();
+    }
+
+    userIsPatientOrAdmin(): boolean {
+        return this.jwtService.userIsPatientOrAdmin();
     }
 }

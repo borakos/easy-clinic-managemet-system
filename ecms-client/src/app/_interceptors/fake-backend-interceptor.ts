@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from "@angular/core";
 import { Observable, of } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import { handleAppointmentRequests } from './fake-backend-sub-cases/appointment-cases';
 import { handleDoctorRequests } from './fake-backend-sub-cases/doctor-cases';
 import { handlePatientRequests } from './fake-backend-sub-cases/patient-cases';
 import { handlePharmacyRequests } from './fake-backend-sub-cases/pharmacy-cases';
@@ -44,9 +45,12 @@ export class FakeBackenInterceptor implements HttpInterceptor{
             result = handlePharmacyRequests(request);
             if(result){
                 return result;
-            } else {
-                return next.handle(request);
             }
+            result = handleAppointmentRequests(request);
+            if(result){
+                return result;
+            }
+            return next.handle(request);
         }
 	}
 }

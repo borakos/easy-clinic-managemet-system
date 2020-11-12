@@ -38,6 +38,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { MilitaryDateFormatter } from './_providers/military-date-provider';
+import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
+import { FormatDoctors } from './_providers/doctor-select-pipe';
+import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
+import { AppointmentService } from './_services/appointment-service';
 
 @NgModule({
     declarations: [
@@ -53,7 +57,10 @@ import { MilitaryDateFormatter } from './_providers/military-date-provider';
         PharmaciestComponent,
         EditDoctorsComponent,
         EditPharmaciesComponent,
-        CustomCalendarComponent
+        CustomCalendarComponent,
+        ApplyToAppointmentComponent,
+        FormatDoctors,
+        FormatAppointmentEvents
     ],
     imports: [
         BrowserModule,
@@ -86,6 +93,7 @@ import { MilitaryDateFormatter } from './_providers/military-date-provider';
         PatientService,
         DoctorService,
         PharmacyService,
+        AppointmentService,
         JWTService,
         HttpClient,
         {

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './app-login/app-login.component';
+import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
 import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
 import { DoctorsComponent } from './doctors/doctors.component';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
@@ -62,8 +63,14 @@ const routes: Routes = [
         canActivate: [AdminSelfGuard]
     },
     {
+        path:'patients/apply-to-appointment',
+        component: ApplyToAppointmentComponent,
+        canActivate: [AuthGuard]
+    },
+    {
         path:'calendar',
-        component: CustomCalendarComponent
+        component: CustomCalendarComponent,
+        canActivate: [AdminGuard]
     },
     {
         path:'',
