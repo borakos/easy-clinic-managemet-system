@@ -56,3 +56,11 @@ export interface Pharmacy {
     supportDelivery: boolean,
     supportPreOrder: boolean
 }
+
+export interface AppointmentEvent {
+    id: number,
+    label: string,
+    isFree: boolean,
+    start: Date,
+    end: Date,
+}

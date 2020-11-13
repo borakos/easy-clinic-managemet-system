@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { DoctorService } from '../_services/doctor-service';
-import { Doctor, Gender } from '../_services/types';
+import { Doctor, Gender } from '../_providers/types';
 
 @Component({
     selector: 'app-doctors',

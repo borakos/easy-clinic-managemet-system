@@ -30,6 +30,8 @@
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "node_modules/font-awesome/css/font-awesome.css",
+                            "node_modules/flatpickr/dist/flatpickr.min.css",
+                            "node_modules/angular-calendar/css/angular-calendar.css",
                             "src/styles.scss"
                         ],
                         "scripts": []
@@ -96,6 +98,8 @@
                         "styles": [
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "node_modules/font-awesome/css/font-awesome.css",
+                            "node_modules/flatpickr/dist/flatpickr.min.css",
+                            "node_modules/angular-calendar/css/angular-calendar.css",
                             "src/styles.scss"
                         ],
                         "scripts": []

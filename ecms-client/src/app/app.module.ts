@@ -30,6 +30,18 @@ import { PharmacyService } from './_services/pharmacy-service';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
 import { AdminSelfGuard } from './_guards/admin-self-guard';
+import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { MilitaryDateFormatter } from './_providers/military-date-provider';
+import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
+import { FormatDoctors } from './_providers/doctor-select-pipe';
+import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
+import { AppointmentService } from './_services/appointment-service';
 
 @NgModule({
     declarations: [
@@ -44,14 +56,26 @@ import { AdminSelfGuard } from './_guards/admin-self-guard';
         DoctorsComponent,
         PharmaciestComponent,
         EditDoctorsComponent,
-        EditPharmaciesComponent
+        EditPharmaciesComponent,
+        CustomCalendarComponent,
+        ApplyToAppointmentComponent,
+        FormatDoctors,
+        FormatAppointmentEvents
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
+        CommonModule,
+        NgbModalModule,
         FontAwesomeModule,
+        FlatpickrModule.forRoot(),
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory
+        }),
         JwtModule.forRoot({
             config:{
                 throwNoTokenError: false,
@@ -69,8 +93,13 @@ import { AdminSelfGuard } from './_guards/admin-self-guard';
         PatientService,
         DoctorService,
         PharmacyService,
+        AppointmentService,
         JWTService,
         HttpClient,
+        {
+            provide: CalendarDateFormatter,
+            useClass: MilitaryDateFormatter
+        },
         {	
             provide: HTTP_INTERCEPTORS,
             useClass: TokenInterceptor,

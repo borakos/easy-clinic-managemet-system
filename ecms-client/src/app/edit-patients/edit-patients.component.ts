@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PatientService } from '../_services/patient-service';
-import { Patient } from '../_services/types';
+import { Patient } from '../_providers/types';
 import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
 
