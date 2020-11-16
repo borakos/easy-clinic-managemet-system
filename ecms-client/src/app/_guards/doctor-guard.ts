@@ -5,15 +5,15 @@ import { JWTService } from '../_services/jwt-service';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AdminGuard implements CanActivate {
 
     constructor(private jwtService: JWTService, private router: Router) {}
 
     canActivate() {
-        if(this.jwtService.activeTokenIsValid()){
+        if (this.jwtService.userIsDoctor()) {
             return true;
         }
-        this.router.navigate(['login']);
+        this.router.navigate(['']);
         return false;
     }
 }

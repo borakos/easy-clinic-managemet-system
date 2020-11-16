@@ -133,8 +133,8 @@ export class ApplyToAppointmentComponent implements OnInit {
             }
             this.updateDoctorsAppointment();
         }, err => {
-            this.error = 'Error ' + err.status + ': ' + err.error.message;
             console.error('Create appointment', err);
+            this.error = 'Error ' + err.status + ': ' + err.error.message;
         });
     }
 

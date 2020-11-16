@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { JWTService } from '../_services/jwt-service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AdminSelfGuard implements CanActivate {
 
     constructor(private jwtService: JWTService, private router: Router) {}

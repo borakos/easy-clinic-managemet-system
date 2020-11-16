@@ -32,6 +32,10 @@ export class NavComponent implements OnInit {
     }
 
     userIsPatientOrAdmin(): boolean {
-        return this.jwtService.userIsPatientOrAdmin();
+        return this.jwtService.userIsPatient() || this.jwtService.userIsAdmin();
+    }
+
+    userIsDoctorOrAdmin(): boolean {
+        return this.jwtService.userIsDoctor() || this.jwtService.userIsAdmin();
     }
 }

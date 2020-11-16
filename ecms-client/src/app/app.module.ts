@@ -86,15 +86,6 @@ import { AppointmentService } from './_services/appointment-service';
     ],
     providers: [
         JwtHelperService,
-        AuthGuard,
-        AdminGuard,
-        AdminSelfGuard,
-        OutsiderGuard,
-        PatientService,
-        DoctorService,
-        PharmacyService,
-        AppointmentService,
-        JWTService,
         HttpClient,
         {
             provide: CalendarDateFormatter,

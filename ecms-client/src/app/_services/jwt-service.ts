@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User, UserRole } from '../_providers/types';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class JWTService{
 
 	constructor(private jwtHelper:JwtHelperService){}
@@ -16,11 +18,19 @@ export class JWTService{
         }
 	}
 
-	userIsPatientOrAdmin(): boolean {
+	userIsPatient(): boolean {
         if (this.activeTokenIsValid()) {
 			let token: string = localStorage.getItem("jwt");
-			let role: UserRole = (this.jwtHelper.decodeToken(token) as User).role;
-            return (role === UserRole.Patient) || (role === UserRole.Admin);
+            return (this.jwtHelper.decodeToken(token) as User).role === UserRole.Patient;
+        } else {
+            return false;
+        }
+    }
+    
+    userIsDoctor(): boolean {
+        if (this.activeTokenIsValid()) {
+			let token: string = localStorage.getItem("jwt");
+            return (this.jwtHelper.decodeToken(token) as User).role === UserRole.Doctor;
         } else {
             return false;
         }
