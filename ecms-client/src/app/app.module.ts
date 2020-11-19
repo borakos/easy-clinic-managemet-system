@@ -11,25 +11,17 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './app-login/app-login.component';
 import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
-import { AuthGuard } from './_guards/auth-guard';
 import { TokenInterceptor } from './_interceptors/token-interceptor';
 import { FormsModule } from '@angular/forms';
 import { FakeBackenInterceptor } from './_interceptors/fake-backend-interceptor';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
-import { OutsiderGuard } from './_guards/outsider-guard';
-import { AdminGuard } from './_guards/admin-guard';
-import { PatientService } from './_services/patient-service';
-import { JWTService } from './_services/jwt-service';
 import { EditPatientsComponent } from './edit-patients/edit-patients.component';
 import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
 import { PatientsComponent } from './patients/patients.component';
 import { DoctorsComponent } from './doctors/doctors.component';
-import { DoctorService } from './_services/doctor-service';
 import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
-import { PharmacyService } from './_services/pharmacy-service';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
-import { AdminSelfGuard } from './_guards/admin-self-guard';
 import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
@@ -41,7 +33,7 @@ import { MilitaryDateFormatter } from './_providers/military-date-provider';
 import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
 import { FormatDoctors } from './_providers/doctor-select-pipe';
 import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
-import { AppointmentService } from './_services/appointment-service';
+import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
 
 @NgModule({
     declarations: [
@@ -60,7 +52,8 @@ import { AppointmentService } from './_services/appointment-service';
         CustomCalendarComponent,
         ApplyToAppointmentComponent,
         FormatDoctors,
-        FormatAppointmentEvents
+        FormatAppointmentEvents,
+        ManageAppointmentComponent
     ],
     imports: [
         BrowserModule,
@@ -79,22 +72,16 @@ import { AppointmentService } from './_services/appointment-service';
         JwtModule.forRoot({
             config:{
                 throwNoTokenError: false,
-                tokenGetter: getToken,
+                tokenGetter: () => {
+                    return localStorage.getItem('jwt');
+                },
+                authScheme: 'Bearer ',
                 allowedDomains: ["localhost:44396"]
             }
         })
     ],
     providers: [
         JwtHelperService,
-        AuthGuard,
-        AdminGuard,
-        AdminSelfGuard,
-        OutsiderGuard,
-        PatientService,
-        DoctorService,
-        PharmacyService,
-        AppointmentService,
-        JWTService,
         HttpClient,
         {
             provide: CalendarDateFormatter,
@@ -118,8 +105,4 @@ export class AppModule {
     constructor(library: FaIconLibrary){
         library.addIconPacks(fas, far);
     }
- }
-
-export function getToken(){
-    return localStorage.getItem("currentUser");
 }

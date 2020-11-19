@@ -4,7 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Patient } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class PatientService{
 
 	private headerJson:HttpHeaders;
@@ -17,7 +19,7 @@ export class PatientService{
 
 	createPatient(data, file = null): Observable<boolean> {
 		delete data.repassword;
-		return this.http.put<boolean>('/api/patients/create', file, {params : data});
+		return this.http.put<boolean>('api/patients/create', file, {params : data});
 	}
 
 	nameIsFree(userName):Observable<boolean>{
@@ -34,11 +36,11 @@ export class PatientService{
 	}
 
 	acceptPatientRegistration(id: number): Observable<boolean> {
-		return this.http.get<boolean>('/api/patients/accept-patient/' + id);
+		return this.http.get<boolean>('api/patients/accept-patient/' + id);
 	}
 
 	denyPatientRegistration(id: number): Observable<boolean> {
-		return this.http.delete<boolean>('/api/patients/deny-patient/' + id);
+		return this.http.delete<boolean>('api/patients/deny-patient/' + id);
 	}
 
 	listPatients(loadingError: (any) => Observable<any>): Observable<Patient[]> {
@@ -48,10 +50,10 @@ export class PatientService{
 	}
 
 	deletePatient(id: number): Observable<boolean> {
-		return this.http.delete<boolean>('/api/patients/delete/' + id);
+		return this.http.delete<boolean>('api/patients/delete/' + id);
 	}
 
 	getPatient(id: number): Observable<Patient> {
-		return this.http.get<Patient>('/api/patients/' + id);
+		return this.http.get<Patient>('api/patients/' + id);
 	}
 }

@@ -4,7 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Doctor } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class DoctorService{
 
 	private headerJson:HttpHeaders;
@@ -17,7 +19,7 @@ export class DoctorService{
 
 	createDoctor(data): Observable<boolean> {
 		delete data.repassword;
-		return this.http.put<boolean>('/api/doctors/create', null, {params : data});
+		return this.http.put<boolean>('api/doctors/create', null, {params : data});
 	}
 
 	nameIsFree(userName):Observable<boolean>{
@@ -39,10 +41,10 @@ export class DoctorService{
 	}
 
 	deleteDoctor(id: number): Observable<boolean> {
-		return this.http.delete<boolean>('/api/doctors/delete/' + id);
+		return this.http.delete<boolean>('api/doctors/delete/' + id);
 	}
 
 	getDoctor(id: number): Observable<Doctor> {
-		return this.http.get<Doctor>('/api/doctors/' + id);
+		return this.http.get<Doctor>('api/doctors/' + id);
 	}
 }
