@@ -11,7 +11,12 @@ namespace Clinic.Controllers
 {
     public class pharmaciesController : ApiController
     {
-        static readonly IBackendRepository repository = new BackendRepository();
+        //Dependency Injection by unity. check "DI.UnityResolver.cs"
+        readonly IBackendRepository repository;
+        public pharmaciesController(IBackendRepository _repository)
+        {
+            repository = _repository;
+        }
 
         [HttpPut]
         //api/pharmacies/creat?pharmacy

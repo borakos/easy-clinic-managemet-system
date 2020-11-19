@@ -14,7 +14,12 @@ namespace Clinic.Controllers
 {
     public class authController : ApiController
     {
-        static readonly IBackendRepository repository = new BackendRepository();
+        //Dependency Injection by unity. check "DI.UnityResolver.cs"
+        readonly IBackendRepository repository;
+        public authController(IBackendRepository _repository)
+        {
+            repository = _repository;
+        }
         [HttpPost]
         public LoginResult login([FromBody]LoginRequest request) {
             LoginResult result = new LoginResult();

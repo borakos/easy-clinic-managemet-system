@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Clinic.Repository
 {
-    interface IBackendRepository
+    public interface IBackendRepository
     {
         Boolean checkUser(string username);
         Boolean checkPass(string userName, string password);
