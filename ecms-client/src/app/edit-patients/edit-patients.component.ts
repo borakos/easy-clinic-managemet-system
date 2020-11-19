@@ -4,6 +4,7 @@ import { PatientService } from '../_services/patient-service';
 import { Patient } from '../_providers/types';
 import { NgForm } from '@angular/forms';
 import { Location } from '@angular/common';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-edit-patients',
@@ -18,7 +19,7 @@ export class EditPatientsComponent implements OnInit {
     isUpdate: boolean = false;
     error = undefined;
 
-    constructor(private patientService: PatientService, private route: ActivatedRoute, public location: Location) {
+    constructor(private logger: Logger, private patientService: PatientService, private route: ActivatedRoute, public location: Location) {
         let id = Number(this.route.snapshot.params.id);
         if(!Number.isNaN(id)){
             this.isUpdate = true;
@@ -26,8 +27,7 @@ export class EditPatientsComponent implements OnInit {
             .subscribe(response => {
                 this.patient = response as Patient;
             }, err => {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Get patient', err);
+				this.error = this.logger.errorLogWithReturnText('Get patient', err);
             });
             this.error = undefined;
         } else {
@@ -98,13 +98,11 @@ export class EditPatientsComponent implements OnInit {
 					createUser.subscribe((response) => {
                         this.location.back()
 					}, err => {
-						this.error = 'Error ' + err.status + ': ' + err.error.message;
-						console.error('User registration', err);
+						this.error = this.logger.errorLogWithReturnText('Patient registration', err);
 					});
 				}
 			},err=>{
-				this.error = 'Error ' + err.status + ': ' + err.error.message;
-				console.error('User registration', err);
+				this.error = this.logger.errorLogWithReturnText('Patient registration', err);
 			})
 		}
 		this.uniqueName = true;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PharmacyService } from '../_services/pharmacy-service';
 import { Pharmacy } from '../_providers/types';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-pharmaciest',
@@ -13,13 +14,12 @@ export class PharmaciestComponent implements OnInit {
     pharmaciesObservable: Observable<Pharmacy[]>
     error = undefined;
 
-    constructor(private pharmacyService: PharmacyService) { }
+    constructor(private logger: Logger, private pharmacyService: PharmacyService) { }
 
     ngOnInit(): void {
         this.pharmaciesObservable = this.pharmacyService.listPharmacies(
             (err) => {
-                console.error('Loading pharmacies', err);
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
+                this.error = this.logger.errorLogWithReturnText('Loading pharmacies', err);
                 return of();
             }
         );
@@ -30,8 +30,7 @@ export class PharmaciestComponent implements OnInit {
         this.pharmacyService.deletePharmacy(id)
         .subscribe(response => {}
             , err => {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Delete pharmacy', err);
+                this.error = this.logger.errorLogWithReturnText('Delete pharmacy', err);
         });
         this.error = undefined;
     }
