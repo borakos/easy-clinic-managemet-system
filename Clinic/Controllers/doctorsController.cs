@@ -1,0 +1,131 @@
+﻿using Clinic.Repository;
+using Clinic.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+
+namespace Clinic.Controllers
+{
+    public class doctorsController : ApiController
+    {
+        static readonly IBackendRepository repository = new BackendRepository();
+        [HttpPut]
+        //api/doctors/creat?Doctor
+        public IHttpActionResult create(Doctor doctor) {
+            try {
+                var result = repository.CreatDoctor(doctor);
+                return Ok(result);
+            }
+            catch (Exception e) {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        //api/doctors/update?doctor
+        public IHttpActionResult update(Doctor doctor)
+        {
+            try
+            {
+                var result = repository.UpdateDoctor(doctor);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        //api/doctors/free?username
+        public IHttpActionResult free(string username)
+        {
+            try
+            {
+                var result = repository.IsUserUnique(username);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        //api/doctors/getAllDoctor
+        /*public IEnumerable<Doctor> getAllDoctor()
+        {
+            return repository.getAllDoctor();
+        }*/
+        public IHttpActionResult getAllDoctor()
+        {
+            try
+            {
+                var result = repository.getAllDoctor();
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+            
+        }
+
+        [HttpGet]
+        //api/doctors/filter?filter
+        /*public IEnumerable<Doctor> filter(string filter) {
+            return repository.getFilterDoctor(filter);
+        }*/
+        public IHttpActionResult filter(string filter)
+        {
+            try
+            {
+                var result = repository.getFilterDoctor(filter);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+            
+        }
+
+        [HttpDelete]
+        //api/doctors/delete?id
+        public IHttpActionResult delete(int id)
+        {
+            try
+            {
+                var result = repository.deleteDoctor(id);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        //api/doctors/getDoctor?id
+        /*public Doctor getDoctor(int id) {
+            return repository.getDoctor(id);
+        }*/
+        public IHttpActionResult getDoctor(int id)
+        {
+            try
+            {
+                var result = repository.getDoctor(id);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
+
+    }
+}

@@ -14,13 +14,21 @@ namespace Clinic.Controllers
         static readonly IBackendRepository repository = new BackendRepository();
 
         [HttpPost]
-        public void listForPatientSelect() {
-
+        public IHttpActionResult listForPatientSelect() {
+            return Ok();
         }
 
         [HttpPut]
-        public Boolean create(Appoinment appoinment) {
-            return repository.createAppointments(appoinment);
+        public IHttpActionResult create(Appoinment appoinment) {
+            try
+            {
+                var result = repository.createAppointments(appoinment);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }
