@@ -12,7 +12,7 @@ export class TokenInterceptor implements HttpInterceptor{
 	intercept(request: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>>{
 		request=request.clone({
 			setHeaders: {
-				"Authorization": this.jwtHelper.getAuthScheme  + this.jwtHelper.tokenGetter(),
+				"Authorization": this.jwtHelper.getAuthScheme('Bearer ', request) + this.jwtHelper.tokenGetter(),
 			},
 			url: this.getUrl(request.url)
 		});

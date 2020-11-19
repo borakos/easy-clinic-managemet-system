@@ -11,6 +11,6 @@ export class Logger{
 	};
 
 	getErrorText(error: any): string {
-		return 'Error ' + error.status + ': ' + (error.error.message ? error.error.message : error.statusText);
+		return 'Error ' + error.status + ': ' + (error.error?.message ? error.error.message : error.statusText);
 	}
 }
