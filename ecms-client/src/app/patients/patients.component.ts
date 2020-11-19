@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { PatientService } from '../_services/patient-service';
 import { Patient, Gender } from '../_providers/types';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-patients',
@@ -14,13 +15,12 @@ export class PatientsComponent implements OnInit {
     Gender = Gender;
     error = undefined;
 
-    constructor(private patientService: PatientService) { }
+    constructor(private logger: Logger, private patientService: PatientService) { }
 
     ngOnInit(): void {
         this.patientsObservable = this.patientService.listPatients(
             (err) => {
-                console.error('Loading patients', err);
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
+                this.error = this.logger.errorLogWithReturnText('Loading patients', err);
                 return of();
             }
         );
@@ -31,8 +31,7 @@ export class PatientsComponent implements OnInit {
         this.patientService.deletePatient(id)
         .subscribe(response => {}
             , err => {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Delete patient', err);
+                this.error = this.logger.errorLogWithReturnText('Delete patient', err);
         });
         this.error = undefined;
     }

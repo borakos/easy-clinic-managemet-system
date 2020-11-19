@@ -21,8 +21,9 @@ export class PatientService{
 	}
 
 	nameIsFree(userName):Observable<boolean>{
-		return this.http.get<boolean>('api/patients/free/' + userName,{
-			headers: this.headerJson
+		return this.http.get<boolean>('api/patients/free',{
+			headers: this.headerJson,
+			params: {username: userName}
 		});
 	}
 

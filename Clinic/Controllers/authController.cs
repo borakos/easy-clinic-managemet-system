@@ -38,7 +38,7 @@ namespace Clinic.Controllers
 						IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
 						IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
 						var token = encoder.Encode(info, secret);
-						return Content(HttpStatusCode.OK, token);
+						return Ok(token);
 					}
 					else
 					{

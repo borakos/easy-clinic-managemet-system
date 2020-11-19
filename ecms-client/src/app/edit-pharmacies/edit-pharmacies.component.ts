@@ -4,6 +4,7 @@ import { Pharmacy } from '../_providers/types';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { NgForm } from '@angular/forms';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-edit-pharmacies',
@@ -20,7 +21,7 @@ export class EditPharmaciesComponent implements OnInit {
 	supportDelivery: boolean = false;
 	supportPreOrder: boolean = false;
 
-    constructor(private pharmacyService: PharmacyService, private route: ActivatedRoute, public location: Location) {
+    constructor(private logger: Logger, private pharmacyService: PharmacyService, private route: ActivatedRoute, public location: Location) {
         let id = Number(this.route.snapshot.params.id);
         if(!Number.isNaN(id)){
             this.isUpdate = true;
@@ -30,8 +31,7 @@ export class EditPharmaciesComponent implements OnInit {
 				this.supportDelivery = this.pharmacy.supportDelivery;
 				this.supportPreOrder = this.pharmacy.supportPreOrder;
             }, err => {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Get pharmacy', err);
+				this.error = this.logger.errorLogWithReturnText('Get pharmacy', err);
             });
             this.error = undefined;
         } else {
@@ -97,13 +97,11 @@ export class EditPharmaciesComponent implements OnInit {
 					createPharmacy.subscribe((response) => {
                         this.location.back()
 					}, err => {
-						this.error = 'Error ' + err.status + ': ' + err.error.message;
-						console.error('User registration', err);
+						this.error = this.logger.errorLogWithReturnText('User registration', err);
 					});
 				}
 			},err=>{
-				this.error = 'Error ' + err.status + ': ' + err.error.message;
-				console.error('User registration', err);
+				this.error = this.logger.errorLogWithReturnText('User registration', err);
 			})
 		}
 		this.uniqueName = true;

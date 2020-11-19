@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { JWTService } from '../_services/jwt-service';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
     invalidLogin: boolean;
     error: string;
 
-    constructor(private http: HttpClient, private router: Router, private jwtService: JWTService) { }
+    constructor(private http: HttpClient, private router: Router, private jwtService: JWTService, private logger: Logger) { }
 
     ngOnInit() {
         if (this.jwtService.activeTokenIsValid()) {
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
             if(err.status === 401){
                 this.error = 'Invalid username or password.';
             } else {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
+                this.error = this.logger.getErrorText(err);
             }
             console.error('Login', err);
         });
