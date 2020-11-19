@@ -8,7 +8,7 @@ namespace Clinic.Models
     public class AuthInfo
     {
         public string userName { get; set; }
-        public List<string> Roles { get; set; }
-        public bool IsAdmin { get; set; }
+        public string role { get; set; }
+        public int id { get; set; }
     }
 }

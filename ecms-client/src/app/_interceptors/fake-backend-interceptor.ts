@@ -23,11 +23,15 @@ export class FakeBackenInterceptor implements HttpInterceptor{
 
         function handleRoute() {
             switch (true) {
+                case url.endsWith('/auth/login') && method === 'POST': return next.handle(request);
+            }
+
+            switch (true) {
                 case url.endsWith('/auth/login') && method === 'POST': {
                     let content = JSON.parse(body)
                     switch(content.userName){
-                        case 'patient' : return ok({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJyb2xlIjoicGF0aWVudCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.Vn0Tqs-coUcnDmRo0nRps2mEAB3dwoiS57dvClD-UD8'});
-                        case 'admin' : return ok({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxMjM0NDMyMTAiLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjoiTWlsYW4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.GxQYLEr0DpUQgt0f1gzEWPIuM_ccdyE4c2L3XVCCNC4'});
+                        case 'patient' : return ok('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJyb2xlIjoicGF0aWVudCIsIm5hbWUiOiJKb2huIERvZSIsImlhdCI6MTUxNjIzOTAyMn0.Vn0Tqs-coUcnDmRo0nRps2mEAB3dwoiS57dvClD-UD8');
+                        case 'admin' : return ok('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAxMjM0NDMyMTAiLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjoiTWlsYW4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.GxQYLEr0DpUQgt0f1gzEWPIuM_ccdyE4c2L3XVCCNC4');
                         case 'error' : return error();
                         default:
                             return unauthorized();

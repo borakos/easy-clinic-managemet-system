@@ -17,6 +17,7 @@ namespace Clinic
             var container = new UnityContainer();
             container.RegisterType<IBackendRepository, BackendRepository>();
             config.DependencyResolver = new UnityResolver(container);
+            config.EnableCors();
 
             // Web API routing
             config.MapHttpAttributeRoutes();

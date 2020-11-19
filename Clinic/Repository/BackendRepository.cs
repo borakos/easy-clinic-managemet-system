@@ -15,7 +15,7 @@ namespace Clinic.Repository
         private List<Appoinment> lista = new List<Appoinment>();
 
         public BackendRepository() {
-            login.Add(new LoginRequest { userName = "admin", password = "xxmff14" });
+            login.Add(new LoginRequest { userName = "admin", password = "admin" });
         }
         //check username
         public Boolean checkUser(string username) {

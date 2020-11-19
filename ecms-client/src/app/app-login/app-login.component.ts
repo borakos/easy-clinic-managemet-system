@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
                 "Content-Type": "application/json"
             })
         }).subscribe(response => {
-            localStorage.setItem("jwt", (<any>response).token);
+            localStorage.setItem("jwt", response as string);
             this.invalidLogin = false;
             this.router.navigate(["/"]);
         }, err => {

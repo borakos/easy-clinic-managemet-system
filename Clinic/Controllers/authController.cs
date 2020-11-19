@@ -9,10 +9,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Clinic.Controllers
 {
-    public class authController : ApiController
+	[EnableCors(origins: "http://localhost:4200", headers: "*", methods: "*")]
+	public class authController : ApiController
     {
         //Dependency Injection by unity. check "DI.UnityResolver.cs"
         readonly IBackendRepository repository;
@@ -21,42 +23,36 @@ namespace Clinic.Controllers
             repository = _repository;
         }
         [HttpPost]
-        public LoginResult login([FromBody]LoginRequest request) {
-            LoginResult result = new LoginResult();
-            if (repository.checkUser(request.userName))
-            {
-                if (repository.checkPass(request.userName, request.password))
-                {
-                    AuthInfo info = new AuthInfo { userName = request.userName, Roles = new List<string> { "Admin", "Manage" }, IsAdmin = true };
-                    try
-                    {
-                        const string secret = "easy clinic managemet system";
-                        //secret
-                        IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
-                        IJsonSerializer serializer = new JsonNetSerializer();
-                        IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
-                        IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
-                        var token = encoder.Encode(info, secret);
-                        result.Message = "Login success";
-                        result.Token = token;
-                        result.Success = true;
-                    }
-                    catch (Exception ex) {
-                        result.Message = ex.Message;
-                        result.Success = false;
-                    }
-                }
-                else {
-                    result.Message = "wrong password";
-                    result.Success = false;
-                }
-            }
-            else {
-                result.Message = "Don't find username";
-                result.Success = false;
-            }
-
-            return result;
-        }
-    }
+		public IHttpActionResult login([FromBody] LoginRequest request)
+		{
+			try
+			{
+				if ((request != null) && repository.checkUser(request.userName))
+				{
+					if (repository.checkPass(request.userName, request.password))
+					{
+						AuthInfo info = new AuthInfo { userName = request.userName, role = "admin", id = 1 };
+						const string secret = "easy clinic managemet system";
+						IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
+						IJsonSerializer serializer = new JsonNetSerializer();
+						IBase64UrlEncoder urlEncoder = new JwtBase64UrlEncoder();
+						IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
+						var token = encoder.Encode(info, secret);
+						return Content(HttpStatusCode.OK, token);
+					}
+					else
+					{
+						return Content(HttpStatusCode.Unauthorized, "Password or username is not correct");
+					}
+				}
+				else
+				{
+					return Content(HttpStatusCode.Unauthorized, "User cannot be found.");
+				}
+				} catch (Exception exc)
+			{
+				return Content(HttpStatusCode.InternalServerError, exc.Message);
+			}
+		}
+	}
 }

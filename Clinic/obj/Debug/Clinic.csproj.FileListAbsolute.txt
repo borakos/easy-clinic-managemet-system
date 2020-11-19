@@ -220,3 +220,6 @@ D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic
 D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.csproj.CopyComplete
 D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.dll
 D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Cors.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.Cors.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.Cors.xml
