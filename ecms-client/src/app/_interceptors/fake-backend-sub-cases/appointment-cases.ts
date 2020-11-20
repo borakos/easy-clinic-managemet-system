@@ -44,7 +44,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 return ok([]);
             }
         }
-        case url.includes('/api/appointments/create') && method === 'PUT': {
+        case url.includes('/appointments/create') && method === 'PUT': {
             let desc = params.get('description');
             if(desc.includes('error')){
                 return error();

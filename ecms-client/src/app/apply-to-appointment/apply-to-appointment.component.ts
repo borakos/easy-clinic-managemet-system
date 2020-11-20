@@ -6,6 +6,7 @@ import { AppointmentEvent, Doctor } from '../_providers/types';
 import { isSameDay, isSameMonth} from 'date-fns';
 import { DoctorService } from '../_services/doctor-service';
 import { AppointmentService } from '../_services/appointment-service';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-apply-to-appointment',
@@ -41,7 +42,7 @@ export class ApplyToAppointmentComponent implements OnInit {
     activeDayIsOpen: boolean = true;
     refresh: Subject<any> = new Subject();
 
-    constructor(private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) { 
+    constructor(private logger: Logger, private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) { 
         // this.eventsObservable = this.appointmentService.loadAppointmentsForPatient([0, 1], this.errorHandler('Loading appointments'));
     }
 
@@ -70,8 +71,7 @@ export class ApplyToAppointmentComponent implements OnInit {
                     this.applyForAppointment(event.id as number, result);
                 }
             }, err => {
-                this.error = 'Error ' + err.status + ': ' + err.error.message;
-                console.error('Apply event', err);
+                this.error = this.logger.errorLogWithReturnText('Apply event', err);
             });
         }
     }
@@ -127,21 +127,18 @@ export class ApplyToAppointmentComponent implements OnInit {
                         this.storedDescription = '';
                     }
                 }, err => {
-                    this.error = 'Error ' + err.status + ': ' + err.error.message;
-                    console.error('Save description', err);
+                    this.error = this.logger.errorLogWithReturnText('Save description', err);
                 });
             }
             this.updateDoctorsAppointment();
         }, err => {
-            this.error = 'Error ' + err.status + ': ' + err.error.message;
-            console.error('Create appointment', err);
+            this.error = this.logger.errorLogWithReturnText('Create appointment', err);
         });
     }
 
     errorHandler(errorTag: string): (any) => Observable<any> {
         return (err) => {
-            console.error(errorTag, err);
-            this.error = 'Error ' + err.status + ': ' + err.error.message;
+            this.error = this.logger.errorLogWithReturnText(errorTag, err);
             return of();
         }
     }

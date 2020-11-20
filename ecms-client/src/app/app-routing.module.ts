@@ -8,6 +8,7 @@ import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPatientsComponent } from './edit-patients/edit-patients.component';
 import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
 import { HomeComponent } from './home/home.component';
+import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { PatientsRegistrationRequestComponent } from './patients-registration-request/patients-registration-request.component';
 import { PatientsComponent } from './patients/patients.component';
@@ -16,6 +17,7 @@ import { AdminGuard } from './_guards/admin-guard';
 import { AdminSelfGuard } from './_guards/admin-self-guard';
 import { AuthGuard } from './_guards/auth-guard';
 import { OutsiderGuard } from './_guards/outsider-guard';
+import { AdminOrDoctorSelfGuard } from './_guards/admin-doctor-self-guard';
 
 const routes: Routes = [
     {
@@ -66,6 +68,11 @@ const routes: Routes = [
         path:'patients/apply-to-appointment',
         component: ApplyToAppointmentComponent,
         canActivate: [AuthGuard]
+    },
+    {
+        path:'doctors/:id/manage-appointments',
+        component: ManageAppointmentComponent,
+        canActivate: [AdminOrDoctorSelfGuard]
     },
     {
         path:'calendar',

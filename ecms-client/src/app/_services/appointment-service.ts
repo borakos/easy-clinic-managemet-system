@@ -4,7 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppointmentEvent } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class AppointmentService{
 
 	private headerJson:HttpHeaders;
@@ -22,6 +24,6 @@ export class AppointmentService{
 	}
 
 	createAppointment(data, file = null): Observable<boolean> {
-		return this.http.put<boolean>('/api/appointments/create', file, {params : data});
+		return this.http.put<boolean>('api/appointments/create', file, {params : data});
 	}
 }

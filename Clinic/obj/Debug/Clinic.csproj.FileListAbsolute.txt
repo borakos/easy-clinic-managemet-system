@@ -1,0 +1,225 @@
+C:\Users\x\source\repos\Clinic\Clinic\obj\Debug\Clinic.csprojAssemblyReference.cache
+C:\Users\x\source\repos\Clinic\Clinic\obj\Debug\Clinic.csproj.CoreCompileInputs.cache
+C:\Users\x\source\repos\Clinic\Clinic\bin\Clinic.dll.config
+C:\Users\x\source\repos\Clinic\Clinic\bin\Clinic.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\Clinic.pdb
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csc.exe
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csc.exe.config
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csc.rsp
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csi.exe
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csi.exe.config
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\csi.rsp
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.AppContext.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Console.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.IO.Compression.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.IO.Pipes.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Claims.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.ValueTuple.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Xml.XPath.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\vbc.exe
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\vbc.exe.config
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\vbc.rsp
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\VBCSCompiler.exe
+C:\Users\x\source\repos\Clinic\Clinic\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\x\source\repos\Clinic\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\Newtonsoft.Json.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Net.Http.Formatting.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Web.Http.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Web.Http.WebHost.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\Newtonsoft.Json.xml
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Net.Http.Formatting.xml
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Web.Http.xml
+C:\Users\x\source\repos\Clinic\Clinic\bin\System.Web.Http.WebHost.xml
+C:\Users\x\source\repos\Clinic\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\x\source\repos\Clinic\Clinic\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\zh-Hans\System.Web.Http.resources.dll
+C:\Users\x\source\repos\Clinic\Clinic\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
+C:\Users\x\source\repos\Clinic\Clinic\obj\Debug\Clinic.csproj.CopyComplete
+C:\Users\x\source\repos\Clinic\Clinic\obj\Debug\Clinic.dll
+C:\Users\x\source\repos\Clinic\Clinic\obj\Debug\Clinic.pdb
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Clinic.dll.config
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Clinic.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Clinic.pdb
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csc.exe
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csc.exe.config
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csc.rsp
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csi.exe
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csi.exe.config
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\csi.rsp
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.AppContext.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Console.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.IO.Compression.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.IO.Pipes.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Claims.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.ValueTuple.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Xml.XPath.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\vbc.exe
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\vbc.exe.config
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\vbc.rsp
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\VBCSCompiler.exe
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Newtonsoft.Json.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Net.Http.Formatting.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Web.Http.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Web.Http.WebHost.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Newtonsoft.Json.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Net.Http.Formatting.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Web.Http.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Web.Http.WebHost.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\zh-Hans\System.Web.Http.resources.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\obj\Debug\Clinic.csprojAssemblyReference.cache
+C:\Users\x\Desktop\clinic\Clinic\Clinic\obj\Debug\Clinic.csproj.CoreCompileInputs.cache
+C:\Users\x\Desktop\clinic\Clinic\Clinic\obj\Debug\Clinic.csproj.CopyComplete
+C:\Users\x\Desktop\clinic\Clinic\Clinic\obj\Debug\Clinic.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\obj\Debug\Clinic.pdb
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\JWT.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\JWT.pdb
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\JWT.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Unity.Abstractions.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Unity.Container.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Unity.WebApi.dll
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Unity.Abstractions.pdb
+C:\Users\x\Desktop\clinic\Clinic\Clinic\bin\Unity.Container.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Clinic.dll.config
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Clinic.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Clinic.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csc.exe
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csc.exe.config
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csc.rsp
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csi.exe
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csi.exe.config
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\csi.rsp
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.Managed.Core.targets
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.AppContext.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Collections.Immutable.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Console.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.IO.Compression.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.IO.FileSystem.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.IO.Pipes.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Reflection.Metadata.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.AccessControl.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Claims.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Security.Principal.Windows.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.ValueTuple.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Xml.XmlDocument.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Xml.XPath.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\vbc.exe
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\vbc.exe.config
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\vbc.rsp
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\VBCSCompiler.exe
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\roslyn\VBCSCompiler.exe.config
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\JWT.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Newtonsoft.Json.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Net.Http.Formatting.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Runtime.CompilerServices.Unsafe.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.WebHost.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Unity.Abstractions.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Unity.Container.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Unity.WebApi.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Threading.Tasks.Extensions.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\JWT.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\JWT.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Net.Http.Formatting.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Runtime.CompilerServices.Unsafe.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Unity.Abstractions.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Unity.Container.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Newtonsoft.Json.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.WebHost.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\zh-Hans\System.Web.Http.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.csprojAssemblyReference.cache
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.csproj.CoreCompileInputs.cache
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.csproj.CopyComplete
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\obj\Debug\Clinic.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Cors.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.Cors.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Web.Http.Cors.xml

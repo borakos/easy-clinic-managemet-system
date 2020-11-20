@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor{
 	
-	constructor(){}
+	constructor(private jwtHelper: JwtHelperService){}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler):Observable<HttpEvent<any>>{
-		let token = localStorage.getItem("jwt");
 		request=request.clone({
 			setHeaders: {
-				"Authorization": "Bearer " + token,
+				"Authorization": this.jwtHelper.getAuthScheme('Bearer ', request) + this.jwtHelper.tokenGetter(),
 			},
 			url: this.getUrl(request.url)
 		});
@@ -21,7 +21,7 @@ export class TokenInterceptor implements HttpInterceptor{
 
 	private getUrl(url: string): string {
 		if(url.startsWith('api')){
-			url = (environment.production ? window.location.origin : environment.server) + url;
+			url = (environment.production ? window.location.origin : environment.server) + '/' + url;
 		}
 		return url;
 	}

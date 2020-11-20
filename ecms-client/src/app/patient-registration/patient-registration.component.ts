@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PatientService } from '../_services/patient-service';
 import { Router } from '@angular/router';
+import { Logger } from '../_services/logger-service';
 
 @Component({
     selector: 'app-patient-registration',
@@ -14,7 +15,7 @@ export class PatientRegistrationComponent implements OnInit {
 	error: string = undefined;
 	successfullRegistration: boolean = false;
 
-    constructor(private patientService: PatientService, private router: Router) { }
+    constructor(private logger: Logger, private patientService: PatientService, private router: Router) { }
 
     ngOnInit(): void {
     }
@@ -70,13 +71,11 @@ export class PatientRegistrationComponent implements OnInit {
 					createdUser.subscribe((response) => {
 						this.successfullRegistration = response;
 					}, err => {
-						this.error = 'Error ' + err.status + ': ' + err.error.message;
-						console.error('User registration', err);
+						this.error = this.logger.errorLogWithReturnText('User registration', err);
 					});
 				}
 			},err=>{
-				this.error = 'Error ' + err.status + ': ' + err.error.message;
-				console.error('User registration', err);
+				this.error = this.logger.errorLogWithReturnText('User regitration', err);
 			})
 		}
 		this.uniqueName = true;

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { CalendarNativeDateFormatter, DateFormatterParams } from 'angular-calendar';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class MilitaryDateFormatter extends CalendarNativeDateFormatter {
 
     public dayViewHour({ date, locale }: DateFormatterParams): string {
