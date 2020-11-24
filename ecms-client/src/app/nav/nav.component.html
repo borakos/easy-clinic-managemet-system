@@ -7,10 +7,10 @@
                 <li *ngIf="userIsPatientOrAdmin()"><a routerLink="patients/apply-to-appointment"><h5><fa-icon [icon]="['far', 'calendar-check']"></fa-icon> Make appointment</h5></a></li>
             </ul>
         </li>
-        <li *ngIf="userIsDoctorOrAdmin()">
+        <li *ngIf="userIsDoctor()">
             <h3><fa-icon [icon]="['fas', 'user-md']"></fa-icon> Doctor</h3>
             <ul>
-                <li *ngIf="userIsPatientOrAdmin()"><a routerLink="patients/apply-to-appointment"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
+                <li><a routerLink="doctors/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
             </ul>
         </li>
         <li *ngIf="userIsAdmin()">
