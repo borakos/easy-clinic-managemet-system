@@ -1,21 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { AppointmentEvent } from './types';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
-
-const colors: any = {
-    red: {
-        primary: '#ad2121',
-        secondary: '#FAE3E3',
-    },
-    blue: {
-        primary: '#1e90ff',
-        secondary: '#D1E8FF',
-    },
-    green: {
-        primary: '#21ad28',
-        secondary: '#e3fae6',
-    },
-};
+import { colors } from './colors';
 
 @Pipe({ name: 'formatAppointmentEvents' })
 export class FormatAppointmentEvents implements PipeTransform {

@@ -52,19 +52,22 @@
         <h5>Interval</h5>
         <div class="interval">
             <label for="dateFrom"><b>From: </b></label>&nbsp;&nbsp;
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateFrom" name="dateFrom" ngModel class="form-control col-sm-3" placeholder="From">
+            <input #dateFrom type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateFrom" name="dateFrom" ngModel class="form-control col-sm-3" placeholder="From">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <label for="dateTo"><b>To: </b></label>&nbsp;&nbsp;
-            <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateTo" name="dateTo" ngModel class="form-control col-sm-3" placeholder="To">
+            <input #dateTo type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateTo" name="dateTo" ngModel class="form-control col-sm-3" placeholder="To">
         </div>
         <br/>
         <h5>Weekly template</h5>
-        <mwl-calendar-week-view [hourSegments]="1" [hourSegmentTemplate]="weekViewHourSegment" [headerTemplate]="weekHeaderTemplate" [viewDate]="viewDate" [events]="(eventsObservable | async | formatAppointmentEvents: actions)" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
+        <mwl-calendar-week-view [precision]="minutes" [hourSegments]="1" [hourSegmentTemplate]="weekViewHourSegment" [headerTemplate]="weekHeaderTemplate" [viewDate]="viewDate" [events]="eventsByFactory" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
             (eventTimesChanged)="eventTimesChanged($event)">
         </mwl-calendar-week-view>
+        <br/>
+        <button type="button" class="btn btn-primary text-white btn-block" (click)="calculateFactoryEvents()">Show preview</button>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-primary text-white btn-block col-sm-2" (click)="close()">OK</button>
+        <div *ngIf="!isFactoryTemplateCorrect(dateFrom.value, dateTo.value)" class="alert alert-danger">Date interval is invalid or template is not provided!</div>
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({from: dateFrom.value, to: dateTo.value})">Save</button>
     </div>
 </ng-template>
 
@@ -89,9 +92,7 @@
         [class.cal-hour-start]="segment.isStart"
         [class.cal-after-hour-start]="!segment.isStart" 
         [ngClass]="segment.cssClass" 
-        [ngbPopover]="popContent"
-        [popoverTitle]="popTitle"
-        (click)="hello2(segment.date)"
+        (dblclick)="addNewEventFactory(segment.date)"
         [contextMenuSubject]="segment.date">
         <div class="cal-time" *ngIf="isTimeLabel">
             {{ segment.date | calendarDate: 'weekViewHour':locale }}
@@ -99,20 +100,13 @@
     </div>
 </ng-template>
 
-<button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" [popoverTitle]="popTitle">
-    I've got markup and bindings in my popover!
-</button>
-
-<ng-template #popTitle>
-    Fancy&nbsp;<b>content!!</b>
-</ng-template>
 <ng-template #popContent>
     Hello,&nbsp;<b>Ákos</b>!
-    <input type="text">
-    <button (click)="hello();">Hello</button>
+    <label for="fromTime">From:</label>
+    <input type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="fromTime" name="fromTime" ngModel="{{ selectedTime | date:'HH:mm' }}" class="form-control" placeholder="From">
 </ng-template>
 
-<ng-template #applyToAppointment let-close="close">
+<ng-template #editAppointment let-close="close">
     <div class="modal-header">
         <h5 class="modal-title">Apply to appintment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
@@ -161,5 +155,27 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close(true)">Save</button>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-2" (click)="close(false)">Leave</button>
+    </div>
+</ng-template>
+
+<ng-template #editAppointmentFactory let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Edit appointment</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <div class="interval">
+            <label for="timeFrom"><b>From: </b></label>&nbsp;&nbsp;
+            <input #timeFrom type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="timeFrom" name="timeFrom" ngModel="{{ selectedEvent?.start | date: 'HH:mm' }}" class="form-control col-sm-3" placeholder="From">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="timeTo"><b>To: </b></label>&nbsp;&nbsp;
+            <input #timeTo type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="timeTo" name="timeTo" ngModel="{{ selectedEvent?.end | date: 'HH:mm' }}" class="form-control col-sm-3" placeholder="To">
+        </div>
+        <br/>
+        <label for="duration"><b>Duration (min): </b></label>
+        <input #duration type="number" id="duration" name="duration" ngModel="{{ selectedEvent?.duration * 60 }}" class="form-control col-sm-3" placeholder="duration">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({from: timeFrom.value, to: timeTo.value, duration: duration.value})">Save</button>
     </div>
 </ng-template>

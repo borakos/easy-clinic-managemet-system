@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { CalendarEvent, CalendarEventAction, CalendarView } from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, of } from 'rxjs';
 import { AppointmentEvent, Doctor } from '../_providers/types';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay, isSameMonth, addHours } from 'date-fns';
 import { DoctorService } from '../_services/doctor-service';
 import { AppointmentService } from '../_services/appointment-service';
 import { Logger } from '../_services/logger-service';
+import { colors } from '../_providers/colors';
 
 @Component({
     selector: 'app-manage-appointment',
@@ -16,7 +17,8 @@ import { Logger } from '../_services/logger-service';
 })
 export class ManageAppointmentComponent implements OnInit {
 
-    @ViewChild('applyToAppointment', { static: true }) applyToAppointment: TemplateRef<any>;
+    @ViewChild('editAppointment', { static: true }) editAppointment: TemplateRef<any>;
+    @ViewChild('editAppointmentFactory', { static: true }) editAppointmentFactory: TemplateRef<any>;
     @ViewChild('appointmentFactoryTemp', { static: false }) appointmentFactoryTemp: TemplateRef<any>;
     @ViewChild('applicationSuccess', { static: true }) applicationSuccess: TemplateRef<any>;
     @ViewChild('applicationFailure', { static: true }) applicationFailure: TemplateRef<any>;
@@ -26,21 +28,55 @@ export class ManageAppointmentComponent implements OnInit {
     doctorsObservable: Observable<Doctor[]>;
     eventsObservable: Observable<AppointmentEvent[]>;
     selectedDoctorId: number[] = [];
-    storedDescription: string = '';
+    selectedEvent: CalendarEvent;
     error: string = undefined;
+    selectedTime: Date = undefined;
+    eventsByFactory: CalendarEvent[] = [];
+    activeDayIsOpen: boolean = true;
+    storedDescription: string = '';
+    refresh: Subject<any> = new Subject();
 
     actions: CalendarEventAction[] = [
         {
             label: '&#x270F',
-            a11yLabel: 'Apply',
+            a11yLabel: 'Edit',
             onClick: ({ event }: { event: CalendarEvent }): void => {
-                this.handleEvent('apply', event);
+                this.handleEvent('edit', event);
+            },
+        },
+        {
+            label: '&#x1f5d1',
+            a11yLabel: 'Delete',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.eventsByFactory = this.eventsByFactory.filter((current) => current !== event);
             },
         }
     ];
 
-    activeDayIsOpen: boolean = true;
-    refresh: Subject<any> = new Subject();
+    factoryActions: CalendarEventAction[] = [
+        {
+            label: '&#x270F',
+            a11yLabel: 'Edit',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.selectedEvent = event;
+                this.handleEvent('edit_factory', event);
+            },
+        },
+        {
+            label: '&#x1f5d1',
+            a11yLabel: 'Delete',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.eventsByFactory = this.eventsByFactory.filter((current) => current !== event);
+            },
+        },
+        {
+            label: '&#x1F4CB',
+            a11yLabel: 'Copy/Paste',
+            onClick: ({ event }: { event }): void => {
+                this.addNewEventFactory(event.start, event.end, event.duration);
+            },
+        }
+    ];
 
     constructor(private logger: Logger, private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) {
     }
@@ -63,16 +99,80 @@ export class ManageAppointmentComponent implements OnInit {
     }
 
     handleEvent(action: string, event: CalendarEvent): void {
-        if (action === 'apply') {
-            this.modal.open(this.applyToAppointment, { size: 'lg' }).closed
+        switch(action){
+            case 'edit' : {
+                this.modal.open(this.editAppointment, { size: 'lg'}).closed
                 .subscribe((result) => {
                     if (result) {
                         this.applyForAppointment(event.id as number, result);
                     }
                 }, err => {
-                    this.error = this.logger.errorLogWithReturnText('Apply event', err);
+                    this.error = this.logger.errorLogWithReturnText('Edit event', err);
                 });
+            }; break;
+            case 'edit_factory' : {
+                this.modal.open(this.editAppointmentFactory).closed
+                .subscribe((result) => {
+                    if (result) {
+                        this.editFactoryEvent(event, result);    
+                    }
+                }, err => {
+                    this.error = this.logger.errorLogWithReturnText('Edit_factory event', err);
+                });
+            }; break;
+        };
+    }
+
+    isFactoryTemplateCorrect(start, end): boolean {
+        if(start && end && (this.eventsByFactory.length > 0)){
+            let startDate = new Date(start);
+            let endDate = new Date(end);
+            if(startDate.valueOf() <= endDate.valueOf()){
+                return true;
+            }
         }
+        return false;
+    }
+
+    editFactoryEvent(event, result): void {
+        event.duration = (result.duration / 60).toPrecision(2);
+        let time: string[] = result.from.split(':');
+        if(time.length === 2)   {
+            event.start.setHours(parseInt(time[0]), parseInt(time[1]), 0);
+        }
+        time = result.to.split(':');
+        if(time.length === 2)   {
+            event.end.setHours(parseInt(time[0]), parseInt(time[1]), 0);
+        }
+        this.refresh.next();
+    }
+
+    calculateIndividualEvents(events: any[]): CalendarEvent[] {
+        let calculatedEvents: CalendarEvent[] = [];
+        for(let event of events) {
+            let duration = (event.end.valueOf() - event.start.valueOf()) / (60 * 60 * 1000);
+            let eventCount = Math.floor(duration / event.duration);
+            for(let i = 0; i < eventCount; i++){
+                calculatedEvents.push({
+                    start: this.addHours(event.start, i * event.duration),
+                    end:  this.addHours(event.start, (i + 1) * event.duration),
+                    title: 'Appointment ' + calculatedEvents.length,
+                    color: colors.blue,
+                    actions: this.factoryActions,
+                    duration: event.duration,
+                    resizable: {
+                        beforeStart: true,
+                        afterEnd: true,
+                    },
+                    draggable: true,
+                } as CalendarEvent);
+            }
+        }
+        return calculatedEvents;
+    }
+
+    addHours(date: Date, hours: number): Date {
+        return new Date(date.valueOf() + hours * 60 * 60 * 1000);
     }
 
     filterDoctors(filter: string): void {
@@ -91,12 +191,16 @@ export class ManageAppointmentComponent implements OnInit {
         }
     }
 
-    addEvent(date: Date): void {
-        console.log('hello')
-    }
-
     appointmentFactory(): void {
-        this.modal.open(this.appointmentFactoryTemp, { size: 'lg' });
+        this.eventsByFactory = [];
+        this.modal.open(this.appointmentFactoryTemp, { size: 'lg' }).closed
+        .subscribe((result) => {
+            if(result && (this.isFactoryTemplateCorrect(result.from, result.to))) {
+                console.log(result)
+            }
+        }, err => {
+            this.error = this.logger.errorLogWithReturnText('Save appointment factory', err);
+        });
     }
 
     updateDoctorsAppointment(): void {
@@ -137,12 +241,38 @@ export class ManageAppointmentComponent implements OnInit {
         });
     }
 
-    hello(): void {
-        console.log('hello')
+    calculateFactoryEvents(): void {
+        this.eventsByFactory = this.calculateIndividualEvents(this.eventsByFactory);
     }
 
-    hello2(event): void {
-        console.log(event)
+    addNewEventFactory(from: Date, end?: Date, duration?: number): void {
+        this.eventsByFactory.push({
+            start: from,
+            end: end ? end : addHours(from, 1),
+            title: 'Appointment ' + this.eventsByFactory.length,
+            color: colors.blue,
+            actions: this.factoryActions,
+            duration: duration ? duration : 0.5,
+            resizable: {
+                beforeStart: true,
+                afterEnd: true,
+            },
+            draggable: true,
+        } as CalendarEvent);
+        this.refresh.next();
+    }
+
+    eventTimesChanged({ event, newStart, newEnd }: CalendarEventTimesChangedEvent): void {
+        this.eventsByFactory = this.eventsByFactory.map((current) => {
+            if (current === event) {
+                return {
+                    ...event,
+                    start: newStart,
+                    end: newEnd,
+                };
+            }
+            return current;
+        });
     }
 
     errorHandler(errorTag: string): (any) => Observable<any> {
