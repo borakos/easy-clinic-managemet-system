@@ -64,3 +64,10 @@ export interface AppointmentEvent {
     start: Date,
     end: Date,
 }
+
+export interface FactoryTemplateEvents {
+    [day: string] : {
+        start: string,
+        end: string
+    }[]
+}

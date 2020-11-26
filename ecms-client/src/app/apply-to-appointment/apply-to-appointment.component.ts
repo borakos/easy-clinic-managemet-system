@@ -111,9 +111,9 @@ export class ApplyToAppointmentComponent implements OnInit {
             let template= <File>files[0];
             let formData= new FormData();
             let file = formData.append('file', template, template.name)
-            createdAppointment = this.appointmentService.createAppointment(data, file);
+            createdAppointment = this.appointmentService.applyAppointment(data, file);
         } else {
-            createdAppointment = this.appointmentService.createAppointment(data);
+            createdAppointment = this.appointmentService.applyAppointment(data);
         }
         createdAppointment.subscribe((response) => {
             if(response){

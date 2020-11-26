@@ -44,13 +44,16 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 return ok([]);
             }
         }
-        case url.includes('/appointments/create') && method === 'PUT': {
+        case url.endsWith('/appointments/apply') && method === 'PUT': {
             let desc = params.get('description');
             if(desc.includes('error')){
                 return error();
             } else if(desc.includes('occupied')){
                 return ok(false);
             }
+            return ok(true);
+        }
+        case url.endsWith('/appointments/create-by-factory') && method === 'POST': {
             return ok(true);
         }
         default: return undefined;

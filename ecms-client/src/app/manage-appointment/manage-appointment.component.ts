@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } fr
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, of } from 'rxjs';
-import { AppointmentEvent, Doctor } from '../_providers/types';
+import { AppointmentEvent, Doctor, FactoryTemplateEvents } from '../_providers/types';
 import { isSameDay, isSameMonth, addHours } from 'date-fns';
 import { DoctorService } from '../_services/doctor-service';
 import { AppointmentService } from '../_services/appointment-service';
 import { Logger } from '../_services/logger-service';
 import { colors } from '../_providers/colors';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-manage-appointment',
@@ -78,10 +79,14 @@ export class ManageAppointmentComponent implements OnInit {
         }
     ];
 
-    constructor(private logger: Logger, private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) {
+    constructor(private route: ActivatedRoute, private logger: Logger, private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) {
     }
 
     ngOnInit(): void {
+    }
+
+    getDoctorId(): number {
+        return this.route.snapshot.params['id'];
     }
 
     dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -196,7 +201,10 @@ export class ManageAppointmentComponent implements OnInit {
         this.modal.open(this.appointmentFactoryTemp, { size: 'lg' }).closed
         .subscribe((result) => {
             if(result && (this.isFactoryTemplateCorrect(result.from, result.to))) {
-                console.log(result)
+                this.appointmentService.createAppointmentTime(new Date(result.from), new Date(result.to), this.createWeeklyTemplate())
+                .subscribe((result) => { }, err => {
+                    this.error = this.logger.errorLogWithReturnText('Save appointment factory request', err);
+                });
             }
         }, err => {
             this.error = this.logger.errorLogWithReturnText('Save appointment factory', err);
@@ -216,9 +224,9 @@ export class ManageAppointmentComponent implements OnInit {
             let template = <File>files[0];
             let formData = new FormData();
             let file = formData.append('file', template, template.name)
-            createdAppointment = this.appointmentService.createAppointment(data, file);
+            createdAppointment = this.appointmentService.applyAppointment(data, file);
         } else {
-            createdAppointment = this.appointmentService.createAppointment(data);
+            createdAppointment = this.appointmentService.applyAppointment(data);
         }
         createdAppointment.subscribe((response) => {
             if (response) {
@@ -239,6 +247,22 @@ export class ManageAppointmentComponent implements OnInit {
         }, err => {
             this.error = this.logger.errorLogWithReturnText('Create appointment', err);
         });
+    }
+
+    createWeeklyTemplate() : FactoryTemplateEvents {
+        this.calculateFactoryEvents();
+        let dict: FactoryTemplateEvents = {};
+        let days: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        for(let day of days) {
+            dict[day] = [];
+        }
+        for(let event of this.eventsByFactory) {
+            dict[days[event.start.getUTCDay()]].push({
+                start: event.start.getUTCHours() + ':' + event.start.getUTCMinutes(),
+                end: event.end.getUTCHours() + ':' + event.end.getUTCMinutes()
+            });
+        }
+        return dict;
     }
 
     calculateFactoryEvents(): void {

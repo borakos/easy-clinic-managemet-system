@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AppointmentEvent } from '../_providers/types';
+import { AppointmentEvent, FactoryTemplateEvents } from '../_providers/types';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -23,7 +23,17 @@ export class AppointmentService{
 		}).pipe(catchError(loadingError));;
 	}
 
-	createAppointment(data, file = null): Observable<boolean> {
-		return this.http.put<boolean>('api/appointments/create', file, {params : data});
+	applyAppointment(data, file = null): Observable<boolean> {
+		return this.http.put<boolean>('api/appointments/apply', file, {params : data});
+	}
+
+	createAppointmentTime(intFrom: Date, intTo: Date, template: FactoryTemplateEvents): Observable<boolean>{
+		return this.http.post<boolean>('api/appointments/create-by-factory', {
+			from: intFrom,
+			to: intTo,
+			weekTemplate: template
+		}, {
+			headers: this.headerJson
+		})
 	}
 }
