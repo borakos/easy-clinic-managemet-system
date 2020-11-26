@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } fr
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, of } from 'rxjs';
-import { AppointmentEvent, Doctor, FactoryTemplateEvents } from '../_providers/types';
+import { Appointment, AppointmentEvent, Doctor, FactoryTemplateEvents } from '../_providers/types';
 import { isSameDay, isSameMonth, addHours } from 'date-fns';
 import { DoctorService } from '../_services/doctor-service';
 import { AppointmentService } from '../_services/appointment-service';
@@ -30,6 +30,7 @@ export class ManageAppointmentComponent implements OnInit {
     eventsObservable: Observable<AppointmentEvent[]>;
     selectedDoctorId: number[] = [];
     selectedEvent: CalendarEvent;
+    selectedAppointment: Appointment;
     error: string = undefined;
     selectedTime: Date = undefined;
     eventsByFactory: CalendarEvent[] = [];
@@ -80,6 +81,7 @@ export class ManageAppointmentComponent implements OnInit {
     ];
 
     constructor(private route: ActivatedRoute, private logger: Logger, private modal: NgbModal, private doctorService: DoctorService, private appointmentService: AppointmentService) {
+        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors([this.route.snapshot.params['id']], this.errorHandler('Loading appointments'));
     }
 
     ngOnInit(): void {
@@ -103,14 +105,44 @@ export class ManageAppointmentComponent implements OnInit {
         }
     }
 
+    downloadMedicalReport(): void {
+        this.appointmentService.downloadMedicalReportForAppointment(this.selectedAppointment?.id)
+        .subscribe((result) => {
+            if (result) {
+                let file = new Blob([result], { type: "application/zip" });
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(file);
+                } else {
+                    const a: any = document.createElement('a');
+                    document.body.appendChild(a);
+                    a.style = 'display: none';    
+                    const url = window.URL.createObjectURL(file);
+                    a.href = url;
+                    a.download = 'MedicalReport.zip';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            }
+        }, err => {
+            this.error = this.logger.errorLogWithReturnText('Edit event', err);
+        });
+    }
+
     handleEvent(action: string, event: CalendarEvent): void {
         switch(action){
             case 'edit' : {
-                this.modal.open(this.editAppointment, { size: 'lg'}).closed
+                this.appointmentService.getAppointmentByEvent(event.id as number)
                 .subscribe((result) => {
-                    if (result) {
-                        this.applyForAppointment(event.id as number, result);
-                    }
+                    this.selectedAppointment = result;
+                    this.storedDescription = this.selectedAppointment?.description;
+                    this.modal.open(this.editAppointment, { size: 'lg'}).closed
+                    .subscribe((result) => {
+                        if (result) {
+                            this.applyForAppointment(event.id as number, result);
+                        }
+                    }, err => {
+                        this.error = this.logger.errorLogWithReturnText('Edit event', err);
+                    });
                 }, err => {
                     this.error = this.logger.errorLogWithReturnText('Edit event', err);
                 });
@@ -212,7 +244,7 @@ export class ManageAppointmentComponent implements OnInit {
     }
 
     updateDoctorsAppointment(): void {
-        this.eventsObservable = this.appointmentService.loadAppointmentsForPatient(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
+        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
     }
 
     applyForAppointment(eventId: number, data): void {

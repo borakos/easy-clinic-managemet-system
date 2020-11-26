@@ -61,8 +61,16 @@ export interface AppointmentEvent {
     id: number,
     label: string,
     isFree: boolean,
+    isAccepted: boolean,
     start: Date,
-    end: Date,
+    end: Date
+}
+
+export interface Appointment {
+    id: number,
+    event: AppointmentEvent,
+    description: string,
+    containsFile: boolean
 }
 
 export interface FactoryTemplateEvents {

@@ -24,14 +24,14 @@
 </div>
 <br />
 <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="(eventsObservable | async | formatAppointmentEvents: actions)" 
+    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" 
         [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" [weekStartsOn]="1" (dayClicked)="dayClicked($event.day)"
         (eventTimesChanged)="eventTimesChanged($event)">
     </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="(eventsObservable | async | formatAppointmentEvents: actions)" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
         (eventTimesChanged)="eventTimesChanged($event)">
     </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="(eventsObservable | async | formatAppointmentEvents: actions)" [refresh]="refresh" [dayStartHour]="6" [dayEndHour]="21"
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" [refresh]="refresh" [dayStartHour]="6" [dayEndHour]="21"
         (eventTimesChanged)="eventTimesChanged($event)">
     </mwl-calendar-day-view>
 </div>
@@ -100,12 +100,6 @@
     </div>
 </ng-template>
 
-<ng-template #popContent>
-    Hello,&nbsp;<b>Ákos</b>!
-    <label for="fromTime">From:</label>
-    <input type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="fromTime" name="fromTime" ngModel="{{ selectedTime | date:'HH:mm' }}" class="form-control" placeholder="From">
-</ng-template>
-
 <ng-template #editAppointment let-close="close">
     <div class="modal-header">
         <h5 class="modal-title">Apply to appintment</h5>
@@ -114,6 +108,8 @@
     <div class="modal-body">
         <h5 for="description">Short description</h5>
         <textarea #description id="description" name="description" ngModel="{{storedDescription}}" class="form-control" placeholder="Description" clos="50" rows="10"></textarea>
+        <br/>
+        <a *ngIf="selectedAppointment?.containsFile" class="btn btn-lg btn-info text-white btn-block" (click)="downloadMedicalReport()">Download Current Medical Report</a>
         <br/>
         <label for="medicalReport" class="sr-only">Medical Report</label>
         <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>

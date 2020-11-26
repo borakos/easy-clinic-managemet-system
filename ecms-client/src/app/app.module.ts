@@ -34,6 +34,7 @@ import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-app
 import { FormatDoctors } from './_providers/doctor-select-pipe';
 import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
 import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
+import { FormatAppointmentEventDoctors } from './_providers/appointment-event-doctors-pipe';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { ManageAppointmentComponent } from './manage-appointment/manage-appointm
         ApplyToAppointmentComponent,
         FormatDoctors,
         FormatAppointmentEvents,
+        FormatAppointmentEventDoctors,
         ManageAppointmentComponent
     ],
     imports: [

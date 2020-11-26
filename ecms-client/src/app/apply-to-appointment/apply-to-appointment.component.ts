@@ -99,7 +99,7 @@ export class ApplyToAppointmentComponent implements OnInit {
     }
 
     updateDoctorsAppointment(): void {
-        this.eventsObservable = this.appointmentService.loadAppointmentsForPatient(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
+        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
     }
 
     applyForAppointment(eventId: number, data): void {

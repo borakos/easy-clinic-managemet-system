@@ -11,4 +11,8 @@ export const colors: any = {
         primary: '#21ad28',
         secondary: '#e3fae6',
     },
+    yellow: {
+        primary: '#ada421',
+        secondary: '#faf7e3',
+    },
 };
