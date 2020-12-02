@@ -102,7 +102,7 @@
 
 <ng-template #editAppointment let-close="close">
     <div class="modal-header">
-        <h5 class="modal-title">Apply to appintment</h5>
+        <h5 class="modal-title">Edit appointment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
     </div>
     <div class="modal-body">
@@ -119,19 +119,18 @@
         <h5><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({preferOnline: preferOnline.checked, description: description.value, files: file.files})">Apply</button>
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({preferOnline: preferOnline.checked, description: description.value, files: file.files})">Save</button>
     </div>
 </ng-template>
 
 <ng-template #applicationSuccess let-close="close">
     <div class="modal-header">
-        <h5 class="modal-title">Apply to appintment</h5>
+        <h5 class="modal-title">Edit appointment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
     </div>
     <div class="modal-body">
         <p>
-            Application was successfull, but the doctor still need to accept it.
-            You can check the application's status under the Applications menu.
+            Edition was successfull.
         </p>
     </div>
     <div class="modal-footer">
@@ -141,12 +140,12 @@
 
 <ng-template #applicationFailure let-close="close">
     <div class="modal-header">
-        <h5 class="modal-title">Apply to appintment</h5>
+        <h5 class="modal-title">Edit appointment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
     </div>
     <div class="modal-body">
-        <p>Application was unsuccessfull. The selected appointment got occupied meanwhile.</p>
-        <p>By clicking to save button you can temprarly can store your description and load to the new appointment.</p>
+        <p>Edition was unsuccessfull.</p>
+        <p>By clicking to save button you can temprarly can store your description and load it again to the appointment.</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close(true)">Save</button>

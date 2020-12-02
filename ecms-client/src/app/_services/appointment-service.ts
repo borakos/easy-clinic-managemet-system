@@ -28,6 +28,10 @@ export class AppointmentService{
 		return this.http.put<boolean>('api/appointments/apply', file, {params : data});
 	}
 
+	editAppointment(data, file = null): Observable<boolean> {
+		return this.http.put<boolean>('api/appointments/edit', file, {params : data});
+	}
+
 	createAppointmentTime(intFrom: Date, intTo: Date, template: FactoryTemplateEvents): Observable<boolean>{
 		return this.http.post<boolean>('api/appointments/create-by-factory', {
 			from: intFrom,
@@ -49,4 +53,8 @@ export class AppointmentService{
 			responseType: 'blob'
 		});
 	} 
+
+	deleteAppointment(id: number): Observable<boolean> {
+		return this.http.delete<boolean>('api/appointments/delete/' + id);
+	}
 }

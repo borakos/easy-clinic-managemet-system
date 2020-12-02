@@ -50,7 +50,7 @@ export class ManageAppointmentComponent implements OnInit {
             label: '&#x1f5d1',
             a11yLabel: 'Delete',
             onClick: ({ event }: { event: CalendarEvent }): void => {
-                this.eventsByFactory = this.eventsByFactory.filter((current) => current !== event);
+                this.handleEvent('delete', event);
             },
         }
     ];
@@ -138,7 +138,7 @@ export class ManageAppointmentComponent implements OnInit {
                     this.modal.open(this.editAppointment, { size: 'lg'}).closed
                     .subscribe((result) => {
                         if (result) {
-                            this.applyForAppointment(event.id as number, result);
+                            this.editAppointmentData(this.selectedAppointment.id as number, result);
                         }
                     }, err => {
                         this.error = this.logger.errorLogWithReturnText('Edit event', err);
@@ -155,6 +155,22 @@ export class ManageAppointmentComponent implements OnInit {
                     }
                 }, err => {
                     this.error = this.logger.errorLogWithReturnText('Edit_factory event', err);
+                });
+            }; break;
+            case 'delete' : {
+                this.appointmentService.getAppointmentByEvent(event.id as number)
+                .subscribe((result) => {
+                    this.appointmentService.deleteAppointment(result.id).subscribe((result) => {
+                        if(result){
+                            this.updateDoctorsAppointment();
+                        } else {
+                            this.error = 'Cannot delte the given appointment.'
+                        }
+                    }, err => {
+                        this.error = this.logger.errorLogWithReturnText('Delete event', err);
+                    });
+                }, err => {
+                    this.error = this.logger.errorLogWithReturnText('Delete event', err);
                 });
             }; break;
         };
@@ -244,23 +260,23 @@ export class ManageAppointmentComponent implements OnInit {
     }
 
     updateDoctorsAppointment(): void {
-        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
+        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors([this.route.snapshot.params['id']], this.errorHandler('Load appointments for patients'));
     }
 
-    applyForAppointment(eventId: number, data): void {
-        let createdAppointment;
+    editAppointmentData(appointmentId: number, data): void {
+        let editedAppointment;
         let files = data.files;
         delete data.files;
-        data.eventId = eventId;
+        data.eventId = appointmentId;
         if (this.fileIsSelected(files)) {
             let template = <File>files[0];
             let formData = new FormData();
             let file = formData.append('file', template, template.name)
-            createdAppointment = this.appointmentService.applyAppointment(data, file);
+            editedAppointment = this.appointmentService.editAppointment(data, file);
         } else {
-            createdAppointment = this.appointmentService.applyAppointment(data);
+            editedAppointment = this.appointmentService.editAppointment(data);
         }
-        createdAppointment.subscribe((response) => {
+        editedAppointment.subscribe((response) => {
             if (response) {
                 this.modal.open(this.applicationSuccess);
             } else {
@@ -277,7 +293,7 @@ export class ManageAppointmentComponent implements OnInit {
             }
             this.updateDoctorsAppointment();
         }, err => {
-            this.error = this.logger.errorLogWithReturnText('Create appointment', err);
+            this.error = this.logger.errorLogWithReturnText('Edit appointment', err);
         });
     }
 

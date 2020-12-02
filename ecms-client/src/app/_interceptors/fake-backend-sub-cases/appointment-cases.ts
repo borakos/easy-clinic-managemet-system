@@ -58,7 +58,6 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
             return ok(true);
         }
         case url.endsWith('/api/appointments/appointment-by-event') && method === 'POST': {
-            console.log(body);
             return ok({
                 id: 1,
                 event: {
@@ -72,6 +71,23 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 containsFile: true,
                 description: 'hello description'
             } as Appointment);
+        }case url.includes('/appointments/downloadReport') && method === 'GET': {
+            let file = new Blob([], {
+                type: 'application/zip'
+            })
+            return ok(file);
+        }
+        case url.includes('/appointments/delete') && method === 'DELETE': {
+            return ok(true);
+        }
+        case url.endsWith('/appointments/edit') && method === 'PUT': {
+            let desc = params.get('description');
+            if(desc.includes('error')){
+                return error();
+            } else if(desc.includes('occupied')){
+                return ok(false);
+            }
+            return ok(true);
         }
         default: return undefined;
     }
