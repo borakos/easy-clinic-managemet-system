@@ -41,5 +41,9 @@ export class NavComponent implements OnInit {
 
     getUserID(): number {
         return this.jwtService.getUserID();
-    }
+	}
+	
+	userIsPatient(): boolean {
+		return this.jwtService.userIsPatient();
+	}
 }
