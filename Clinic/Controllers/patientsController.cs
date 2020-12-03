@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 namespace Clinic.Controllers
 {
@@ -22,16 +23,16 @@ namespace Clinic.Controllers
 
         [HttpPut]
         //api/patients/creat?patient
-        public IHttpActionResult create(Patient patient)
+        public IHttpActionResult create(string patient)
         {
             try
             {
-                var result = repository.CreatPatient(patient);
+                var result = repository.CreatPatient(JsonConvert.DeserializeObject<Patient>(patient));
                 return Ok(result);
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
