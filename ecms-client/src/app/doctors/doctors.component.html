@@ -27,7 +27,8 @@
             <td>
                 <a routerLink="/doctors/edit/{{ doctor.id }}"><fa-icon [icon]="['fas', 'user-cog']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
                 <a routerLink="/doctors/{{ doctor.id }}/manage-appointments"><fa-icon [icon]="['far', 'calendar-alt']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
-                <a (click)="deleteDoctor(doctor.id)"><fa-icon [icon]="['fas', 'user-times']" style="color:red"></fa-icon></a></td>
+				<a (click)="deleteDoctor(doctor.id)"><fa-icon [icon]="['fas', 'user-times']" style="color:red"></fa-icon></a>
+			</td>
         </tr>
     </tbody>
     <tfoot>

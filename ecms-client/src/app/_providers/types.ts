@@ -70,7 +70,8 @@ export interface Appointment {
     id: number,
     event: AppointmentEvent,
     description: string,
-    containsFile: boolean
+	containsFile: boolean,
+	preferOnline: boolean
 }
 
 export interface FactoryTemplateEvents {

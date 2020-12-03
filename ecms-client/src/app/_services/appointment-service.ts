@@ -24,6 +24,12 @@ export class AppointmentService{
 		}).pipe(catchError(loadingError));;
 	}
 
+	loadAppointmentsByPatients(patientIds: number[], loadingError: (any) => Observable<any>): Observable<Appointment[]> {
+		return this.http.post<AppointmentEvent[]>('api/appointments/list-by-patient', {doctorIds: patientIds} ,{
+			headers: this.headerJson
+		}).pipe(catchError(loadingError));;
+	}
+
 	applyAppointment(data, file = null): Observable<boolean> {
 		return this.http.put<boolean>('api/appointments/apply', file, {params : data});
 	}

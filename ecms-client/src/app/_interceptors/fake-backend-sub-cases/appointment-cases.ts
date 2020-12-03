@@ -13,7 +13,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 return ok([
                     {
                         id: 0,
-                        label: 'Dr. Anna Alöldi',
+                        label: 'Dr. Anna Alföldi',
                         isFree: true,
                         isAccepted: false,
                         start: new Date(Date.now()),
@@ -21,7 +21,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                     } as AppointmentEvent,
                     {
                         id: 1,
-                        label: 'Dr. Géza Alöldi',
+                        label: 'Dr. Géza Alföldi',
                         isFree: false,
                         isAccepted: false,
                         start: new Date(Date.now() + 2 * hour),
@@ -29,7 +29,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                     } as AppointmentEvent,
                     {
                         id: 2,
-                        label: 'Dr. Anna Alöldi',
+                        label: 'Dr. Anna Alföldi',
                         isFree: false,
                         isAccepted: true,
                         start: new Date(Date.now() + 22 * hour),
@@ -37,7 +37,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                     } as AppointmentEvent,
                     {
                         id: 3,
-                        label: 'Dr. Géza Alöldi',
+                        label: 'Dr. Géza Alföldi',
                         isFree: true,
                         isAccepted: false,
                         start: new Date(Date.now()+ 23 * hour),
@@ -57,21 +57,53 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
             }
             return ok(true);
         }
-        case url.endsWith('/api/appointments/appointment-by-event') && method === 'POST': {
-            return ok({
+        case url.endsWith('/appointments/list-by-patient') && method === 'POST': {
+            return ok([{
                 id: 1,
                 event: {
                     id: 3,
-                    label: 'Dr. Géza Alöldi',
+                    label: 'Dr. Géza Alföldi',
                     isFree: false,
                     isAccepted: false,
                     start: new Date(Date.now()+ 23 * 3600 * 1000),
                     end: new Date(Date.now() + 23.5 * 3600 * 1000),
                 } as AppointmentEvent,
                 containsFile: true,
-                description: 'hello description'
+				description: 'hello description',
+				preferOnline: true
+			} as Appointment,
+			{
+                id: 1,
+                event: {
+                    id: 3,
+                    label: 'Dr. Anna Alföldi',
+                    isFree: false,
+                    isAccepted: true,
+                    start: new Date(Date.now()+ 23 * 3600 * 1000),
+                    end: new Date(Date.now() + 23.5 * 3600 * 1000),
+                } as AppointmentEvent,
+                containsFile: true,
+                description: 'hello description',
+				preferOnline: false
+			} as Appointment,]);
+		}
+		case url.endsWith('/appointments/appointment-by-event') && method === 'POST': {
+            return ok({
+                id: 1,
+                event: {
+                    id: 3,
+                    label: 'Dr. Géza Alföldi',
+                    isFree: false,
+                    isAccepted: false,
+                    start: new Date(Date.now()+ 23 * 3600 * 1000),
+                    end: new Date(Date.now() + 23.5 * 3600 * 1000),
+                } as AppointmentEvent,
+                containsFile: true,
+                description: 'hello description edit',
+				preferOnline: false
             } as Appointment);
-        }case url.includes('/appointments/downloadReport') && method === 'GET': {
+		}
+		case url.includes('/appointments/downloadReport') && method === 'GET': {
             let file = new Blob([], {
                 type: 'application/zip'
             })

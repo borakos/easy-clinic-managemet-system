@@ -115,8 +115,9 @@
         <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>
         <input #file type="file" accept=".zip,.rar,.7zip" id="file" name="file" placeholder="Browse Medical Report" class="hide">
         <a class="btn btn-lg btn-info text-white btn-block" (click)="file.click()">Browse Medical Report</a>
-        <br/>
-		<h5><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
+		<br/>
+		<h5 [hidden]="selectedAppointment?.preferOnline"><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline" checked> Prefer online examination.</h5>
+		<h5 [hidden]="!selectedAppointment?.preferOnline"><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
 		<br/>
         <a *ngIf="!selectedAppointment?.event.isFree && !selectedAppointment?.event.isFree" class="btn btn-lg btn-info text-white btn-block" (click)="acceptApplication(selectedAppointment?.id)">Accept application</a>
     </div>
