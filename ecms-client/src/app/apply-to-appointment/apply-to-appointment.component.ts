@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { CalendarEvent, CalendarEventAction, CalendarView } from 'angular-calendar';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject, of } from 'rxjs';
 import { AppointmentEvent, Doctor } from '../_providers/types';
@@ -99,7 +99,7 @@ export class ApplyToAppointmentComponent implements OnInit {
     }
 
     updateDoctorsAppointment(): void {
-        this.eventsObservable = this.appointmentService.loadAppointmentsForPatient(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
+        this.eventsObservable = this.appointmentService.loadAppointmentsByDoctors(this.selectedDoctorId, this.errorHandler('Load appointments for patients'));
     }
 
     applyForAppointment(eventId: number, data): void {
@@ -111,9 +111,9 @@ export class ApplyToAppointmentComponent implements OnInit {
             let template= <File>files[0];
             let formData= new FormData();
             let file = formData.append('file', template, template.name)
-            createdAppointment = this.appointmentService.createAppointment(data, file);
+            createdAppointment = this.appointmentService.applyAppointment(data, file);
         } else {
-            createdAppointment = this.appointmentService.createAppointment(data);
+            createdAppointment = this.appointmentService.applyAppointment(data);
         }
         createdAppointment.subscribe((response) => {
             if(response){

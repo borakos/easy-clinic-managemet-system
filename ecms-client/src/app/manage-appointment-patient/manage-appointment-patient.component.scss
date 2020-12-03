@@ -1,22 +1,5 @@
 @import '../../styles.scss';
 
-.modal-body, .modal-header, .modal-footer {
-    background-color: #d9e3e8;
-}
-
-.hide {
-    display: none;
-}
-
-.interval {
-    display: flex;
-    align-items: flex-start;
-}
-  
-.interval :first-child {
-      align-self: center;
-}
-
 $scale: 1.5;
 
 input[type=checkbox]
@@ -29,4 +12,12 @@ input[type=checkbox]
   padding: 10px;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.modal-body, .modal-header, .modal-footer {
+    background-color: #d9e3e8;
+}
+
+.hide {
+    display: none;
 }

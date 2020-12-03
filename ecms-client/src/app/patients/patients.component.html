@@ -31,7 +31,11 @@
             <ng-template #noForm>
                 <td></td>
             </ng-template>
-            <td><a routerLink="/patients/edit/{{ patient.id }}"><fa-icon [icon]="['fas', 'user-cog']" style="color:blue"></fa-icon></a><a (click)="deletePatient(patient.id)"><fa-icon [icon]="['fas', 'user-times']" style="color:red; float:right"></fa-icon></a></td>
+            <td>
+				<a routerLink="/patients/edit/{{ patient.id }}"><fa-icon [icon]="['fas', 'user-cog']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
+				<a routerLink="/patients/{{ patient.id }}/manage-appointments"><fa-icon [icon]="['far', 'calendar-alt']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
+				<a (click)="deletePatient(patient.id)"><fa-icon [icon]="['fas', 'user-times']" style="color:red"></fa-icon></a>
+			</td>
         </tr>
     </tbody>
     <tfoot>

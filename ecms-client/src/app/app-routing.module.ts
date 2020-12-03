@@ -18,6 +18,8 @@ import { AdminSelfGuard } from './_guards/admin-self-guard';
 import { AuthGuard } from './_guards/auth-guard';
 import { OutsiderGuard } from './_guards/outsider-guard';
 import { AdminOrDoctorSelfGuard } from './_guards/admin-doctor-self-guard';
+import { AdminOrPatientSelfGuard } from './_guards/admin-patient-self-guard';
+import { ManageAppointmentPatientComponent } from './manage-appointment-patient/manage-appointment-patient.component';
 
 const routes: Routes = [
     {
@@ -73,6 +75,11 @@ const routes: Routes = [
         path:'doctors/:id/manage-appointments',
         component: ManageAppointmentComponent,
         canActivate: [AdminOrDoctorSelfGuard]
+	},
+    {
+        path:'patients/:id/manage-appointments',
+        component: ManageAppointmentPatientComponent,
+        canActivate: [AdminOrPatientSelfGuard]
     },
     {
         path:'calendar',

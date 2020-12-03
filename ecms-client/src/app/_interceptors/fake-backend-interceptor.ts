@@ -22,7 +22,7 @@ export class FakeBackenInterceptor implements HttpInterceptor{
             .pipe(dematerialize());
 
         function handleRoute() {
-            switch (true) {
+            /*switch (true) {
                 case url.endsWith('/auth/login') && method === 'POST': return next.handle(request);
                 case url.includes('/patients/free/') && method === 'GET': return next.handle(request);
                 case url.endsWith('/patients/create') && method === 'PUT': return next.handle(request);

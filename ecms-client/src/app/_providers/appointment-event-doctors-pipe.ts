@@ -3,8 +3,8 @@ import { AppointmentEvent } from './types';
 import { CalendarEvent, CalendarEventAction } from 'angular-calendar';
 import { colors } from './colors';
 
-@Pipe({ name: 'formatAppointmentEvents' })
-export class FormatAppointmentEvents implements PipeTransform {
+@Pipe({ name: 'FormatAppointmentEventDoctors' })
+export class FormatAppointmentEventDoctors implements PipeTransform {
     transform(events: AppointmentEvent[], actions?: CalendarEventAction[]): any {
         if(events){
             let calendarEvents: CalendarEvent[] = [];
@@ -14,8 +14,8 @@ export class FormatAppointmentEvents implements PipeTransform {
                     start: event.start,
                     end: event.end,
                     title: event.label,
-                    color: event.isFree ? colors.green : colors.red,
-                    actions: event.isFree ? actions : undefined,
+                    color: event.isFree ? colors.blue : event.isAccepted ? colors.red : colors.yellow,
+                    actions: actions,
                     isFree: event.isFree
                 } as CalendarEvent)
             }

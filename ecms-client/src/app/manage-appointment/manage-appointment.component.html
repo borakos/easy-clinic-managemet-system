@@ -1,1 +1,179 @@
-<p>manage-appointment works!</p>
+<h2>Manage appointments</h2>
+<br/>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<a (click)="appointmentFactory()" class="btn btn-lg btn-primary text-white btn-block">Appointment factory</a>
+<br/>
+<div class="row text-center">
+    <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn btn-info text-white" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">Previous</div>
+            <div class="btn btn-dark text-white" mwlCalendarToday [(viewDate)]="viewDate">Today</div>
+            <div class="btn btn-info text-white" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()">Next</div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    </div>
+    <div class="col-md-4">
+        <div class="btn-group">
+            <div class="btn btn-info text-white" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">Month</div>
+            <div class="btn btn-info text-white" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">Week</div>
+            <div class="btn btn-info text-white" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">Day</div>
+        </div>
+    </div>
+</div>
+<br />
+<div [ngSwitch]="view">
+    <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" 
+        [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" [weekStartsOn]="1" (dayClicked)="dayClicked($event.day)"
+        (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
+        (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="(eventsObservable | async | FormatAppointmentEventDoctors: actions)" [refresh]="refresh" [dayStartHour]="6" [dayEndHour]="21"
+        (eventTimesChanged)="eventTimesChanged($event)">
+    </mwl-calendar-day-view>
+</div>
+<ng-template #loading>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #appointmentFactoryTemp let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Appointment factory</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <h5>Interval</h5>
+        <div class="interval">
+            <label for="dateFrom"><b>From: </b></label>&nbsp;&nbsp;
+            <input #dateFrom type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateFrom" name="dateFrom" ngModel class="form-control col-sm-3" placeholder="From">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="dateTo"><b>To: </b></label>&nbsp;&nbsp;
+            <input #dateTo type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="dateTo" name="dateTo" ngModel class="form-control col-sm-3" placeholder="To">
+        </div>
+        <br/>
+        <h5>Weekly template</h5>
+        <mwl-calendar-week-view [precision]="minutes" [hourSegments]="1" [hourSegmentTemplate]="weekViewHourSegment" [headerTemplate]="weekHeaderTemplate" [viewDate]="viewDate" [events]="eventsByFactory" [refresh]="refresh" [weekStartsOn]="1" [dayStartHour]="6" [dayEndHour]="21"
+            (eventTimesChanged)="eventTimesChanged($event)">
+        </mwl-calendar-week-view>
+        <br/>
+        <button type="button" class="btn btn-primary text-white btn-block" (click)="calculateFactoryEvents()">Show preview</button>
+    </div>
+    <div class="modal-footer">
+        <div *ngIf="!isFactoryTemplateCorrect(dateFrom.value, dateTo.value)" class="alert alert-danger">Date interval is invalid or template is not provided!</div>
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({from: dateFrom.value, to: dateTo.value})">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #weekHeaderTemplate let-days="days" let-locale="locale" let-dayHeaderClicked="dayHeaderClicked">
+    <div class="cal-day-headers">
+        <div class="cal-header" 
+            *ngFor="let day of days" 
+            [class.cal-past]="day.isPast" 
+            [class.cal-today]="day.isToday"
+            [class.cal-future]="day.isFuture" 
+            [class.cal-weekend]="day.isWeekend"
+            (click)="dayHeaderClicked.emit({day: day})" 
+            [contextMenuSubject]="day.date">
+            <b>{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</b>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #weekViewHourSegment let-segment="segment" let-locale="locale" let-segmentHeight="segmentHeight" let-isTimeLabel="isTimeLabel">
+    <div class="cal-hour-segment" 
+        [style.height.px]="segmentHeight" 
+        [class.cal-hour-start]="segment.isStart"
+        [class.cal-after-hour-start]="!segment.isStart" 
+        [ngClass]="segment.cssClass" 
+        (dblclick)="addNewEventFactory(segment.date)"
+        [contextMenuSubject]="segment.date">
+        <div class="cal-time" *ngIf="isTimeLabel">
+            {{ segment.date | calendarDate: 'weekViewHour':locale }}
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #editAppointment let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Edit appointment</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <h5 for="description">Short description</h5>
+        <textarea #description id="description" name="description" ngModel="{{storedDescription}}" class="form-control" placeholder="Description" clos="50" rows="10"></textarea>
+        <br/>
+		<a *ngIf="selectedAppointment?.containsFile" class="btn btn-lg btn-info text-white btn-block" (click)="downloadMedicalReport()">Download Current Medical Report</a>
+        <br/>
+        <label for="medicalReport" class="sr-only">Medical Report</label>
+        <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>
+        <input #file type="file" accept=".zip,.rar,.7zip" id="file" name="file" placeholder="Browse Medical Report" class="hide">
+        <a class="btn btn-lg btn-info text-white btn-block" (click)="file.click()">Browse Medical Report</a>
+		<br/>
+		<h5 [hidden]="selectedAppointment?.preferOnline"><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline" checked> Prefer online examination.</h5>
+		<h5 [hidden]="!selectedAppointment?.preferOnline"><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
+		<br/>
+        <a *ngIf="!selectedAppointment?.event.isFree && !selectedAppointment?.event.isFree" class="btn btn-lg btn-info text-white btn-block" (click)="acceptApplication(selectedAppointment?.id)">Accept application</a>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({preferOnline: preferOnline.checked, description: description.value, files: file.files})">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #applicationSuccess let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Edit appointment</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <p>
+            Edition was successfull.
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close()">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #applicationFailure let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Edit appointment</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <p>Edition was unsuccessfull.</p>
+        <p>By clicking to save button you can temprarly can store your description and load it again to the appointment.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close(true)">Save</button>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-2" (click)="close(false)">Leave</button>
+    </div>
+</ng-template>
+
+<ng-template #editAppointmentFactory let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Edit appointment</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <div class="interval">
+            <label for="timeFrom"><b>From: </b></label>&nbsp;&nbsp;
+            <input #timeFrom type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="timeFrom" name="timeFrom" ngModel="{{ selectedEvent?.start | date: 'HH:mm' }}" class="form-control col-sm-3" placeholder="From">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label for="timeTo"><b>To: </b></label>&nbsp;&nbsp;
+            <input #timeTo type="text" onfocus="(this.type='time')" onblur="(this.type='text')" id="timeTo" name="timeTo" ngModel="{{ selectedEvent?.end | date: 'HH:mm' }}" class="form-control col-sm-3" placeholder="To">
+        </div>
+        <br/>
+        <label for="duration"><b>Duration (min): </b></label>
+        <input #duration type="number" id="duration" name="duration" ngModel="{{ selectedEvent?.duration * 60 }}" class="form-control col-sm-3" placeholder="duration">
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({from: timeFrom.value, to: timeTo.value, duration: duration.value})">Save</button>
+    </div>
+</ng-template>

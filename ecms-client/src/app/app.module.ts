@@ -23,7 +23,7 @@ import { PharmaciestComponent } from './pharmaciest/pharmaciest.component';
 import { EditDoctorsComponent } from './edit-doctors/edit-doctors.component';
 import { EditPharmaciesComponent } from './edit-pharmacies/edit-pharmacies.component';
 import { CustomCalendarComponent } from './custom-calendar/custom-calendar.component';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarDateFormatter, CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +34,8 @@ import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-app
 import { FormatDoctors } from './_providers/doctor-select-pipe';
 import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
 import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
+import { FormatAppointmentEventDoctors } from './_providers/appointment-event-doctors-pipe';
+import { ManageAppointmentPatientComponent } from './manage-appointment-patient/manage-appointment-patient.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +55,9 @@ import { ManageAppointmentComponent } from './manage-appointment/manage-appointm
         ApplyToAppointmentComponent,
         FormatDoctors,
         FormatAppointmentEvents,
-        ManageAppointmentComponent
+        FormatAppointmentEventDoctors,
+        ManageAppointmentComponent,
+        ManageAppointmentPatientComponent
     ],
     imports: [
         BrowserModule,
@@ -63,6 +67,7 @@ import { ManageAppointmentComponent } from './manage-appointment/manage-appointm
         FormsModule,
         CommonModule,
         NgbModalModule,
+        NgbModule,
         FontAwesomeModule,
         FlatpickrModule.forRoot(),
         CalendarModule.forRoot({
