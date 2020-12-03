@@ -1,4 +1,4 @@
-<h2>Apply to appintments</h2>
+<h2>Apply to appointments</h2>
 <br/>
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 <a (click)="showDoctors()" class="btn btn-lg btn-primary text-white btn-block">Select doctors for available appointments</a>
@@ -92,7 +92,7 @@
 
 <ng-template #applicationSuccess let-close="close">
     <div class="modal-header">
-        <h5 class="modal-title">Apply to appintment</h5>
+        <h5 class="modal-title">Apply to appointment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
     </div>
     <div class="modal-body">
@@ -108,7 +108,7 @@
 
 <ng-template #applicationFailure let-close="close">
     <div class="modal-header">
-        <h5 class="modal-title">Apply to appintment</h5>
+        <h5 class="modal-title">Apply to appointment</h5>
         <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
     </div>
     <div class="modal-body">

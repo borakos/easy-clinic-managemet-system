@@ -57,4 +57,10 @@ export class AppointmentService{
 	deleteAppointment(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('api/appointments/delete/' + id);
 	}
+
+	acceptApplication(id: number): Observable<boolean> {
+		return this.http.post<boolean>('api/appointments/accept', {id: id}, {
+			headers: this.headerJson
+		});
+	}
 }

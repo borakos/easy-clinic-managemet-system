@@ -63,7 +63,7 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 event: {
                     id: 3,
                     label: 'Dr. Géza Alöldi',
-                    isFree: true,
+                    isFree: false,
                     isAccepted: false,
                     start: new Date(Date.now()+ 23 * 3600 * 1000),
                     end: new Date(Date.now() + 23.5 * 3600 * 1000),
@@ -88,7 +88,10 @@ export function handleAppointmentRequests(request: HttpRequest<any>): Observable
                 return ok(false);
             }
             return ok(true);
-        }
+		}
+		case url.endsWith('/appointments/accept') && method === 'POST': {
+            return ok(true);
+		}
         default: return undefined;
     }
 }

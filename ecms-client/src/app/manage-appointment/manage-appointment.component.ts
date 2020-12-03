@@ -133,7 +133,7 @@ export class ManageAppointmentComponent implements OnInit {
             case 'edit' : {
                 this.appointmentService.getAppointmentByEvent(event.id as number)
                 .subscribe((result) => {
-                    this.selectedAppointment = result;
+					this.selectedAppointment = result;
                     this.storedDescription = this.selectedAppointment?.description;
                     this.modal.open(this.editAppointment, { size: 'lg'}).closed
                     .subscribe((result) => {
@@ -160,7 +160,8 @@ export class ManageAppointmentComponent implements OnInit {
             case 'delete' : {
                 this.appointmentService.getAppointmentByEvent(event.id as number)
                 .subscribe((result) => {
-                    this.appointmentService.deleteAppointment(result.id).subscribe((result) => {
+					this.appointmentService.deleteAppointment(result.id)
+					.subscribe((result) => {
                         if(result){
                             this.updateDoctorsAppointment();
                         } else {
@@ -185,7 +186,14 @@ export class ManageAppointmentComponent implements OnInit {
             }
         }
         return false;
-    }
+	}
+	
+	acceptApplication(id: number): void {
+		this.appointmentService.acceptApplication(id)
+		.subscribe((result) => { }, err => {
+			this.error = this.logger.errorLogWithReturnText('Delete event', err);
+		});
+	}
 
     editFactoryEvent(event, result): void {
         event.duration = (result.duration / 60).toPrecision(2);

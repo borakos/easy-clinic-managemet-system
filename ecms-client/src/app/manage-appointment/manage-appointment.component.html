@@ -1,4 +1,4 @@
-<h2>Manage appintments</h2>
+<h2>Manage appointments</h2>
 <br/>
 <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 <a (click)="appointmentFactory()" class="btn btn-lg btn-primary text-white btn-block">Appointment factory</a>
@@ -109,14 +109,16 @@
         <h5 for="description">Short description</h5>
         <textarea #description id="description" name="description" ngModel="{{storedDescription}}" class="form-control" placeholder="Description" clos="50" rows="10"></textarea>
         <br/>
-        <a *ngIf="selectedAppointment?.containsFile" class="btn btn-lg btn-info text-white btn-block" (click)="downloadMedicalReport()">Download Current Medical Report</a>
+		<a *ngIf="selectedAppointment?.containsFile" class="btn btn-lg btn-info text-white btn-block" (click)="downloadMedicalReport()">Download Current Medical Report</a>
         <br/>
         <label for="medicalReport" class="sr-only">Medical Report</label>
         <div *ngIf="!fileIsSelected(file.files)" class="alert alert-warning">Medical report is not choosen</div>
         <input #file type="file" accept=".zip,.rar,.7zip" id="file" name="file" placeholder="Browse Medical Report" class="hide">
         <a class="btn btn-lg btn-info text-white btn-block" (click)="file.click()">Browse Medical Report</a>
         <br/>
-        <h5><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
+		<h5><input #preferOnline type="checkbox" id="preferOnline" name="preferOnline"> Prefer online examination.</h5>
+		<br/>
+        <a *ngIf="!selectedAppointment?.event.isFree && !selectedAppointment?.event.isFree" class="btn btn-lg btn-info text-white btn-block" (click)="acceptApplication(selectedAppointment?.id)">Accept application</a>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({preferOnline: preferOnline.checked, description: description.value, files: file.files})">Save</button>
