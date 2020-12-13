@@ -80,3 +80,17 @@ export interface FactoryTemplateEvents {
         end: string
     }[]
 }
+
+export interface Examination {
+	id: number,
+	application: Appointment,
+	notes: string,
+	containsFile: boolean
+}
+
+export interface Prescription {
+	id: number,
+	examination: Examination,
+	notes: string,
+	containsFile: boolean
+}

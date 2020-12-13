@@ -36,6 +36,8 @@ import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
 import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
 import { FormatAppointmentEventDoctors } from './_providers/appointment-event-doctors-pipe';
 import { ManageAppointmentPatientComponent } from './manage-appointment-patient/manage-appointment-patient.component';
+import { ExaminationDoctorComponent } from './examination-doctor/examination-doctor.component';
+import { ExaminationPatientComponent } from './examination-patient/examination-patient.component';
 
 @NgModule({
     declarations: [
@@ -57,7 +59,9 @@ import { ManageAppointmentPatientComponent } from './manage-appointment-patient/
         FormatAppointmentEvents,
         FormatAppointmentEventDoctors,
         ManageAppointmentComponent,
-        ManageAppointmentPatientComponent
+        ManageAppointmentPatientComponent,
+        ExaminationDoctorComponent,
+        ExaminationPatientComponent
     ],
     imports: [
         BrowserModule,

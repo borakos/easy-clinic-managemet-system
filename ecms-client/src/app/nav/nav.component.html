@@ -5,13 +5,15 @@
             <ul>
                 <li><a routerLink="{{ getPersonalRoute() }}"><h5><fa-icon [icon]="['far', 'id-card']"></fa-icon> Personal Settings</h5></a></li>
                 <li *ngIf="userIsPatientOrAdmin()"><a routerLink="patients/apply-to-appointment"><h5><fa-icon [icon]="['far', 'calendar-check']"></fa-icon> Make appointment</h5></a></li>
-				<li *ngIf="userIsPatient()" ><a routerLink="patients/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
+				<li *ngIf="userIsPatient()"><a routerLink="patients/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
+				<li *ngIf="userIsPatient()"><a routerLink="patients/{{ getUserID() }}/examinations"><h5><fa-icon [icon]="['fas', 'stethoscope']"></fa-icon> Check examinations</h5></a></li>
 			</ul>
         </li>
         <li *ngIf="userIsDoctor()">
             <h3><fa-icon [icon]="['fas', 'user-md']"></fa-icon> Doctor</h3>
             <ul>
-                <li><a routerLink="doctors/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
+				<li><a routerLink="doctors/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
+				<li><a routerLink="doctors/{{ getUserID() }}/examinations"><h5><fa-icon [icon]="['fas', 'stethoscope']"></fa-icon> Manage examinations</h5></a></li>
             </ul>
         </li>
         <li *ngIf="userIsAdmin()">

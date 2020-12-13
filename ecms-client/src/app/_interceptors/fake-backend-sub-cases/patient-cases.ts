@@ -17,7 +17,8 @@ export function handlePatientRequests(request: HttpRequest<any>): Observable<Htt
             }
         }
         case url.endsWith('/patients/create') && method === 'PUT': {
-            switch(params.get('userName')){
+			let  patient = JSON.parse(params.get('patient'))
+            switch(patient?.userName){
                 case 'error' : return error();
                 default:
                     return ok(true);

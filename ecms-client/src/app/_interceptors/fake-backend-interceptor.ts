@@ -7,6 +7,7 @@ import { handleDoctorRequests } from './fake-backend-sub-cases/doctor-cases';
 import { handlePatientRequests } from './fake-backend-sub-cases/patient-cases';
 import { handlePharmacyRequests } from './fake-backend-sub-cases/pharmacy-cases';
 import { ok, error, unauthorized } from './fake-backend-sub-cases/responses';
+import { handleExaminationRequests } from './fake-backend-sub-cases/examination-cases';
 
 @Injectable()
 export class FakeBackenInterceptor implements HttpInterceptor{
@@ -22,7 +23,7 @@ export class FakeBackenInterceptor implements HttpInterceptor{
             .pipe(dematerialize());
 
         function handleRoute() {
-            switch (true) {
+            /*switch (true) {
                 case url.endsWith('/auth/login') && method === 'POST': return next.handle(request);
                 case url.includes('/patients/free/') && method === 'GET': return next.handle(request);
                 case url.endsWith('/patients/create') && method === 'PUT': return next.handle(request);
@@ -53,6 +54,10 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                 return result;
             }
             result = handleAppointmentRequests(request);
+            if(result){
+                return result;
+			}
+			result = handleExaminationRequests(request);
             if(result){
                 return result;
             }
