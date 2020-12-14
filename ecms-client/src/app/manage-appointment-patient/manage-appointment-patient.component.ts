@@ -100,5 +100,28 @@ export class ManageAppointmentPatientComponent implements OnInit {
                 this.error = this.logger.errorLogWithReturnText('Delete Appointments', err);
         });
         this.error = undefined;
+	}
+	
+	downloadMedicalReport(): void {
+        this.appointmentService.downloadMedicalReportForAppointment(this.selectedAppointment?.id)
+        .subscribe((result) => {
+            if (result) {
+                let file = new Blob([result], { type: "application/zip" });
+                if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveOrOpenBlob(file);
+                } else {
+                    const a: any = document.createElement('a');
+                    document.body.appendChild(a);
+                    a.style = 'display: none';    
+                    const url = window.URL.createObjectURL(file);
+                    a.href = url;
+                    a.download = 'MedicalReport.zip';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                }
+            }
+        }, err => {
+            this.error = this.logger.errorLogWithReturnText('Edit event', err);
+        });
     }
 }
