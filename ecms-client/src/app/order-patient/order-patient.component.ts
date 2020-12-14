@@ -1,47 +1,47 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Prescription } from '../_providers/types';
 import { Logger } from 'Api&Test/ecms-client/src/app/_services/logger-service';
-import { Examination } from '../_providers/types';
-import { ExaminationService } from '../_services/examination-service';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PrescriptionService } from '../_services/prescription-service';
 
 @Component({
-	selector: 'app-examination-doctor',
-	templateUrl: './examination-doctor.component.html',
-	styleUrls: ['./examination-doctor.component.scss']
+	selector: 'app-order-patient',
+	templateUrl: './order-patient.component.html',
+	styleUrls: ['./order-patient.component.scss']
 })
-export class ExaminationDoctorComponent implements OnInit {
+export class OrderPatientComponent implements OnInit {
 
-	@ViewChild('editExamination', { static: true }) editExamination: TemplateRef<any>;
+	@ViewChild('orderPrescription', { static: true }) orderPrescription: TemplateRef<any>;
     @ViewChild('editSuccess', { static: true }) editSuccess: TemplateRef<any>;
     @ViewChild('editFailure', { static: true }) editFailure: TemplateRef<any>;
-	examinationsObservable: Observable<Examination[]>
-    selectedExamination: Examination;
+	prescriptionObservable: Observable<Prescription[]>
+    selectedPrescription: Prescription;
 	storedDescription: string;
     error = undefined;
 
-    constructor(private examinationService: ExaminationService, private logger: Logger, private route: ActivatedRoute,  private modal: NgbModal) { }
+    constructor(private prescriptionService: PrescriptionService, private logger: Logger, private route: ActivatedRoute,  private modal: NgbModal) { }
 
     ngOnInit(): void {
-        this.updateExaminations();
+        this.updatePrescriptions();
         this.error = undefined;
     }
 
-	editExaminationData(examination: Examination): void {
-		this.selectedExamination = examination;
-		this.storedDescription = examination.notes;
-		this.modal.open(this.editExamination, { size: 'lg'}).closed
+	orederPrescriptionMenu(prescription: Prescription): void {
+		this.selectedPrescription = prescription;
+		this.storedDescription = prescription.notes;
+		this.modal.open(this.orderPrescription, { size: 'lg'}).closed
 		.subscribe((result) => {
 			if (result) {
-				this.saveEditExaminationData(this.selectedExamination.id as number, result);
+				//this.saveEditExaminationData(this.selectedExamination.id as number, result);
 			}
 		}, err => {
 			this.error = this.logger.errorLogWithReturnText('Edit event', err);
 		});
 	}
 
-	saveEditExaminationData(examinationId: number, data): void {
+	/*saveEditExaminationData(examinationId: number, data): void {
         let editedAppointment;
 		let files = data.files;
 		let presciptionFiles = data.filesP;
@@ -50,11 +50,12 @@ export class ExaminationDoctorComponent implements OnInit {
 		delete data.descriptionP;
 		delete data.files;
 		data.eventId = examinationId;
+		console.log(data)
         if (this.fileIsSelected(files)) {
             let template = <File>files[0];
             let formData = new FormData();
             let file = formData.append('file', template, template.name)
-            editedAppointment = this.examinationService.editExamination(data, file);
+            editedAppointment = this.prescriptionService.editExamination(data, file);
         } else {
             editedAppointment = this.examinationService.editExamination(data);
         }
@@ -92,10 +93,10 @@ export class ExaminationDoctorComponent implements OnInit {
         }, err => {
             this.error = this.logger.errorLogWithReturnText('Edit appointment', err);
         });
-	}
+	}*/
 
-	updateExaminations(): void {
-		this.examinationsObservable = this.examinationService.loadExaminationsByDoctors(this.route.snapshot.params['id'],
+	updatePrescriptions(): void {
+		this.prescriptionObservable = this.prescriptionService.loadPrescriptionsByPatients(this.route.snapshot.params['id'],
             (err) => {
                 this.error = this.logger.errorLogWithReturnText('Loading Examinations', err);
                 return of();
@@ -104,11 +105,11 @@ export class ExaminationDoctorComponent implements OnInit {
         this.error = undefined;
 	}
 
-    deleteExamination(id: number): void {
-        this.examinationService.deleteExamination(id)
+    deletePresciption(id: number): void {
+        this.prescriptionService.deletePrescription(id)
         .subscribe(response => {}
             , err => {
-                this.error = this.logger.errorLogWithReturnText('Delete examination', err);
+                this.error = this.logger.errorLogWithReturnText('Delete prescription', err);
         });
         this.error = undefined;
 	}
@@ -122,7 +123,7 @@ export class ExaminationDoctorComponent implements OnInit {
     }
 
 	downloadMedicalReport(): void {
-        this.examinationService.downloadMedicalReportForExamination(this.selectedExamination?.id)
+        this.prescriptionService.downloadMedicalReportForPrescription(this.selectedPrescription?.id)
         .subscribe((result) => {
             if (result) {
                 let file = new Blob([result], { type: "application/zip" });
@@ -143,5 +144,4 @@ export class ExaminationDoctorComponent implements OnInit {
             this.error = this.logger.errorLogWithReturnText('Download exmaination', err);
         });
     }
-
 }

@@ -19,39 +19,19 @@ export class ExaminationService{
 	}
 
 	loadExaminationsByDoctors(doctorId: number, loadingError: (any) => Observable<any>): Observable<Examination[]> {
-		return this.http.post<AppointmentEvent[]>('api/examinations/list-by-doctor', {doctorId: doctorId} ,{
+		return this.http.post<Examination[]>('api/examinations/list-by-doctor', {doctorId: doctorId} ,{
 			headers: this.headerJson
-		}).pipe(catchError(loadingError));;
+		}).pipe(catchError(loadingError));
 	}
 
 	loadExaminationsByPatients(patientId: number, loadingError: (any) => Observable<any>): Observable<Examination[]> {
-		return this.http.post<AppointmentEvent[]>('api/examinations/list-by-patient', {patientId: patientId} ,{
+		return this.http.post<Examination[]>('api/examinations/list-by-patient', {patientId: patientId} ,{
 			headers: this.headerJson
-		}).pipe(catchError(loadingError));;
-	}
-
-	applyAppointment(data, file = null): Observable<boolean> {
-		return this.http.put<boolean>('api/appointments/apply', file, {params : data});
+		}).pipe(catchError(loadingError));
 	}
 
 	editExamination(data, file = null): Observable<boolean> {
 		return this.http.put<boolean>('api/examinations/edit', file, {params : data});
-	}
-
-	createAppointmentTime(intFrom: Date, intTo: Date, template: FactoryTemplateEvents): Observable<boolean>{
-		return this.http.post<boolean>('api/appointments/create-by-factory', {
-			from: intFrom,
-			to: intTo,
-			weekTemplate: template
-		}, {
-			headers: this.headerJson
-		})
-	}
-
-	getAppointmentByEvent(eventId: number): Observable<Appointment> {
-		return this.http.post<Appointment>('api/appointments/appointment-by-event', {id: eventId}, {
-			headers: this.headerJson
-		});
 	}
 
 	downloadMedicalReportForExamination(examinationId: number): Observable<Blob> {
@@ -62,12 +42,6 @@ export class ExaminationService{
 
 	deleteExamination(id: number): Observable<boolean> {
 		return this.http.delete<boolean>('api/examinations/delete/' + id);
-	}
-
-	acceptApplication(id: number): Observable<boolean> {
-		return this.http.post<boolean>('api/appointments/accept', {id: id}, {
-			headers: this.headerJson
-		});
 	}
 
 	editPrescription(data, file = null): Observable<boolean> {
