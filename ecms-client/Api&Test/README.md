@@ -1,1 +1,0 @@
-# easy-clinic-managemet-system

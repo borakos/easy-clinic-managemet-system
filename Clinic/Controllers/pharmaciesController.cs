@@ -20,7 +20,7 @@ namespace Clinic.Controllers
 
         [HttpPut]
         //api/pharmacies/creat?pharmacy
-        public IHttpActionResult creat(Pharmacy pharmacy) {
+        public IHttpActionResult create(Pharmacy pharmacy) {
             try
             {
                 var result = repository.CreatPharmacy(pharmacy);

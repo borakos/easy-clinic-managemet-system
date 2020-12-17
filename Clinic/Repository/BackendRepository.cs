@@ -47,12 +47,15 @@ namespace Clinic.Repository
 
         //creat new Pharmacy
         public Boolean CreatPharmacy(Pharmacy pharmacy) {
+            PHARMACIST newPHARMACIST = new PHARMACIST();
+            newPHARMACIST.support_delivery = pharmacy.supportDelivery;
             var result = true;
             if (login.Exists(t => t.userName == pharmacy.userName))
             {
                 result = false;
             }
             else {
+                LinqToSQL.insert2PHARMACIST(newPHARMACIST);
                 listp.Add(pharmacy);
                 login.Add(new LoginRequest { userName = pharmacy.userName, password = pharmacy.password });
             }
@@ -63,6 +66,11 @@ namespace Clinic.Repository
         public Boolean UpdatePharmacy(Pharmacy pharmacy) {
             var result = false;
             var l = new LoginRequest();
+
+            PHARMACIST updatePHARMACIST = new PHARMACIST();
+            string strID = pharmacy.id;
+            LinqToSQL.updatePHARMACIST(strID, updatePHARMACIST);
+
             listp.ForEach(c =>
             {
                 if (c.userName == pharmacy.userName)
@@ -89,25 +97,35 @@ namespace Clinic.Repository
         }
 
         //delete pharmacy by id
-        public Boolean deletePharmacy(int id) {
+        public Boolean deletePharmacy(string id) {
             var result = false;
-            listp.ForEach(c => {
-                if (c.id == id) {
-                    listp.Remove(c);
-                    result = true;
-                }
-            });
+            if(LinqToSQL.deletePHARMACIST(id))
+                result = true;
+            //listp.ForEach(c => {
+            //    if (c.id == id) {
+            //        listp.Remove(c);
+            //        result = true;
+            //    }
+            //});
             return result;
         }
 
         // get a pharmacy by id
-        public Pharmacy GetPharmacy(int id) {
+        public Pharmacy GetPharmacy(string id) {
+            
             Pharmacy p = new Pharmacy();
-            listp.ForEach(c => {
-                if (c.id == id) {
-                    p = c;
-                }
-            });
+
+            PHARMACIST selectPHA = LinqToSQL.selectPHARMACISTByID(id);
+            p.id = selectPHA.id;
+            p.nativeName= selectPHA.native_name
+
+
+
+            //listp.ForEach(c => {
+            //    if (c.id == id) {
+            //        p = c;
+            //    }
+            //});
 
             return p;
         }
@@ -122,7 +140,12 @@ namespace Clinic.Repository
             }
             else
             {
-                listd.Add(doctor);
+                //listd.Add(doctor);
+                DOCTORS newDOC = new DOCTORS();
+                newDOC.id = doctor.id;
+                newDOC.native_name = doctor.nativeName;
+                LinqToSQL.insert2doctors(newDOC);
+
                 login.Add(new LoginRequest { userName = doctor.userName, password = doctor.password });
             }
             return result;
@@ -133,14 +156,21 @@ namespace Clinic.Repository
         {
             var result = false;
             var l = new LoginRequest();
-            listd.ForEach(c =>
-            {
-                if (c.userName == doctor.userName)
-                {
-                    listd.Insert(listd.IndexOf(c),doctor);
-                    result = true;
-                }
-            });
+
+            DOCTORS updateDOC = new DOCTORS();
+            updateDOC.id = doctor.id;
+            updateDOC.native_name = doctor.nativeName;
+            if (LinqToSQL.updateDoc(doctor.id, updateDOC))
+                result = true;
+
+            //listd.ForEach(c =>
+            //{
+            //    if (c.userName == doctor.userName)
+            //    {
+            //        listd.Insert(listd.IndexOf(c),doctor);
+            //        result = true;
+            //    }
+            //});
             login.ForEach(c =>
             {
                 if (c.userName == doctor.userName)
@@ -164,28 +194,39 @@ namespace Clinic.Repository
         }
 
         //delete a doctor by id
-        public Boolean deleteDoctor(int id)
+        public Boolean deleteDoctor(string id)
         {
             var result = false;
-            listd.ForEach(c => {
-                if (c.id == id)
-                {
-                    listd.Remove(c);
-                    result = true;
-                }
-            });
+            //listd.ForEach(c => {
+            //    if (c.id == id)
+            //    {
+            //        result = true;
+            //        listd.Remove(c);
+            //        return;
+            //    }
+            //});
+            if (LinqToSQL.deleteDoc(id))
+                result = true;
+            
+
             return result;
         }
 
         //get a doctor by id
-        public Doctor getDoctor(int id) {
+        public Doctor getDoctor(string id) {
             Doctor p = new Doctor();
-            listd.ForEach(c => {
-                if (c.id == id)
-                {
-                    p = c;
-                }
-            });
+
+            DOCTORS selectDoc = LinqToSQL.selectDocByID(id);
+            p.nativeName = selectDoc.native_name;
+            p.userName = selectDoc.user_name;
+
+            //listd.ForEach(c => {
+            //    if (c.id == id)
+            //    {
+            //        p = c;
+            //        return;
+            //    }
+            //});
 
             return p;
         }
@@ -200,7 +241,15 @@ namespace Clinic.Repository
             }
             else
             {
-                listpa.Add(patient);
+                //listpa.Add(patient);
+
+                PATIENT newPatient = new PATIENT();
+                newPatient.id = patient.id;
+                newPatient.user_name = patient.userName;
+                newPatient.native_name = patient.nativeName;
+                newPatient.password = patient.password";
+                newPatient.gender = patient.gender;
+                LinqToSQL.insert2patient(newPatient)
                 login.Add(new LoginRequest { userName = patient.userName, password = patient.password });
             }
             return result;
@@ -211,14 +260,22 @@ namespace Clinic.Repository
         {
             var result = false;
             var l = new LoginRequest();
-            listpa.ForEach(c =>
-            {
-                if (c.userName == patient.userName)
-                {
-                    listpa.Insert(listpa.IndexOf(c), patient);
-                    result = true;
-                }
-            });
+
+            PATIENT updatePATIENT = new PATIENT();
+            updatePATIENT.user_name = patient.userName;
+            updatePATIENT.age = patient.age;
+
+            if (LinqToSQL.updatePatientById(patient.id, updatePATIENT))
+                result = true;
+
+            //listpa.ForEach(c =>
+            //{
+            //    if (c.userName == patient.userName)
+            //    {
+            //        listpa.Insert(listpa.IndexOf(c), patient);
+            //        result = true;
+            //    }
+            //});
             login.ForEach(c =>
             {
                 if (c.userName == patient.userName)
@@ -237,29 +294,38 @@ namespace Clinic.Repository
         }
 
         //delete a patient by id
-        public Boolean deletePatient(int id)
+        public Boolean deletePatient(string id)
         {
             var result = false;
-            listpa.ForEach(c => {
-                if (c.id == id)
-                {
-                    listpa.Remove(c);
-                    result = true;
-                }
-            });
+
+            if (LinqToSQL.deletePatient(id))
+                result = true;
+
+            //listpa.ForEach(c => {
+            //    if (c.id == id)
+            //    {
+            //        listpa.Remove(c);
+            //        result = true;
+            //    }
+            //});
             return result;
         }
 
         //get a patient by id
-        public Patient getPatient(int id)
+        public Patient getPatient(string id)
         {
             Patient p = new Patient();
-            listpa.ForEach(c => {
-                if (c.id == id)
-                {
-                    p = c;
-                }
-            });
+
+            PATIENT selectPatient = LinqToSQL.selectPatientById(id);
+            p.userName = selectPatient.user_name;
+            p.weight = selectPatient.weight;
+
+            //listpa.ForEach(c => {
+            //    if (c.id == id)
+            //    {
+            //        p = c;
+            //    }
+            //});
 
             return p;
         }
@@ -277,6 +343,7 @@ namespace Clinic.Repository
                 if (c.id == id && c.registration == true)
                 {
                     result = true;
+                    return;
                 }
             });
             return result;
@@ -299,7 +366,12 @@ namespace Clinic.Repository
         //create a appoinment
         public Boolean createAppointments(Appoinment appoinment)
         {
-            lista.Add(appoinment);
+            //lista.Add(appoinment);
+            APPLICATIONS newAPPLICATIONS = new APPLICATIONS();
+            //newAPPLICATIONS.doctor_id= appoinment.
+
+            LinqToSQL.insert2applications(newAPPLICATIONS);
+            
             return true;
         }
 

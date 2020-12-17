@@ -1,2 +1,0 @@
-C:\Users\x\Desktop\easy-clinic-managemet-system\easy-clinic-managemet-system\easy-clinic-managemet-system.csproj;x86
-C:\Users\x\Desktop\easy-clinic-managemet-system\Test\Test.csproj;x86
