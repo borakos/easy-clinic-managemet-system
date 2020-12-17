@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Clinic.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -18,7 +21,7 @@ namespace Clinic
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
-            SYSTEM_ADMINS selectADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.username.Equals(str_username));
+            SYSTEM_ADMINS selectADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(str_username));
 
             return selectADM;
 
@@ -51,7 +54,7 @@ namespace Clinic
             ECMSDataContext db = new ECMSDataContext(connectString);
 
             //Get Employee for update
-            SYSTEM_ADMINS oldADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.username.Equals(str_username));
+            SYSTEM_ADMINS oldADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(str_username));
 
             oldADM = newADM;
 
@@ -71,7 +74,7 @@ namespace Clinic
             ECMSDataContext db = new ECMSDataContext(connectString);
 
             //Get ADM to Delete
-            SYSTEM_ADMINS deleteADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.username.Equals(str_username));
+            SYSTEM_ADMINS deleteADM = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(str_username));
 
             //Delete ADM
             db.SYSTEM_ADMINS.DeleteOnSubmit(deleteADM);
@@ -85,13 +88,13 @@ namespace Clinic
         /// </summary>
         /// 
 
-        public static DOCTORS selectDocByID(string str_id)
+        public static DOCTORS selectDocByID(int id)
         {
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
-            DOCTORS selectDoc = db.DOCTORS.FirstOrDefault(e => e.id.Equals(str_id));
+            DOCTORS selectDoc = db.DOCTORS.FirstOrDefault(e => e.id.Equals(id));
 
             return selectDoc;
 
@@ -123,7 +126,7 @@ namespace Clinic
 
         }
 
-        public static bool updateDoc(string str_id, DOCTORS newDOCTORS)
+        public static bool updateDoc(int id, DOCTORS newDOCTORS)
         {
             bool result = true;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -132,7 +135,7 @@ namespace Clinic
             try
             {
                 //Get DOCTORS for update
-                DOCTORS oldDOCTORS = db.DOCTORS.FirstOrDefault(e => e.id.Equals(str_id));
+                DOCTORS oldDOCTORS = db.DOCTORS.FirstOrDefault(e => e.id.Equals(id));
 
                 oldDOCTORS = newDOCTORS;
 
@@ -146,7 +149,7 @@ namespace Clinic
             return result;
         }
 
-        public static bool deleteDoc(string str_username)
+        public static bool deleteDoc(int id)
         {
             bool result = false;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -154,7 +157,7 @@ namespace Clinic
             ECMSDataContext db = new ECMSDataContext(connectString);
             try { 
                 //Get DOCTORS to Delete
-                DOCTORS deleteDoctor = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(str_username));
+                DOCTORS deleteDoctor = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(id));
 
                 //Delete DOCTORS
                 db.DOCTORS.DeleteOnSubmit(deleteDoctor);
@@ -175,46 +178,100 @@ namespace Clinic
         /// PATIENTS
         /// </summary>
 
-        public static PATIENTS selectPatientById(string str_id)
+        public static PATIENTS selectPatientById(int id)
         {
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
-            PATIENTS selectPAT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(str_id));
+            PATIENTS selectPAT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
 
             return selectPAT;
 
         }
 
-        public static void insert2patient(PATIENTS newPatient)
-        {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+        public static bool checkPassword(string name, string password) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
-            /*
-            //Create new patent
-            PATIENT newPatient = new PATIENT();
-            newPatient.id = "001";
-            newPatient.user_name = "John";
-            newPatient.native_name = "Doc.John";
-            newPatient.password = "123";
-            newPatient.gender = "M";
-            newPatient.age = 23;
-            newPatient.weight = 2014;
-            newPatient.country = "China";
-            newPatient.city = "SH";
-            newPatient.postal_code = "123456";
-            newPatient.address = "Budapest";
-            */
-            //Add new patient to database
-            db.PATIENTS.InsertOnSubmit(newPatient);
+            //Get selected user  
+            var selectedP = db.PATIENTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedP != null) {
+                return true;
+            }
+            var selectedA = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedA != null) {
+                return true;
+            }
+            var selectedD = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedD != null) {
+                return true;
+            }
+            var selectedPH = db.PHARMACISTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedPH != null) {
+                return true;
+            }
+            return false;
+        }
 
+        public static int getUserIdByName(string name) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user  
+            var selectedP = db.PATIENTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedP != null) {
+                return selectedP.id;
+            }
+            var selectedA = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedA != null) {
+                return selectedA.id;
+            }
+            var selectedD = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedD != null) {
+                return selectedD.id;
+            }
+            var selectedPH = db.PHARMACISTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedPH != null) {
+                return selectedPH.id;
+            }
+            return -1;
+        }
+
+        public static Role getUserTypeByName(string name) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user  
+            var selectedP = db.PATIENTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if(selectedP != null) {
+                return Role.patient;
+            }
+            var selectedA = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedA != null) {
+                return Role.admin;
+            }
+            var selectedD = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedD != null) {
+                return Role.doctor;
+            }
+            var selectedPH = db.PHARMACISTS.FirstOrDefault(e => e.user_name.Equals(name));
+            if (selectedPH != null) {
+                return Role.pharmacy;
+            }
+            return Role.none;
+        }
+
+        public static void insert2patient(PATIENTS newPatient)
+        {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            db.PATIENTS.InsertOnSubmit(newPatient);
             //Save changes to Database.
             db.SubmitChanges();
         }
 
-        public static bool updatePatientById(string str_id, PATIENTS newPatient)
+        public static bool updatePatientById(int id, PATIENTS newPatient)
         {
             bool result = true;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -223,7 +280,7 @@ namespace Clinic
             try
             {
                 //Get Patient for update
-                PATIENTS oldPatient = db.PATIENTS.FirstOrDefault(e => e.id.Equals(str_id));
+                PATIENTS oldPatient = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
 
                 oldPatient = newPatient;
 
@@ -237,7 +294,7 @@ namespace Clinic
             return result;
         }
 
-        public static bool deletePatient(string str_id)
+        public static bool deletePatient(int id)
         {
             bool result = true;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -245,7 +302,7 @@ namespace Clinic
             ECMSDataContext db = new ECMSDataContext(connectString);
             try { 
                 //Get PATIENT to Delete
-                PATIENTS deletePATIENT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(str_id));
+                PATIENTS deletePATIENT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
 
                 //Delete PATIENT
                 db.PATIENTS.DeleteOnSubmit(deletePATIENT);
@@ -596,13 +653,13 @@ namespace Clinic
         /// </summary>
         /// 
 
-        public static PHARMACISTS selectPHARMACISTByID(string strID)
+        public static PHARMACISTS selectPHARMACISTByID(int id)
         {
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
-            PHARMACISTS selectPHA = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(strID));
+            PHARMACISTS selectPHA = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(id));
 
             return selectPHA;
 
@@ -620,7 +677,7 @@ namespace Clinic
             db.SubmitChanges();
         }
 
-        public static bool updatePHARMACIST(string str_id, PHARMACISTS updatePHARMACIST)
+        public static bool updatePHARMACIST(int id, PHARMACISTS updatePHARMACIST)
         {
             bool result = false;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -630,7 +687,7 @@ namespace Clinic
             
             try{
                 //Get PHARMACIST for update
-                PHARMACISTS oldPHARMACIST = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(str_id));
+                PHARMACISTS oldPHARMACIST = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(id));
 
                 oldPHARMACIST = updatePHARMACIST;
 
@@ -645,7 +702,7 @@ namespace Clinic
             return result;
         }
 
-        public static bool deletePHARMACIST(string str_id)
+        public static bool deletePHARMACIST(int id)
         {
             bool result = false;
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
@@ -653,7 +710,7 @@ namespace Clinic
             ECMSDataContext db = new ECMSDataContext(connectString);
 
             //Get PHARMACIST to Delete
-            PHARMACISTS deletePHARMACIST = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(str_id));
+            PHARMACISTS deletePHARMACIST = db.PHARMACISTS.FirstOrDefault(e => e.id.Equals(id));
 
             try
             {
@@ -706,7 +763,7 @@ namespace Clinic
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
-
+            
             //Get PHARMACIST_HOLIDAYS to Delete
             PHARMACIST_HOLIDAYS deletePHARMACIST_HOLIDAYS = db.PHARMACIST_HOLIDAYS.FirstOrDefault(e => e.id.Equals(str_id));
 

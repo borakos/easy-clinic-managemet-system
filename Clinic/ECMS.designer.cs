@@ -33,9 +33,6 @@ namespace Clinic
     partial void InsertAPPLICATIONS(APPLICATIONS instance);
     partial void UpdateAPPLICATIONS(APPLICATIONS instance);
     partial void DeleteAPPLICATIONS(APPLICATIONS instance);
-    partial void InsertSYSTEM_ADMINS(SYSTEM_ADMINS instance);
-    partial void UpdateSYSTEM_ADMINS(SYSTEM_ADMINS instance);
-    partial void DeleteSYSTEM_ADMINS(SYSTEM_ADMINS instance);
     partial void InsertDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
     partial void UpdateDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
     partial void DeleteDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
@@ -51,15 +48,15 @@ namespace Clinic
     partial void InsertPATIENTS(PATIENTS instance);
     partial void UpdatePATIENTS(PATIENTS instance);
     partial void DeletePATIENTS(PATIENTS instance);
-    partial void InsertPHARMACISTS(PHARMACISTS instance);
-    partial void UpdatePHARMACISTS(PHARMACISTS instance);
-    partial void DeletePHARMACISTS(PHARMACISTS instance);
     partial void InsertPHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
     partial void UpdatePHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
     partial void DeletePHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
     partial void InsertPHARMACIST_OPENTIMES(PHARMACIST_OPENTIMES instance);
     partial void UpdatePHARMACIST_OPENTIMES(PHARMACIST_OPENTIMES instance);
     partial void DeletePHARMACIST_OPENTIMES(PHARMACIST_OPENTIMES instance);
+    partial void InsertPHARMACISTS(PHARMACISTS instance);
+    partial void UpdatePHARMACISTS(PHARMACISTS instance);
+    partial void DeletePHARMACISTS(PHARMACISTS instance);
     partial void InsertPRESCRIPTIONS(PRESCRIPTIONS instance);
     partial void UpdatePRESCRIPTIONS(PRESCRIPTIONS instance);
     partial void DeletePRESCRIPTIONS(PRESCRIPTIONS instance);
@@ -69,10 +66,13 @@ namespace Clinic
     partial void InsertSPECIALIZATIONS_OF_DOCTORS(SPECIALIZATIONS_OF_DOCTORS instance);
     partial void UpdateSPECIALIZATIONS_OF_DOCTORS(SPECIALIZATIONS_OF_DOCTORS instance);
     partial void DeleteSPECIALIZATIONS_OF_DOCTORS(SPECIALIZATIONS_OF_DOCTORS instance);
+    partial void InsertSYSTEM_ADMINS(SYSTEM_ADMINS instance);
+    partial void UpdateSYSTEM_ADMINS(SYSTEM_ADMINS instance);
+    partial void DeleteSYSTEM_ADMINS(SYSTEM_ADMINS instance);
     #endregion
 		
 		public ECMSDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -106,14 +106,6 @@ namespace Clinic
 			get
 			{
 				return this.GetTable<APPLICATIONS>();
-			}
-		}
-		
-		public System.Data.Linq.Table<SYSTEM_ADMINS> SYSTEM_ADMINS
-		{
-			get
-			{
-				return this.GetTable<SYSTEM_ADMINS>();
 			}
 		}
 		
@@ -157,14 +149,6 @@ namespace Clinic
 			}
 		}
 		
-		public System.Data.Linq.Table<PHARMACISTS> PHARMACISTS
-		{
-			get
-			{
-				return this.GetTable<PHARMACISTS>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PHARMACIST_HOLIDAYS> PHARMACIST_HOLIDAYS
 		{
 			get
@@ -178,6 +162,14 @@ namespace Clinic
 			get
 			{
 				return this.GetTable<PHARMACIST_OPENTIMES>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PHARMACISTS> PHARMACISTS
+		{
+			get
+			{
+				return this.GetTable<PHARMACISTS>();
 			}
 		}
 		
@@ -204,6 +196,14 @@ namespace Clinic
 				return this.GetTable<SPECIALIZATIONS_OF_DOCTORS>();
 			}
 		}
+		
+		public System.Data.Linq.Table<SYSTEM_ADMINS> SYSTEM_ADMINS
+		{
+			get
+			{
+				return this.GetTable<SYSTEM_ADMINS>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.APPLICATIONS")]
@@ -212,11 +212,11 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _patient_id;
+		private System.Nullable<int> _patient_id;
 		
-		private string _doctor_id;
+		private System.Nullable<int> _doctor_id;
 		
 		private System.Nullable<System.DateTime> _date;
 		
@@ -236,11 +236,11 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Onpatient_idChanging(string value);
+    partial void Onpatient_idChanging(System.Nullable<int> value);
     partial void Onpatient_idChanged();
-    partial void Ondoctor_idChanging(string value);
+    partial void Ondoctor_idChanging(System.Nullable<int> value);
     partial void Ondoctor_idChanged();
     partial void OndateChanging(System.Nullable<System.DateTime> value);
     partial void OndateChanged();
@@ -260,8 +260,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -280,8 +280,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_patient_id", DbType="VarChar(100)")]
-		public string patient_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_patient_id", DbType="Int")]
+		public System.Nullable<int> patient_id
 		{
 			get
 			{
@@ -304,8 +304,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="VarChar(100)")]
-		public string doctor_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="Int")]
+		public System.Nullable<int> doctor_id
 		{
 			get
 			{
@@ -408,7 +408,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="APPLICATION_EXAMINATION", Storage="_EXAMINATIONS", ThisKey="id", OtherKey="application_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="APPLICATIONS_EXAMINATIONS", Storage="_EXAMINATIONS", ThisKey="id", OtherKey="application_id")]
 		public EntitySet<EXAMINATIONS> EXAMINATIONS
 		{
 			get
@@ -421,7 +421,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_APPLICATION", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_APPLICATIONS", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
 		public DOCTORS DOCTORS
 		{
 			get
@@ -448,14 +448,14 @@ namespace Clinic
 					}
 					else
 					{
-						this._doctor_id = default(string);
+						this._doctor_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("DOCTORS");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATION", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
 		public PATIENTS PATIENTS
 		{
 			get
@@ -482,7 +482,7 @@ namespace Clinic
 					}
 					else
 					{
-						this._patient_id = default(string);
+						this._patient_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("PATIENTS");
 				}
@@ -522,149 +522,15 @@ namespace Clinic
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SYSTEM_ADMINS")]
-	public partial class SYSTEM_ADMINS : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _id;
-		
-		private string _username;
-		
-		private string _native_name;
-		
-		private string _password;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(string value);
-    partial void OnidChanged();
-    partial void OnusernameChanging(string value);
-    partial void OnusernameChanged();
-    partial void Onnative_nameChanging(string value);
-    partial void Onnative_nameChanged();
-    partial void OnpasswordChanging(string value);
-    partial void OnpasswordChanged();
-    #endregion
-		
-		public SYSTEM_ADMINS()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_username", DbType="VarChar(100)")]
-		public string username
-		{
-			get
-			{
-				return this._username;
-			}
-			set
-			{
-				if ((this._username != value))
-				{
-					this.OnusernameChanging(value);
-					this.SendPropertyChanging();
-					this._username = value;
-					this.SendPropertyChanged("username");
-					this.OnusernameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_native_name", DbType="VarChar(100)")]
-		public string native_name
-		{
-			get
-			{
-				return this._native_name;
-			}
-			set
-			{
-				if ((this._native_name != value))
-				{
-					this.Onnative_nameChanging(value);
-					this.SendPropertyChanging();
-					this._native_name = value;
-					this.SendPropertyChanged("native_name");
-					this.Onnative_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(200)")]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DOCTOR_OPENTIMES")]
 	public partial class DOCTOR_OPENTIMES : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _doctor_id;
+		private System.Nullable<int> _doctor_id;
 		
 		private System.Nullable<System.TimeSpan> _start;
 		
@@ -676,9 +542,9 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Ondoctor_idChanging(string value);
+    partial void Ondoctor_idChanging(System.Nullable<int> value);
     partial void Ondoctor_idChanged();
     partial void OnstartChanging(System.Nullable<System.TimeSpan> value);
     partial void OnstartChanged();
@@ -692,8 +558,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -712,8 +578,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="VarChar(100)")]
-		public string doctor_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="Int")]
+		public System.Nullable<int> doctor_id
 		{
 			get
 			{
@@ -776,7 +642,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_DOCTOR_OPENTIME", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIMES", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
 		public DOCTORS DOCTORS
 		{
 			get
@@ -803,7 +669,7 @@ namespace Clinic
 					}
 					else
 					{
-						this._doctor_id = default(string);
+						this._doctor_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("DOCTORS");
 				}
@@ -837,7 +703,7 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
 		private string _user_name;
 		
@@ -847,9 +713,9 @@ namespace Clinic
 		
 		private string _gender;
 		
-		private System.Nullable<int> _age;
+		private System.Nullable<System.DateTime> _birthday;
 		
-		private System.Nullable<int> _start_year_of_work;
+		private System.Nullable<System.DateTime> _start_year_of_work;
 		
 		private EntitySet<APPLICATIONS> _APPLICATIONS;
 		
@@ -861,7 +727,7 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
     partial void Onuser_nameChanging(string value);
     partial void Onuser_nameChanged();
@@ -871,9 +737,9 @@ namespace Clinic
     partial void OnpasswordChanged();
     partial void OngenderChanging(string value);
     partial void OngenderChanged();
-    partial void OnageChanging(System.Nullable<int> value);
-    partial void OnageChanged();
-    partial void Onstart_year_of_workChanging(System.Nullable<int> value);
+    partial void OnbirthdayChanging(System.Nullable<System.DateTime> value);
+    partial void OnbirthdayChanged();
+    partial void Onstart_year_of_workChanging(System.Nullable<System.DateTime> value);
     partial void Onstart_year_of_workChanged();
     #endregion
 		
@@ -885,8 +751,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -985,28 +851,28 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_age", DbType="Int")]
-		public System.Nullable<int> age
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthday", DbType="Date")]
+		public System.Nullable<System.DateTime> birthday
 		{
 			get
 			{
-				return this._age;
+				return this._birthday;
 			}
 			set
 			{
-				if ((this._age != value))
+				if ((this._birthday != value))
 				{
-					this.OnageChanging(value);
+					this.OnbirthdayChanging(value);
 					this.SendPropertyChanging();
-					this._age = value;
-					this.SendPropertyChanged("age");
-					this.OnageChanged();
+					this._birthday = value;
+					this.SendPropertyChanged("birthday");
+					this.OnbirthdayChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_year_of_work", DbType="Int")]
-		public System.Nullable<int> start_year_of_work
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_year_of_work", DbType="Date")]
+		public System.Nullable<System.DateTime> start_year_of_work
 		{
 			get
 			{
@@ -1025,7 +891,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_APPLICATION", Storage="_APPLICATIONS", ThisKey="id", OtherKey="doctor_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="doctor_id")]
 		public EntitySet<APPLICATIONS> APPLICATIONS
 		{
 			get
@@ -1038,7 +904,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_DOCTOR_OPENTIME", Storage="_DOCTOR_OPENTIMES", ThisKey="id", OtherKey="doctor_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIMES", Storage="_DOCTOR_OPENTIMES", ThisKey="id", OtherKey="doctor_id")]
 		public EntitySet<DOCTOR_OPENTIMES> DOCTOR_OPENTIMES
 		{
 			get
@@ -1051,7 +917,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_SPECIALIZATIONS_OF_DOCTOR", Storage="_SPECIALIZATIONS_OF_DOCTORS", ThisKey="id", OtherKey="doctor_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_SPECIALIZATIONS_OF_DOCTORS", Storage="_SPECIALIZATIONS_OF_DOCTORS", ThisKey="id", OtherKey="doctor_id")]
 		public EntitySet<SPECIALIZATIONS_OF_DOCTORS> SPECIALIZATIONS_OF_DOCTORS
 		{
 			get
@@ -1127,9 +993,9 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _application_id;
+		private System.Nullable<int> _application_id;
 		
 		private string _notes;
 		
@@ -1143,9 +1009,9 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Onapplication_idChanging(string value);
+    partial void Onapplication_idChanging(System.Nullable<int> value);
     partial void Onapplication_idChanged();
     partial void OnnotesChanging(string value);
     partial void OnnotesChanged();
@@ -1160,8 +1026,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -1180,8 +1046,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_application_id", DbType="VarChar(100)")]
-		public string application_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_application_id", DbType="Int")]
+		public System.Nullable<int> application_id
 		{
 			get
 			{
@@ -1244,7 +1110,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EXAMINATION_PRESCRIPTION", Storage="_PRESCRIPTIONS", ThisKey="id", OtherKey="examination_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EXAMINATIONS_PRESCRIPTIONS", Storage="_PRESCRIPTIONS", ThisKey="id", OtherKey="examination_id")]
 		public EntitySet<PRESCRIPTIONS> PRESCRIPTIONS
 		{
 			get
@@ -1257,7 +1123,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="APPLICATION_EXAMINATION", Storage="_APPLICATIONS", ThisKey="application_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="APPLICATIONS_EXAMINATIONS", Storage="_APPLICATIONS", ThisKey="application_id", OtherKey="id", IsForeignKey=true)]
 		public APPLICATIONS APPLICATIONS
 		{
 			get
@@ -1284,7 +1150,7 @@ namespace Clinic
 					}
 					else
 					{
-						this._application_id = default(string);
+						this._application_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("APPLICATIONS");
 				}
@@ -1330,11 +1196,11 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _prescription_id;
+		private System.Nullable<int> _prescription_id;
 		
-		private string _pharmacy_id;
+		private System.Nullable<int> _pharmacy_id;
 		
 		private string _notes;
 		
@@ -1348,11 +1214,11 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Onprescription_idChanging(string value);
+    partial void Onprescription_idChanging(System.Nullable<int> value);
     partial void Onprescription_idChanged();
-    partial void Onpharmacy_idChanging(string value);
+    partial void Onpharmacy_idChanging(System.Nullable<int> value);
     partial void Onpharmacy_idChanged();
     partial void OnnotesChanging(string value);
     partial void OnnotesChanged();
@@ -1367,8 +1233,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -1387,8 +1253,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_prescription_id", DbType="VarChar(100)")]
-		public string prescription_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_prescription_id", DbType="Int")]
+		public System.Nullable<int> prescription_id
 		{
 			get
 			{
@@ -1411,8 +1277,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="VarChar(100)")]
-		public string pharmacy_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="Int")]
+		public System.Nullable<int> pharmacy_id
 		{
 			get
 			{
@@ -1475,7 +1341,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_ORDER", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_ORDERS", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
 		public PHARMACISTS PHARMACISTS
 		{
 			get
@@ -1502,14 +1368,14 @@ namespace Clinic
 					}
 					else
 					{
-						this._pharmacy_id = default(string);
+						this._pharmacy_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("PHARMACISTS");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PRESCRIPTION_ORDER", Storage="_PRESCRIPTIONS", ThisKey="prescription_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PRESCRIPTIONS_ORDERS", Storage="_PRESCRIPTIONS", ThisKey="prescription_id", OtherKey="id", IsForeignKey=true)]
 		public PRESCRIPTIONS PRESCRIPTIONS
 		{
 			get
@@ -1536,7 +1402,7 @@ namespace Clinic
 					}
 					else
 					{
-						this._prescription_id = default(string);
+						this._prescription_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("PRESCRIPTIONS");
 				}
@@ -1564,13 +1430,13 @@ namespace Clinic
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PATIENT")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PATIENTS")]
 	public partial class PATIENTS : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
 		private string _user_name;
 		
@@ -1580,7 +1446,7 @@ namespace Clinic
 		
 		private string _gender;
 		
-		private System.Nullable<int> _age;
+		private System.Nullable<System.DateTime> _birthday;
 		
 		private System.Nullable<double> _weight;
 		
@@ -1588,7 +1454,7 @@ namespace Clinic
 		
 		private string _city;
 		
-		private string _postal_code;
+		private System.Nullable<int> _postal_code;
 		
 		private string _address;
 		
@@ -1598,7 +1464,7 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
     partial void Onuser_nameChanging(string value);
     partial void Onuser_nameChanged();
@@ -1608,15 +1474,15 @@ namespace Clinic
     partial void OnpasswordChanged();
     partial void OngenderChanging(string value);
     partial void OngenderChanged();
-    partial void OnageChanging(System.Nullable<int> value);
-    partial void OnageChanged();
+    partial void OnbirthdayChanging(System.Nullable<System.DateTime> value);
+    partial void OnbirthdayChanged();
     partial void OnweightChanging(System.Nullable<double> value);
     partial void OnweightChanged();
     partial void OncountryChanging(string value);
     partial void OncountryChanged();
     partial void OncityChanging(string value);
     partial void OncityChanged();
-    partial void Onpostal_codeChanging(string value);
+    partial void Onpostal_codeChanging(System.Nullable<int> value);
     partial void Onpostal_codeChanged();
     partial void OnaddressChanging(string value);
     partial void OnaddressChanged();
@@ -1628,8 +1494,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -1728,22 +1594,22 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_age", DbType="Int")]
-		public System.Nullable<int> age
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthday", DbType="Date")]
+		public System.Nullable<System.DateTime> birthday
 		{
 			get
 			{
-				return this._age;
+				return this._birthday;
 			}
 			set
 			{
-				if ((this._age != value))
+				if ((this._birthday != value))
 				{
-					this.OnageChanging(value);
+					this.OnbirthdayChanging(value);
 					this.SendPropertyChanging();
-					this._age = value;
-					this.SendPropertyChanged("age");
-					this.OnageChanged();
+					this._birthday = value;
+					this.SendPropertyChanged("birthday");
+					this.OnbirthdayChanged();
 				}
 			}
 		}
@@ -1808,8 +1674,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="VarChar(100)")]
-		public string postal_code
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="Int")]
+		public System.Nullable<int> postal_code
 		{
 			get
 			{
@@ -1848,7 +1714,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATION", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
 		public EntitySet<APPLICATIONS> APPLICATIONS
 		{
 			get
@@ -1894,13 +1760,411 @@ namespace Clinic
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACIST")]
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACIST_HOLIDAYS")]
+	public partial class PHARMACIST_HOLIDAYS : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<int> _pharmacy_id;
+		
+		private System.Nullable<System.DateTime> _date;
+		
+		private System.Nullable<System.TimeSpan> _away_start;
+		
+		private System.Nullable<System.TimeSpan> _away_close;
+		
+		private EntityRef<PHARMACISTS> _PHARMACISTS;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onpharmacy_idChanging(System.Nullable<int> value);
+    partial void Onpharmacy_idChanged();
+    partial void OndateChanging(System.Nullable<System.DateTime> value);
+    partial void OndateChanged();
+    partial void Onaway_startChanging(System.Nullable<System.TimeSpan> value);
+    partial void Onaway_startChanged();
+    partial void Onaway_closeChanging(System.Nullable<System.TimeSpan> value);
+    partial void Onaway_closeChanged();
+    #endregion
+		
+		public PHARMACIST_HOLIDAYS()
+		{
+			this._PHARMACISTS = default(EntityRef<PHARMACISTS>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="Int")]
+		public System.Nullable<int> pharmacy_id
+		{
+			get
+			{
+				return this._pharmacy_id;
+			}
+			set
+			{
+				if ((this._pharmacy_id != value))
+				{
+					if (this._PHARMACISTS.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onpharmacy_idChanging(value);
+					this.SendPropertyChanging();
+					this._pharmacy_id = value;
+					this.SendPropertyChanged("pharmacy_id");
+					this.Onpharmacy_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="Date")]
+		public System.Nullable<System.DateTime> date
+		{
+			get
+			{
+				return this._date;
+			}
+			set
+			{
+				if ((this._date != value))
+				{
+					this.OndateChanging(value);
+					this.SendPropertyChanging();
+					this._date = value;
+					this.SendPropertyChanged("date");
+					this.OndateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_away_start", DbType="Time")]
+		public System.Nullable<System.TimeSpan> away_start
+		{
+			get
+			{
+				return this._away_start;
+			}
+			set
+			{
+				if ((this._away_start != value))
+				{
+					this.Onaway_startChanging(value);
+					this.SendPropertyChanging();
+					this._away_start = value;
+					this.SendPropertyChanged("away_start");
+					this.Onaway_startChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_away_close", DbType="Time")]
+		public System.Nullable<System.TimeSpan> away_close
+		{
+			get
+			{
+				return this._away_close;
+			}
+			set
+			{
+				if ((this._away_close != value))
+				{
+					this.Onaway_closeChanging(value);
+					this.SendPropertyChanging();
+					this._away_close = value;
+					this.SendPropertyChanged("away_close");
+					this.Onaway_closeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_PHARMACIST_HOLIDAYS", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
+		public PHARMACISTS PHARMACISTS
+		{
+			get
+			{
+				return this._PHARMACISTS.Entity;
+			}
+			set
+			{
+				PHARMACISTS previousValue = this._PHARMACISTS.Entity;
+				if (((previousValue != value) 
+							|| (this._PHARMACISTS.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PHARMACISTS.Entity = null;
+						previousValue.PHARMACIST_HOLIDAYS.Remove(this);
+					}
+					this._PHARMACISTS.Entity = value;
+					if ((value != null))
+					{
+						value.PHARMACIST_HOLIDAYS.Add(this);
+						this._pharmacy_id = value.id;
+					}
+					else
+					{
+						this._pharmacy_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PHARMACISTS");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACIST_OPENTIMES")]
+	public partial class PHARMACIST_OPENTIMES : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<int> _pharmacy_id;
+		
+		private string _day_of_the_week;
+		
+		private System.Nullable<System.TimeSpan> _opentime;
+		
+		private System.Nullable<System.TimeSpan> _closetime;
+		
+		private EntityRef<PHARMACISTS> _PHARMACISTS;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onpharmacy_idChanging(System.Nullable<int> value);
+    partial void Onpharmacy_idChanged();
+    partial void Onday_of_the_weekChanging(string value);
+    partial void Onday_of_the_weekChanged();
+    partial void OnopentimeChanging(System.Nullable<System.TimeSpan> value);
+    partial void OnopentimeChanged();
+    partial void OnclosetimeChanging(System.Nullable<System.TimeSpan> value);
+    partial void OnclosetimeChanged();
+    #endregion
+		
+		public PHARMACIST_OPENTIMES()
+		{
+			this._PHARMACISTS = default(EntityRef<PHARMACISTS>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="Int")]
+		public System.Nullable<int> pharmacy_id
+		{
+			get
+			{
+				return this._pharmacy_id;
+			}
+			set
+			{
+				if ((this._pharmacy_id != value))
+				{
+					if (this._PHARMACISTS.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onpharmacy_idChanging(value);
+					this.SendPropertyChanging();
+					this._pharmacy_id = value;
+					this.SendPropertyChanged("pharmacy_id");
+					this.Onpharmacy_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_day_of_the_week", DbType="VarChar(100)")]
+		public string day_of_the_week
+		{
+			get
+			{
+				return this._day_of_the_week;
+			}
+			set
+			{
+				if ((this._day_of_the_week != value))
+				{
+					this.Onday_of_the_weekChanging(value);
+					this.SendPropertyChanging();
+					this._day_of_the_week = value;
+					this.SendPropertyChanged("day_of_the_week");
+					this.Onday_of_the_weekChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_opentime", DbType="Time")]
+		public System.Nullable<System.TimeSpan> opentime
+		{
+			get
+			{
+				return this._opentime;
+			}
+			set
+			{
+				if ((this._opentime != value))
+				{
+					this.OnopentimeChanging(value);
+					this.SendPropertyChanging();
+					this._opentime = value;
+					this.SendPropertyChanged("opentime");
+					this.OnopentimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_closetime", DbType="Time")]
+		public System.Nullable<System.TimeSpan> closetime
+		{
+			get
+			{
+				return this._closetime;
+			}
+			set
+			{
+				if ((this._closetime != value))
+				{
+					this.OnclosetimeChanging(value);
+					this.SendPropertyChanging();
+					this._closetime = value;
+					this.SendPropertyChanged("closetime");
+					this.OnclosetimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_PHARMACIST_OPENTIMES", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
+		public PHARMACISTS PHARMACISTS
+		{
+			get
+			{
+				return this._PHARMACISTS.Entity;
+			}
+			set
+			{
+				PHARMACISTS previousValue = this._PHARMACISTS.Entity;
+				if (((previousValue != value) 
+							|| (this._PHARMACISTS.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PHARMACISTS.Entity = null;
+						previousValue.PHARMACIST_OPENTIMES.Remove(this);
+					}
+					this._PHARMACISTS.Entity = value;
+					if ((value != null))
+					{
+						value.PHARMACIST_OPENTIMES.Add(this);
+						this._pharmacy_id = value.id;
+					}
+					else
+					{
+						this._pharmacy_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("PHARMACISTS");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACISTS")]
 	public partial class PHARMACISTS : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
 		private string _user_name;
 		
@@ -1916,7 +2180,7 @@ namespace Clinic
 		
 		private string _city;
 		
-		private string _postal_code;
+		private System.Nullable<int> _postal_code;
 		
 		private string _address;
 		
@@ -1930,7 +2194,7 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
     partial void Onuser_nameChanging(string value);
     partial void Onuser_nameChanged();
@@ -1946,7 +2210,7 @@ namespace Clinic
     partial void OncountryChanged();
     partial void OncityChanging(string value);
     partial void OncityChanged();
-    partial void Onpostal_codeChanging(string value);
+    partial void Onpostal_codeChanging(System.Nullable<int> value);
     partial void Onpostal_codeChanged();
     partial void OnaddressChanging(string value);
     partial void OnaddressChanged();
@@ -1960,8 +2224,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -2120,8 +2384,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="VarChar(100)")]
-		public string postal_code
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="Int")]
+		public System.Nullable<int> postal_code
 		{
 			get
 			{
@@ -2160,7 +2424,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_ORDER", Storage="_ORDERS", ThisKey="id", OtherKey="pharmacy_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_ORDERS", Storage="_ORDERS", ThisKey="id", OtherKey="pharmacy_id")]
 		public EntitySet<ORDERS> ORDERS
 		{
 			get
@@ -2173,7 +2437,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_PHARMACIST_HOLIDAY", Storage="_PHARMACIST_HOLIDAYS", ThisKey="id", OtherKey="pharmacy_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_PHARMACIST_HOLIDAYS", Storage="_PHARMACIST_HOLIDAYS", ThisKey="id", OtherKey="pharmacy_id")]
 		public EntitySet<PHARMACIST_HOLIDAYS> PHARMACIST_HOLIDAYS
 		{
 			get
@@ -2186,7 +2450,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_PHARMACIST_OPENTIME", Storage="_PHARMACIST_OPENTIMES", ThisKey="id", OtherKey="pharmacy_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACISTS_PHARMACIST_OPENTIMES", Storage="_PHARMACIST_OPENTIMES", ThisKey="id", OtherKey="pharmacy_id")]
 		public EntitySet<PHARMACIST_OPENTIMES> PHARMACIST_OPENTIMES
 		{
 			get
@@ -2256,413 +2520,15 @@ namespace Clinic
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACIST_HOLIDAYS")]
-	public partial class PHARMACIST_HOLIDAYS : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _id;
-		
-		private string _pharmacy_id;
-		
-		private System.Nullable<System.DateTime> _date;
-		
-		private System.Nullable<System.TimeSpan> _away_start;
-		
-		private System.Nullable<System.TimeSpan> _away_close;
-		
-		private EntityRef<PHARMACISTS> _PHARMACISTS;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(string value);
-    partial void OnidChanged();
-    partial void Onpharmacy_idChanging(string value);
-    partial void Onpharmacy_idChanged();
-    partial void OndateChanging(System.Nullable<System.DateTime> value);
-    partial void OndateChanged();
-    partial void Onaway_startChanging(System.Nullable<System.TimeSpan> value);
-    partial void Onaway_startChanged();
-    partial void Onaway_closeChanging(System.Nullable<System.TimeSpan> value);
-    partial void Onaway_closeChanged();
-    #endregion
-		
-		public PHARMACIST_HOLIDAYS()
-		{
-			this._PHARMACISTS = default(EntityRef<PHARMACISTS>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="VarChar(100)")]
-		public string pharmacy_id
-		{
-			get
-			{
-				return this._pharmacy_id;
-			}
-			set
-			{
-				if ((this._pharmacy_id != value))
-				{
-					if (this._PHARMACISTS.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onpharmacy_idChanging(value);
-					this.SendPropertyChanging();
-					this._pharmacy_id = value;
-					this.SendPropertyChanged("pharmacy_id");
-					this.Onpharmacy_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_date", DbType="Date")]
-		public System.Nullable<System.DateTime> date
-		{
-			get
-			{
-				return this._date;
-			}
-			set
-			{
-				if ((this._date != value))
-				{
-					this.OndateChanging(value);
-					this.SendPropertyChanging();
-					this._date = value;
-					this.SendPropertyChanged("date");
-					this.OndateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_away_start", DbType="Time")]
-		public System.Nullable<System.TimeSpan> away_start
-		{
-			get
-			{
-				return this._away_start;
-			}
-			set
-			{
-				if ((this._away_start != value))
-				{
-					this.Onaway_startChanging(value);
-					this.SendPropertyChanging();
-					this._away_start = value;
-					this.SendPropertyChanged("away_start");
-					this.Onaway_startChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_away_close", DbType="Time")]
-		public System.Nullable<System.TimeSpan> away_close
-		{
-			get
-			{
-				return this._away_close;
-			}
-			set
-			{
-				if ((this._away_close != value))
-				{
-					this.Onaway_closeChanging(value);
-					this.SendPropertyChanging();
-					this._away_close = value;
-					this.SendPropertyChanged("away_close");
-					this.Onaway_closeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_PHARMACIST_HOLIDAY", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
-		public PHARMACISTS PHARMACISTS
-		{
-			get
-			{
-				return this._PHARMACISTS.Entity;
-			}
-			set
-			{
-				PHARMACISTS previousValue = this._PHARMACISTS.Entity;
-				if (((previousValue != value) 
-							|| (this._PHARMACISTS.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PHARMACISTS.Entity = null;
-						previousValue.PHARMACIST_HOLIDAYS.Remove(this);
-					}
-					this._PHARMACISTS.Entity = value;
-					if ((value != null))
-					{
-						value.PHARMACIST_HOLIDAYS.Add(this);
-						this._pharmacy_id = value.id;
-					}
-					else
-					{
-						this._pharmacy_id = default(string);
-					}
-					this.SendPropertyChanged("PHARMACISTS");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PHARMACIST_OPENTIMES")]
-	public partial class PHARMACIST_OPENTIMES : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _id;
-		
-		private string _pharmacy_id;
-		
-		private string _day_of_the_week;
-		
-		private System.Nullable<System.TimeSpan> _opentime;
-		
-		private System.Nullable<System.TimeSpan> _closetime;
-		
-		private EntityRef<PHARMACISTS> _PHARMACISTS;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(string value);
-    partial void OnidChanged();
-    partial void Onpharmacy_idChanging(string value);
-    partial void Onpharmacy_idChanged();
-    partial void Onday_of_the_weekChanging(string value);
-    partial void Onday_of_the_weekChanged();
-    partial void OnopentimeChanging(System.Nullable<System.TimeSpan> value);
-    partial void OnopentimeChanged();
-    partial void OnclosetimeChanging(System.Nullable<System.TimeSpan> value);
-    partial void OnclosetimeChanged();
-    #endregion
-		
-		public PHARMACIST_OPENTIMES()
-		{
-			this._PHARMACISTS = default(EntityRef<PHARMACISTS>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pharmacy_id", DbType="VarChar(100)")]
-		public string pharmacy_id
-		{
-			get
-			{
-				return this._pharmacy_id;
-			}
-			set
-			{
-				if ((this._pharmacy_id != value))
-				{
-					if (this._PHARMACISTS.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onpharmacy_idChanging(value);
-					this.SendPropertyChanging();
-					this._pharmacy_id = value;
-					this.SendPropertyChanged("pharmacy_id");
-					this.Onpharmacy_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_day_of_the_week", DbType="VarChar(100)")]
-		public string day_of_the_week
-		{
-			get
-			{
-				return this._day_of_the_week;
-			}
-			set
-			{
-				if ((this._day_of_the_week != value))
-				{
-					this.Onday_of_the_weekChanging(value);
-					this.SendPropertyChanging();
-					this._day_of_the_week = value;
-					this.SendPropertyChanged("day_of_the_week");
-					this.Onday_of_the_weekChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_opentime", DbType="Time")]
-		public System.Nullable<System.TimeSpan> opentime
-		{
-			get
-			{
-				return this._opentime;
-			}
-			set
-			{
-				if ((this._opentime != value))
-				{
-					this.OnopentimeChanging(value);
-					this.SendPropertyChanging();
-					this._opentime = value;
-					this.SendPropertyChanged("opentime");
-					this.OnopentimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_closetime", DbType="Time")]
-		public System.Nullable<System.TimeSpan> closetime
-		{
-			get
-			{
-				return this._closetime;
-			}
-			set
-			{
-				if ((this._closetime != value))
-				{
-					this.OnclosetimeChanging(value);
-					this.SendPropertyChanging();
-					this._closetime = value;
-					this.SendPropertyChanged("closetime");
-					this.OnclosetimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PHARMACIST_PHARMACIST_OPENTIME", Storage="_PHARMACISTS", ThisKey="pharmacy_id", OtherKey="id", IsForeignKey=true)]
-		public PHARMACISTS PHARMACISTS
-		{
-			get
-			{
-				return this._PHARMACISTS.Entity;
-			}
-			set
-			{
-				PHARMACISTS previousValue = this._PHARMACISTS.Entity;
-				if (((previousValue != value) 
-							|| (this._PHARMACISTS.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PHARMACISTS.Entity = null;
-						previousValue.PHARMACIST_OPENTIMES.Remove(this);
-					}
-					this._PHARMACISTS.Entity = value;
-					if ((value != null))
-					{
-						value.PHARMACIST_OPENTIMES.Add(this);
-						this._pharmacy_id = value.id;
-					}
-					else
-					{
-						this._pharmacy_id = default(string);
-					}
-					this.SendPropertyChanged("PHARMACISTS");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PRESCRIPTIONS")]
 	public partial class PRESCRIPTIONS : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _examination_id;
+		private System.Nullable<int> _examination_id;
 		
 		private string _notes;
 		
@@ -2676,9 +2542,9 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Onexamination_idChanging(string value);
+    partial void Onexamination_idChanging(System.Nullable<int> value);
     partial void Onexamination_idChanged();
     partial void OnnotesChanging(string value);
     partial void OnnotesChanged();
@@ -2693,8 +2559,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -2713,8 +2579,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_examination_id", DbType="VarChar(100)")]
-		public string examination_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_examination_id", DbType="Int")]
+		public System.Nullable<int> examination_id
 		{
 			get
 			{
@@ -2777,7 +2643,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PRESCRIPTION_ORDER", Storage="_ORDERS", ThisKey="id", OtherKey="prescription_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PRESCRIPTIONS_ORDERS", Storage="_ORDERS", ThisKey="id", OtherKey="prescription_id")]
 		public EntitySet<ORDERS> ORDERS
 		{
 			get
@@ -2790,7 +2656,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EXAMINATION_PRESCRIPTION", Storage="_EXAMINATIONS", ThisKey="examination_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="EXAMINATIONS_PRESCRIPTIONS", Storage="_EXAMINATIONS", ThisKey="examination_id", OtherKey="id", IsForeignKey=true)]
 		public EXAMINATIONS EXAMINATIONS
 		{
 			get
@@ -2817,7 +2683,7 @@ namespace Clinic
 					}
 					else
 					{
-						this._examination_id = default(string);
+						this._examination_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("EXAMINATIONS");
 				}
@@ -2863,7 +2729,7 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
 		private string _name;
 		
@@ -2875,7 +2741,7 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
     partial void OnnameChanging(string value);
     partial void OnnameChanged();
@@ -2889,8 +2755,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -2949,7 +2815,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SPECIALIZATION_SPECIALIZATIONS_OF_DOCTOR", Storage="_SPECIALIZATIONS_OF_DOCTORS", ThisKey="id", OtherKey="specicalization_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SPECIALIZATIONS_SPECIALIZATIONS_OF_DOCTORS", Storage="_SPECIALIZATIONS_OF_DOCTORS", ThisKey="id", OtherKey="specicalization_id")]
 		public EntitySet<SPECIALIZATIONS_OF_DOCTORS> SPECIALIZATIONS_OF_DOCTORS
 		{
 			get
@@ -3001,11 +2867,11 @@ namespace Clinic
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _id;
+		private int _id;
 		
-		private string _doctor_id;
+		private System.Nullable<int> _doctor_id;
 		
-		private string _specicalization_id;
+		private System.Nullable<int> _specicalization_id;
 		
 		private EntityRef<DOCTORS> _DOCTORS;
 		
@@ -3015,11 +2881,11 @@ namespace Clinic
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnidChanging(string value);
+    partial void OnidChanging(int value);
     partial void OnidChanged();
-    partial void Ondoctor_idChanging(string value);
+    partial void Ondoctor_idChanging(System.Nullable<int> value);
     partial void Ondoctor_idChanged();
-    partial void Onspecicalization_idChanging(string value);
+    partial void Onspecicalization_idChanging(System.Nullable<int> value);
     partial void Onspecicalization_idChanged();
     #endregion
 		
@@ -3030,8 +2896,8 @@ namespace Clinic
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="VarChar(100) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
 		{
 			get
 			{
@@ -3050,8 +2916,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="VarChar(100)")]
-		public string doctor_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="Int")]
+		public System.Nullable<int> doctor_id
 		{
 			get
 			{
@@ -3074,8 +2940,8 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_specicalization_id", DbType="VarChar(100)")]
-		public string specicalization_id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_specicalization_id", DbType="Int")]
+		public System.Nullable<int> specicalization_id
 		{
 			get
 			{
@@ -3098,7 +2964,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTOR_SPECIALIZATIONS_OF_DOCTOR", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_SPECIALIZATIONS_OF_DOCTORS", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
 		public DOCTORS DOCTORS
 		{
 			get
@@ -3125,14 +2991,14 @@ namespace Clinic
 					}
 					else
 					{
-						this._doctor_id = default(string);
+						this._doctor_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("DOCTORS");
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SPECIALIZATION_SPECIALIZATIONS_OF_DOCTOR", Storage="_SPECIALIZATIONS", ThisKey="specicalization_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SPECIALIZATIONS_SPECIALIZATIONS_OF_DOCTORS", Storage="_SPECIALIZATIONS", ThisKey="specicalization_id", OtherKey="id", IsForeignKey=true)]
 		public SPECIALIZATIONS SPECIALIZATIONS
 		{
 			get
@@ -3159,9 +3025,143 @@ namespace Clinic
 					}
 					else
 					{
-						this._specicalization_id = default(string);
+						this._specicalization_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("SPECIALIZATIONS");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SYSTEM_ADMINS")]
+	public partial class SYSTEM_ADMINS : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _user_name;
+		
+		private string _native_name;
+		
+		private string _password;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onuser_nameChanging(string value);
+    partial void Onuser_nameChanged();
+    partial void Onnative_nameChanging(string value);
+    partial void Onnative_nameChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    #endregion
+		
+		public SYSTEM_ADMINS()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_name", DbType="VarChar(100)")]
+		public string user_name
+		{
+			get
+			{
+				return this._user_name;
+			}
+			set
+			{
+				if ((this._user_name != value))
+				{
+					this.Onuser_nameChanging(value);
+					this.SendPropertyChanging();
+					this._user_name = value;
+					this.SendPropertyChanged("user_name");
+					this.Onuser_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_native_name", DbType="VarChar(100)")]
+		public string native_name
+		{
+			get
+			{
+				return this._native_name;
+			}
+			set
+			{
+				if ((this._native_name != value))
+				{
+					this.Onnative_nameChanging(value);
+					this.SendPropertyChanging();
+					this._native_name = value;
+					this.SendPropertyChanged("native_name");
+					this.Onnative_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(200)")]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
 				}
 			}
 		}

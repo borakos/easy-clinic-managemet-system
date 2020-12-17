@@ -7,6 +7,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using System.Web;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Clinic.Controllers
 {
@@ -22,16 +27,21 @@ namespace Clinic.Controllers
 
         [HttpPut]
         //api/patients/creat?patient
-        public IHttpActionResult create(Patient patient)
+        public IHttpActionResult create(string patient)
         {
-            try
-            {
-                var result = repository.CreatPatient(patient);
+            try {
+                /*var provider = new MultipartFormDataStreamProvider("D:\\ELTE\\Software technology\\Storage");
+                await Request.Content.ReadAsMultipartAsync(provider);
+                foreach(var file in provider.FileData) {
+                    var name = file.Headers.ContentDisposition.FileName.Trim('"');
+                    var path = "D:\\ELTE\\Software technology\\Storage" + file.LocalFileName;
+                    File.Move(file.LocalFileName, path);
+                }*/
+                var result = repository.CreatPatient(JsonConvert.DeserializeObject<Patient>(patient));
                 return Ok(result);
             }
-            catch (Exception e)
-            {
-                return BadRequest();
+            catch (Exception e) {
+                return InternalServerError(e);
             }
         }
 
@@ -61,7 +71,7 @@ namespace Clinic.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -82,7 +92,7 @@ namespace Clinic.Controllers
 
         [HttpDelete]
         //api/patients/delete?id
-        public IHttpActionResult delete(string id)
+        public IHttpActionResult delete(int id)
         {
             try
             {
@@ -97,7 +107,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/getPatient?id
-        public IHttpActionResult getPatient(string id)
+        public IHttpActionResult getPatient(int id)
         {
             try
             {
@@ -126,7 +136,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/acceptPatient?id
-        public IHttpActionResult acceptPatient(string id) {
+        public IHttpActionResult acceptPatient(int id) {
             try
             {
                 var result = repository.acceptPatient(id);
@@ -140,7 +150,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/denyPatient?id
-        public IHttpActionResult denyPatient(string id)
+        public IHttpActionResult denyPatient(int id)
         {
             try
             {

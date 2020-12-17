@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit {
                 "Content-Type": "application/json"
             })
         }).subscribe(response => {
-            localStorage.setItem("jwt", response as string);
+			this.jwtService.setActiveToken(response as string);
+			console.log(this.jwtService.getUserRole())
             this.invalidLogin = false;
             this.router.navigate(["/"]);
         }, err => {

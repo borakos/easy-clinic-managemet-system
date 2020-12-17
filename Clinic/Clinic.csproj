@@ -134,6 +134,7 @@
     <Compile Include="Models\AuthInfo.cs" />
     <Compile Include="Models\Basic.cs" />
     <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\LoginResult.cs" />
     <Compile Include="Models\Patient.cs" />

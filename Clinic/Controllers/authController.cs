@@ -27,11 +27,11 @@ namespace Clinic.Controllers
 		{
 			try
 			{
-				if ((request != null) && repository.checkUser(request.userName))
+				if (request != null)
 				{
 					if (repository.checkPass(request.userName, request.password))
 					{
-						AuthInfo info = new AuthInfo { userName = request.userName, role = "admin", id = "1" };
+                        AuthInfo info = new AuthInfo { userName = request.userName, role = repository.getUserRoleByName(request.userName).ToString(), id = repository.getUserIdByName(request.userName) };
 						const string secret = "easy clinic managemet system";
 						IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
 						IJsonSerializer serializer = new JsonNetSerializer();
@@ -39,7 +39,7 @@ namespace Clinic.Controllers
 						IJwtEncoder encoder = new JwtEncoder(algorithm, serializer, urlEncoder);
 						var token = encoder.Encode(info, secret);
 						return Ok(token);
-					}
+                    }
 					else
 					{
 						return Content(HttpStatusCode.Unauthorized, "Password or username is not correct");
@@ -47,7 +47,7 @@ namespace Clinic.Controllers
 				}
 				else
 				{
-					return Content(HttpStatusCode.Unauthorized, "User cannot be found.");
+					return Content(HttpStatusCode.Unauthorized, "Cannot get username or password.");
 				}
 				} catch (Exception exc)
 			{

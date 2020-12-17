@@ -19,7 +19,9 @@ export class PatientService{
 
 	createPatient(data, file = null): Observable<boolean> {
 		delete data.repassword;
-		return this.http.put<boolean>('api/patients/create', file, {params : {patient: JSON.stringify(data)}});
+		return this.http.put<boolean>('api/patients/create', file, {
+			params : {patient: JSON.stringify(data)}
+		});
 	}
 
 	nameIsFree(userName):Observable<boolean>{

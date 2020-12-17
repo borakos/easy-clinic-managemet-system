@@ -1,6 +1,8 @@
 ﻿using Clinic.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -15,7 +17,7 @@ namespace Clinic.Repository
         private List<Appoinment> lista = new List<Appoinment>();
 
         public BackendRepository() {
-            login.Add(new LoginRequest { userName = "admin", password = "admin" });
+            //login.Add(new LoginRequest { userName = "admin", password = "admin" });
         }
         //check username
         public Boolean checkUser(string username) {
@@ -28,24 +30,25 @@ namespace Clinic.Repository
 
         //check password
         public Boolean checkPass(string username, string password) {
-            var result = false;
-            if (login.Exists(t => t.userName == username && t.password == password))
-            {
-                result = true;
-            }
-            return result;
-        }
-        //check username can use or not
-        public Boolean IsUserUnique(string username) {
-            var result = true;
-            if (login.Exists(t => t.userName == username))
-            {
-                result = false;
-            }
-            return result;
+            return LinqToSQL.checkPassword(username, password);
         }
 
-        //creat new Pharmacy
+        //check username can use or not
+        public bool IsUserUnique(string username) {
+            return LinqToSQL.getUserTypeByName(username) == Role.none;
+        }
+
+        //get the role of the user
+        public Role getUserRoleByName(string username) {
+            return LinqToSQL.getUserTypeByName(username);
+        }
+
+        //get the id of the user
+        public int getUserIdByName(string username) {
+            return LinqToSQL.getUserIdByName(username);
+        }
+
+        //create new Pharmacy
         public Boolean CreatPharmacy(Pharmacy pharmacy) {
             PHARMACISTS newPHARMACISTS = new PHARMACISTS();
             newPHARMACISTS.support_delivery = pharmacy.supportDelivery;
@@ -68,8 +71,7 @@ namespace Clinic.Repository
             var l = new LoginRequest();
 
             PHARMACISTS updatePHARMACISTS = new PHARMACISTS();
-            string strID = pharmacy.id;
-            LinqToSQL.updatePHARMACIST(strID, updatePHARMACISTS);
+            LinqToSQL.updatePHARMACIST(pharmacy.id, updatePHARMACISTS);
 
             listp.ForEach(c =>
             {
@@ -97,7 +99,7 @@ namespace Clinic.Repository
         }
 
         //delete pharmacy by id
-        public Boolean deletePharmacy(string id) {
+        public Boolean deletePharmacy(int id) {
             var result = false;
             if(LinqToSQL.deletePHARMACIST(id))
                 result = true;
@@ -111,7 +113,7 @@ namespace Clinic.Repository
         }
 
         // get a pharmacy by id
-        public Pharmacy GetPharmacy(string id) {
+        public Pharmacy GetPharmacy(int id) {
             
             Pharmacy p = new Pharmacy();
 
@@ -142,7 +144,7 @@ namespace Clinic.Repository
             {
                 //listd.Add(doctor);
                 DOCTORS newDOC = new DOCTORS();
-                newDOC.id = doctor.id;
+                //newDOC.id = doctor.id;
                 newDOC.native_name = doctor.nativeName;
                 LinqToSQL.insert2doctors(newDOC);
 
@@ -158,7 +160,7 @@ namespace Clinic.Repository
             var l = new LoginRequest();
 
             DOCTORS updateDOC = new DOCTORS();
-            updateDOC.id = doctor.id;
+            //updateDOC.id = doctor.id;
             updateDOC.native_name = doctor.nativeName;
             if (LinqToSQL.updateDoc(doctor.id, updateDOC))
                 result = true;
@@ -194,7 +196,7 @@ namespace Clinic.Repository
         }
 
         //delete a doctor by id
-        public Boolean deleteDoctor(string id)
+        public Boolean deleteDoctor(int id)
         {
             var result = false;
             //listd.ForEach(c => {
@@ -213,7 +215,7 @@ namespace Clinic.Repository
         }
 
         //get a doctor by id
-        public Doctor getDoctor(string id) {
+        public Doctor getDoctor(int id) {
             Doctor p = new Doctor();
 
             DOCTORS selectDoc = LinqToSQL.selectDocByID(id);
@@ -235,7 +237,7 @@ namespace Clinic.Repository
         public Boolean CreatPatient(Patient patient)
         {
             var result = true;
-            if (login.Exists(t => t.userName == patient.userName))
+            if (!IsUserUnique(patient.userName))
             {
                 result = false;
             }
@@ -244,13 +246,18 @@ namespace Clinic.Repository
                 //listpa.Add(patient);
 
                 PATIENTS newPatient = new PATIENTS();
-                newPatient.id = patient.id;
                 newPatient.user_name = patient.userName;
                 newPatient.native_name = patient.nativeName;
                 newPatient.password = patient.password;
                 newPatient.gender = patient.gender.ToString();
+                newPatient.birthday = patient.birthday;
+                newPatient.weight = patient.weight;
+                newPatient.country = patient.country;
+                newPatient.city = patient.city;
+                newPatient.postal_code = patient.postalCode;
+                newPatient.address = patient.address;
                 LinqToSQL.insert2patient(newPatient);
-                login.Add(new LoginRequest { userName = patient.userName, password = patient.password });
+                //login.Add(new LoginRequest { userName = patient.userName, password = patient.password });
             }
             return result;
         }
@@ -263,7 +270,6 @@ namespace Clinic.Repository
 
             PATIENTS updatePATIENT = new PATIENTS();
             updatePATIENT.user_name = patient.userName;
-            updatePATIENT.age = patient.age;
 
             if (LinqToSQL.updatePatientById(patient.id, updatePATIENT))
                 result = true;
@@ -294,7 +300,7 @@ namespace Clinic.Repository
         }
 
         //delete a patient by id
-        public Boolean deletePatient(string id)
+        public Boolean deletePatient(int id)
         {
             var result = false;
 
@@ -312,7 +318,7 @@ namespace Clinic.Repository
         }
 
         //get a patient by id
-        public Patient getPatient(string id)
+        public Patient getPatient(int id)
         {
             Patient p = new Patient();
 
@@ -336,7 +342,7 @@ namespace Clinic.Repository
         }
 
         //check the patient if accept by id
-        public Boolean acceptPatient(string id) {
+        public Boolean acceptPatient(int id) {
             var result = false;
             listpa.ForEach(c =>
             {
@@ -350,7 +356,7 @@ namespace Clinic.Repository
         }
 
         //check the patient if denied
-        public Boolean denyPatient(string id)
+        public Boolean denyPatient(int id)
         {
             var result = false;
             listpa.ForEach(c =>

@@ -12,6 +12,5 @@ namespace Clinic.Models
         public double weight { get; set; }
         public Boolean hasMedicalData { get; set; }
         public Boolean registration { get; set; }
-        public int age { get; set; }
     }
 }
