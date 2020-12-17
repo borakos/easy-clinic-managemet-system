@@ -8,6 +8,9 @@ import { catchError } from 'rxjs/operators';
     providedIn: 'root'
 })
 export class PharmacyService{
+	listPharmaciesWithFilter(arg0: (any: any) => Observable<any>, filter: string): Observable<Pharmacy[]> {
+		throw new Error("Method not implemented.");
+	}
 
 	private headerJson:HttpHeaders;
 

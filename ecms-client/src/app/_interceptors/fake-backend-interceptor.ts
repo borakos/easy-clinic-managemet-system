@@ -8,6 +8,7 @@ import { handlePatientRequests } from './fake-backend-sub-cases/patient-cases';
 import { handlePharmacyRequests } from './fake-backend-sub-cases/pharmacy-cases';
 import { ok, error, unauthorized } from './fake-backend-sub-cases/responses';
 import { handleExaminationRequests } from './fake-backend-sub-cases/examination-cases';
+import { handlePrescriptionRequests } from './fake-backend-sub-cases/prescription-cases';
 
 @Injectable()
 export class FakeBackenInterceptor implements HttpInterceptor{
@@ -58,6 +59,10 @@ export class FakeBackenInterceptor implements HttpInterceptor{
                 return result;
 			}
 			result = handleExaminationRequests(request);
+            if(result){
+                return result;
+			}
+			result = handlePrescriptionRequests(request);
             if(result){
                 return result;
             }

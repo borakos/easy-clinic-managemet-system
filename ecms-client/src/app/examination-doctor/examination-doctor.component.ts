@@ -50,7 +50,6 @@ export class ExaminationDoctorComponent implements OnInit {
 		delete data.descriptionP;
 		delete data.files;
 		data.eventId = examinationId;
-		console.log(data)
         if (this.fileIsSelected(files)) {
             let template = <File>files[0];
             let formData = new FormData();

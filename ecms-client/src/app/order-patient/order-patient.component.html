@@ -1,0 +1,120 @@
+<h2>Orders</h2>
+<br/>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+<table *ngIf="prescriptionObservable | async as prescriptions; else loading" class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+			<th>Prescription ID</th>
+			<th>Examination date</th>
+			<th>Notes</th>
+			<th>Contains file</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let prescription of prescriptions">
+            <td>{{ prescription.examination.application.event.label }}</td>
+            <td>{{ prescription.id }}</td>
+			<td>{{ prescription.examination.application.event.start.toISOString().split('T')[0] }}</td>
+			<td>{{ prescription.notes }}</td>
+            <td *ngIf="prescription.containsFile; else noForm1" class="text-center"><fa-icon [icon]="['fas', 'check']"></fa-icon></td>
+            <ng-template #noForm1>
+                <td></td>
+            </ng-template>
+            <td>
+				<a (click)="orederPrescriptionMenu(prescription)"><fa-icon [icon]="['fas', 'truck']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
+				<a (click)="deletePresciption(prescription.id)"><fa-icon [icon]="['fas', 'trash-alt']" style="color:red"></fa-icon></a>
+			</td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #loading>
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #orderPrescription let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Order precsription</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <h5 for="description">Notes</h5>
+        <textarea #description readonly id="description" name="description" ngModel="{{ storedDescription }}" class="form-control" placeholder="Description" clos="50" rows="5"></textarea>
+        <br/>
+		<a *ngIf="selectedExamination?.containsFile" class="btn btn-lg btn-info text-white btn-block" (click)="downloadMedicalReport()">Download Current Medical Report</a>
+        <input #filter type="text" id="filter" name="filter" ngModel class="form-control" (change)="filterPharmacies(filter.value)" placeholder="Filter">
+        <br/>
+        <select *ngIf="pharmacyObservable | async as pharmacies; else loading" #pharmaciesSelect id="doctorsSelect" name="doctorsSelect" (change)="getPharmacy(pharmaciesSelect.value)" size="5" ngModel class="form-control">
+            <optgroup *ngFor="let group of (pharmacies | formatPharmacies)" label="{{ group.key }}">      
+                <option *ngFor="let pharmacy of group.pharmacies" value="{{pharmacy.id}}">{{ pharmacy.name }}</option>
+            </optgroup>
+        </select>
+        <ng-template #loading>
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+		</ng-template>
+		<br/>
+		<div *ngIf="selectedLoading == 'loading'">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border text-primary" style="width: 5rem; height: 5rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+			</div>
+		</div>
+		<div [hidden]="(selectedLoading != 'loaded') || !(selectedPharmacy?.supportPreOrder)">
+			<h5 ><input #onlinePay type="checkbox" id="preferOnline" name="preferOnline"> I would like to pay online.</h5>
+		</div>
+		<div [hidden]="(selectedLoading != 'loaded') || !(selectedPharmacy?.supportDelivery)">
+			<h5 ><input #delivery type="checkbox" id="preferOnline" name="preferOnline"> I would like to have a delivery.</h5>
+		</div>
+	</div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close({onlinePay: onlinePay.checked, delivery: delivery.checked})">Save</button>
+    </div>
+</ng-template>
+
+<ng-template #orderSuccess let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Order was successfull.</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+		<p>The pharmacy will pack your medicines.</p>
+		<div *ngIf="onlinePay; else localPay">
+			You selected online pay, for the following steps you will be informed via email by the pharmacy.
+		</div>
+		<ng-template #localPay>
+			You selected local pay, you have to pay for the medicines in the pharmacy.
+		</ng-template>
+		<div *ngIf="delivery; else noDelivery">
+			You selected delivery, for the following steps you will be informed via email by the pharmacy.
+		</div>
+		<ng-template #noDelivery>
+			You selected local buy, you have to go for the medicines to the pharmacy.
+		</ng-template>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success text-white btn-block col-sm-2" (click)="close()">Ok</button>
+    </div>
+</ng-template>
+
+<ng-template #orderFailure let-close="close">
+    <div class="modal-header">
+        <h5 class="modal-title">Order precsription</h5>
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-1" (click)="close()"><fa-icon [icon]="['fas', 'times']" ></fa-icon></button>
+    </div>
+    <div class="modal-body">
+        <p>Order was unsuccessfull.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger text-white btn-block col-sm-2" (click)="close()">Ok</button>
+    </div>
+</ng-template>

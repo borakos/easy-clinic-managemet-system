@@ -35,6 +35,7 @@
 				<a routerLink="/patients/edit/{{ patient.id }}"><fa-icon [icon]="['fas', 'user-cog']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
 				<a routerLink="/patients/{{ patient.id }}/manage-appointments"><fa-icon [icon]="['far', 'calendar-alt']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
 				<a routerLink="/patients/{{ patient.id }}/examinations"><fa-icon [icon]="['fas', 'stethoscope']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
+				<a routerLink="/patients/{{ patient.id }}/orders"><fa-icon [icon]="['fas', 'truck']" style="color:blue"></fa-icon></a>&nbsp;&nbsp;
 				<a (click)="deletePatient(patient.id)"><fa-icon [icon]="['fas', 'user-times']" style="color:red"></fa-icon></a>
 			</td>
         </tr>

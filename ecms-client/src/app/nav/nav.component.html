@@ -7,6 +7,7 @@
                 <li *ngIf="userIsPatientOrAdmin()"><a routerLink="patients/apply-to-appointment"><h5><fa-icon [icon]="['far', 'calendar-check']"></fa-icon> Make appointment</h5></a></li>
 				<li *ngIf="userIsPatient()"><a routerLink="patients/{{ getUserID() }}/manage-appointments"><h5><fa-icon [icon]="['far', 'calendar-alt']"></fa-icon> Manage appointments</h5></a></li>
 				<li *ngIf="userIsPatient()"><a routerLink="patients/{{ getUserID() }}/examinations"><h5><fa-icon [icon]="['fas', 'stethoscope']"></fa-icon> Check examinations</h5></a></li>
+				<li *ngIf="userIsPatient()"><a routerLink="patients/{{ getUserID() }}/orders"><h5><fa-icon [icon]="['fas', 'truck']"></fa-icon> Order medicines</h5></a></li>
 			</ul>
         </li>
         <li *ngIf="userIsDoctor()">

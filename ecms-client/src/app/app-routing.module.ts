@@ -22,6 +22,7 @@ import { AdminOrPatientSelfGuard } from './_guards/admin-patient-self-guard';
 import { ManageAppointmentPatientComponent } from './manage-appointment-patient/manage-appointment-patient.component';
 import { ExaminationDoctorComponent } from './examination-doctor/examination-doctor.component';
 import { ExaminationPatientComponent } from './examination-patient/examination-patient.component';
+import { OrderPatientComponent } from './order-patient/order-patient.component';
 
 const routes: Routes = [
     {
@@ -91,6 +92,11 @@ const routes: Routes = [
 	{
         path:'patients/:id/examinations',
         component: ExaminationPatientComponent,
+        canActivate: [AdminOrPatientSelfGuard]
+	},
+	{
+        path:'patients/:id/orders',
+        component: OrderPatientComponent,
         canActivate: [AdminOrPatientSelfGuard]
     },
     {

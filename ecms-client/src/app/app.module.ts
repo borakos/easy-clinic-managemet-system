@@ -32,12 +32,14 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { MilitaryDateFormatter } from './_providers/military-date-provider';
 import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
 import { FormatDoctors } from './_providers/doctor-select-pipe';
+import { FormatPharmacies } from './_providers/pharmacies-select-pipe';
 import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
 import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
 import { FormatAppointmentEventDoctors } from './_providers/appointment-event-doctors-pipe';
 import { ManageAppointmentPatientComponent } from './manage-appointment-patient/manage-appointment-patient.component';
 import { ExaminationDoctorComponent } from './examination-doctor/examination-doctor.component';
 import { ExaminationPatientComponent } from './examination-patient/examination-patient.component';
+import { OrderPatientComponent } from './order-patient/order-patient.component';
 
 @NgModule({
     declarations: [
@@ -55,13 +57,15 @@ import { ExaminationPatientComponent } from './examination-patient/examination-p
         EditPharmaciesComponent,
         CustomCalendarComponent,
         ApplyToAppointmentComponent,
-        FormatDoctors,
+		FormatDoctors,
+		FormatPharmacies,
         FormatAppointmentEvents,
         FormatAppointmentEventDoctors,
         ManageAppointmentComponent,
         ManageAppointmentPatientComponent,
         ExaminationDoctorComponent,
-        ExaminationPatientComponent
+        ExaminationPatientComponent,
+        OrderPatientComponent
     ],
     imports: [
         BrowserModule,

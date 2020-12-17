@@ -21,6 +21,33 @@ export function handlePharmacyRequests(request: HttpRequest<any>): Observable<Ht
                 postalCode: 9420, address:'Kossuth u. 1.'
             } as Pharmacy);
             return ok(pharmacies);
+		}
+		case url.endsWith('/pharmacies/list/filter') && method === 'POST': {
+			let pharmacies: Pharmacy[] = [
+                {
+					id: 0, name: 'Virag gyogyszertar', userName: 'viraggy',
+					email: 'info@viraggyogyszertar.com', supportDelivery: true,
+					supportPreOrder: false, country: 'Hungary', city: 'Budapest VII',
+					postalCode: 8007, address:'Kossuth u. 1.'
+				} as Pharmacy,
+				{
+					id: 1, name: 'Beres gyogyszertar', userName: 'beresgy',
+					email: 'info@beresgyogyszertar.com', supportDelivery: false,
+					supportPreOrder: true, country: 'Hungary', city: 'Sopron',
+					postalCode: 9420, address:'Kossuth u. 1.'
+				} as Pharmacy
+            ];
+            let filter: string  = body.filter as string;
+            if(filter) {
+                let filtered = [];
+                for(let i = 0; i < pharmacies.length; i++){
+                    if((pharmacies[i].name.includes(filter)) || (pharmacies[i].city[0].includes(filter))){
+                        filtered.push(pharmacies[i])
+                    }
+                }
+                return ok(filtered);
+            }
+            return ok(pharmacies);
         }
         case url.includes('/pharmacies/delete') && method === 'DELETE': {
             return error();
@@ -29,7 +56,7 @@ export function handlePharmacyRequests(request: HttpRequest<any>): Observable<Ht
             return ok({
                 id: 0, name: 'Virag gyogyszertar', userName: 'error',
                 email: 'info@viraggyogyszertar.com', supportDelivery: true,
-                supportPreOrder: false, country: 'Hungary', city: 'Budapest VII',
+                supportPreOrder: true, country: 'Hungary', city: 'Budapest VII',
                 postalCode: 8007, address:'Kossuth u. 1.'
             } as Pharmacy);
         }

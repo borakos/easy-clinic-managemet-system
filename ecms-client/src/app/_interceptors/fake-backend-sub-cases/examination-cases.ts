@@ -57,15 +57,6 @@ export function handleExaminationRequests(request: HttpRequest<any>): Observable
 		case url.endsWith('api/examinations/prescriptions') && method === 'PUT': {
             return ok(true);
         }
-        case url.endsWith('/appointments/apply') && method === 'PUT': {
-            let desc = params.get('description');
-            if(desc.includes('error')){
-                return error();
-            } else if(desc.includes('occupied')){
-                return ok(false);
-            }
-            return ok(true);
-        }
         case url.endsWith('/examinations/list-by-patient') && method === 'POST': {
             let doctorIds: number = body.patientId;
             if(doctorIds){
@@ -114,29 +105,13 @@ export function handleExaminationRequests(request: HttpRequest<any>): Observable
                 return ok([]);
             }
 		}
-		case url.endsWith('/appointments/appointment-by-event') && method === 'POST': {
-            return ok({
-                id: 1,
-                event: {
-                    id: 3,
-                    label: 'Dr. Géza Alföldi',
-                    isFree: false,
-                    isAccepted: false,
-                    start: new Date(Date.now()+ 23 * 3600 * 1000),
-                    end: new Date(Date.now() + 23.5 * 3600 * 1000),
-                } as AppointmentEvent,
-                containsFile: true,
-                description: 'hello description edit',
-				preferOnline: false
-            } as Appointment);
-		}
 		case url.includes('/examinations/downloadReport') && method === 'GET': {
             let file = new Blob([], {
                 type: 'application/zip'
             })
             return ok(file);
         }
-        case url.includes('/appointments/delete') && method === 'DELETE': {
+        case url.includes('/examinations/delete') && method === 'DELETE': {
             return ok(true);
         }
         case url.endsWith('/examinations/edit') && method === 'PUT': {
@@ -146,9 +121,6 @@ export function handleExaminationRequests(request: HttpRequest<any>): Observable
             } else if(desc?.includes('occupied')){
                 return ok(false);
             }
-            return ok(true);
-		}
-		case url.endsWith('/appointments/accept') && method === 'POST': {
             return ok(true);
 		}
         default: return undefined;

@@ -106,7 +106,7 @@ export class ApplyToAppointmentComponent implements OnInit {
         let createdAppointment;
         let files = data.files;
         delete data.files;
-        data.eventId = eventId;
+		data.eventId = eventId;
         if(this.fileIsSelected(files)){
             let template= <File>files[0];
             let formData= new FormData();
