@@ -9,6 +9,6 @@ namespace Clinic.Models
     {
         public string userName { get; set; }
         public string role { get; set; }
-        public int id { get; set; }
+        public string id { get; set; }
     }
 }

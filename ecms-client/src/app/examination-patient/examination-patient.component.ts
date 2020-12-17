@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Examination } from '../_providers/types';
 import { ExaminationService } from '../_services/examination-service';
-import { Logger } from 'Api&Test/ecms-client/src/app/_services/logger-service';
+import { Logger } from '../_services/logger-service';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 

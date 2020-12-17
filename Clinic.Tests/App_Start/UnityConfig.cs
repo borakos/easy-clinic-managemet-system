@@ -15,7 +15,7 @@ namespace Clinic.Tests
             
             // e.g. container.RegisterType<ITestService, TestService>();
             
-            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            //GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }
 }

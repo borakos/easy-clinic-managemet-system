@@ -100,7 +100,7 @@ namespace Clinic.Controllers
 
         [HttpDelete]
         //api/doctors/delete?id
-        public IHttpActionResult delete(int id)
+        public IHttpActionResult delete(string id)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace Clinic.Controllers
         /*public Doctor getDoctor(int id) {
             return repository.getDoctor(id);
         }*/
-        public IHttpActionResult getDoctor(int id)
+        public IHttpActionResult getDoctor(string id)
         {
             try
             {

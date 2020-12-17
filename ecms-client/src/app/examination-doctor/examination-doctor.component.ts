@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Logger } from 'Api&Test/ecms-client/src/app/_services/logger-service';
+import { Logger } from '../_services/logger-service';
 import { Examination } from '../_providers/types';
 import { ExaminationService } from '../_services/examination-service';
 import { ActivatedRoute } from '@angular/router';

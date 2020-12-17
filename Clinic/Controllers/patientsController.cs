@@ -82,7 +82,7 @@ namespace Clinic.Controllers
 
         [HttpDelete]
         //api/patients/delete?id
-        public IHttpActionResult delete(int id)
+        public IHttpActionResult delete(string id)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/getPatient?id
-        public IHttpActionResult getPatient(int id)
+        public IHttpActionResult getPatient(string id)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/acceptPatient?id
-        public IHttpActionResult acceptPatient(int id) {
+        public IHttpActionResult acceptPatient(string id) {
             try
             {
                 var result = repository.acceptPatient(id);
@@ -140,7 +140,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/denyPatient?id
-        public IHttpActionResult denyPatient(int id)
+        public IHttpActionResult denyPatient(string id)
         {
             try
             {

@@ -9,8 +9,9 @@ namespace Clinic.Models
     {
         public Gender gender { get; set; }
         public DateTime birthday { get; set; }
-        public int weight { get; set; }
+        public double weight { get; set; }
         public Boolean hasMedicalData { get; set; }
         public Boolean registration { get; set; }
+        public int age { get; set; }
     }
 }

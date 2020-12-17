@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 17.25, 14.25" name="ECMS">
+  <DataContextMoniker Name="/ECMSDataContext" />
+  <nestedChildShapes>
+    <classShape Id="208b88f4-9076-42b9-934d-685b41ac8720" absoluteBounds="8.875, 10.375, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ECMSDataContext/APPLICATIONS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1545a39b-87b3-4b80-819b-01b02df660ef" absoluteBounds="8.89, 10.835, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3682f2be-4fc0-4433-b3b5-7cde5a26ac1a" absoluteBounds="9.375, 2.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ECMSDataContext/SYSTEM_ADMINS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d78adafb-5042-4eb6-8303-ad2de642c9e0" absoluteBounds="9.39, 2.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="516ec65d-e53f-4c2c-be57-b7bb8c7a8ce8" absoluteBounds="13.5, 4.625, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ECMSDataContext/DOCTOR_OPENTIMES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="fdf68a69-fd11-49b1-b800-597ef95bcc20" absoluteBounds="13.515, 5.0850000000000009, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b2046146-e904-49fc-8ddb-b4584b55607f" absoluteBounds="12.125, 7.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ECMSDataContext/DOCTORS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4c313c14-ee8c-48af-9bca-0bbf4a721837" absoluteBounds="12.14, 8.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0c5a63a5-9e2c-4d19-af98-2728a54ed088" absoluteBounds="1.25, 9.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ECMSDataContext/EXAMINATIONS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="73ca0279-9d15-4bbd-8c12-b9390c15334c" absoluteBounds="1.2650000000000006, 10.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="687acca5-5998-404a-8516-0a60603e90e0" absoluteBounds="4, 1.625, 2, 1.7708968098958329">
+      <DataClassMoniker Name="/ECMSDataContext/ORDERS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5751d10c-b583-4b7c-af78-5b8a5e7d1153" absoluteBounds="4.0150000000000006, 2.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="86bbb4b7-ed51-4a28-b999-810afff5c9c2" absoluteBounds="4.375, 11.125, 2, 2.9247054036458309">
+      <DataClassMoniker Name="/ECMSDataContext/PATIENTS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4bd4062e-9604-4623-831d-6e2ed06e8e9c" absoluteBounds="4.3900000000000006, 11.585, 1.9700000000000002, 2.364705403645833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c6afa920-05ae-4209-92f2-8317b3eb25b6" absoluteBounds="1.125, 3.625, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/ECMSDataContext/PHARMACISTS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="88d90663-8809-4de0-92f3-e7f0a14f31d4" absoluteBounds="1.1399999999999997, 4.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f9909cb6-0b31-47d0-9ac6-93556236ecd6" absoluteBounds="3.75, 5.125, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/ECMSDataContext/PHARMACIST_HOLIDAYS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8de8c35d-41b0-4b14-9994-75c6c7acbfe7" absoluteBounds="3.7650000000000006, 5.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c7ccdd5a-beb1-4010-9cfe-761cfd061ef3" absoluteBounds="1.125, 7.125, 2, 1.7708968098958335">
+      <DataClassMoniker Name="/ECMSDataContext/PHARMACIST_OPENTIMES" />
+      <nestedChildShapes>
+        <elementListCompartment Id="07a778a8-57ce-4f7b-bf6d-e167ca59e38b" absoluteBounds="1.1400000000000006, 7.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e8a19f6e-b98a-4397-af8c-9316048f42d0" absoluteBounds="7, 8.25, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ECMSDataContext/PRESCRIPTIONS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d1b074b5-c692-4a86-829d-c3d06d1eed55" absoluteBounds="7.015, 8.71, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b507ac2d-d8f3-475b-9ecf-77164b364a41" absoluteBounds="12.75, 10.5, 2, 1.3862939453125023">
+      <DataClassMoniker Name="/ECMSDataContext/SPECIALIZATIONS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="78a56fd9-1c68-4d1e-9296-6a078134d649" absoluteBounds="12.765, 10.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="da8d314f-6e12-466c-99c9-f04608ce5824" absoluteBounds="15, 8.375, 2, 1.3862939453125023">
+      <DataClassMoniker Name="/ECMSDataContext/SPECIALIZATIONS_OF_DOCTORS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="eda1366f-fac4-4761-8fcc-d03e5f8adcf7" absoluteBounds="15.015, 8.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(12.125 : 8.03125); (9.96875 : 8.03125); (9.96875 : 10.375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/DOCTORS/DOCTOR_APPLICATION" />
+      <nodes>
+        <classShapeMoniker Id="b2046146-e904-49fc-8ddb-b4584b55607f" />
+        <classShapeMoniker Id="208b88f4-9076-42b9-934d-685b41ac8720" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(13.8125 : 7.875); (13.8125 : 6.20359537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/DOCTORS/DOCTOR_DOCTOR_OPENTIME" />
+      <nodes>
+        <classShapeMoniker Id="b2046146-e904-49fc-8ddb-b4584b55607f" />
+        <classShapeMoniker Id="516ec65d-e53f-4c2c-be57-b7bb8c7a8ce8" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.875 : 10.71875); (3.25 : 10.71875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/APPLICATIONS/APPLICATION_EXAMINATION" />
+      <nodes>
+        <classShapeMoniker Id="208b88f4-9076-42b9-934d-685b41ac8720" />
+        <classShapeMoniker Id="0c5a63a5-9e2c-4d19-af98-2728a54ed088" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.375 : 11.8277498372396); (8.875 : 11.8277498372396)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/PATIENTS/PATIENT_APPLICATION" />
+      <nodes>
+        <classShapeMoniker Id="86bbb4b7-ed51-4a28-b999-810afff5c9c2" />
+        <classShapeMoniker Id="208b88f4-9076-42b9-934d-685b41ac8720" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.125 : 4.34375); (5.90625 : 4.34375); (5.90625 : 3.39589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/PHARMACISTS/PHARMACIST_ORDER" />
+      <nodes>
+        <classShapeMoniker Id="c6afa920-05ae-4209-92f2-8317b3eb25b6" />
+        <classShapeMoniker Id="687acca5-5998-404a-8516-0a60603e90e0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.125 : 5.74120198567708); (3.75 : 5.74120198567708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/PHARMACISTS/PHARMACIST_PHARMACIST_HOLIDAY" />
+      <nodes>
+        <classShapeMoniker Id="c6afa920-05ae-4209-92f2-8317b3eb25b6" />
+        <classShapeMoniker Id="f9909cb6-0b31-47d0-9ac6-93556236ecd6" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.125 : 6.35740397135417); (2.125 : 7.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/PHARMACISTS/PHARMACIST_PHARMACIST_OPENTIME" />
+      <nodes>
+        <classShapeMoniker Id="c6afa920-05ae-4209-92f2-8317b3eb25b6" />
+        <classShapeMoniker Id="c7ccdd5a-beb1-4010-9cfe-761cfd061ef3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8 : 8.25); (8 : 2.51044840494792); (6 : 2.51044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/PRESCRIPTIONS/PRESCRIPTION_ORDER" />
+      <nodes>
+        <classShapeMoniker Id="e8a19f6e-b98a-4397-af8c-9316048f42d0" />
+        <classShapeMoniker Id="687acca5-5998-404a-8516-0a60603e90e0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.25 : 10.09375); (7.90625 : 10.09375); (7.90625 : 9.82859537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/EXAMINATIONS/EXAMINATION_PRESCRIPTION" />
+      <nodes>
+        <classShapeMoniker Id="0c5a63a5-9e2c-4d19-af98-2728a54ed088" />
+        <classShapeMoniker Id="e8a19f6e-b98a-4397-af8c-9316048f42d0" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.125 : 9.06814697265625); (15 : 9.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/DOCTORS/DOCTOR_SPECIALIZATIONS_OF_DOCTOR" />
+      <nodes>
+        <classShapeMoniker Id="b2046146-e904-49fc-8ddb-b4584b55607f" />
+        <classShapeMoniker Id="da8d314f-6e12-466c-99c9-f04608ce5824" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(14.75 : 11.1931469726563); (16 : 11.1931469726563); (16 : 9.7612939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ECMSDataContext/SPECIALIZATIONS/SPECIALIZATION_SPECIALIZATIONS_OF_DOCTOR" />
+      <nodes>
+        <classShapeMoniker Id="b507ac2d-d8f3-475b-9ecf-77164b364a41" />
+        <classShapeMoniker Id="da8d314f-6e12-466c-99c9-f04608ce5824" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

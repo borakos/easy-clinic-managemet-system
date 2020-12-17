@@ -79,7 +79,7 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/pharmacies/getPharmacy?id
-        public IHttpActionResult getPharmacy(int id) {
+        public IHttpActionResult getPharmacy(string id) {
             try
             {
                 var result = repository.GetPharmacy(id);
@@ -94,7 +94,7 @@ namespace Clinic.Controllers
 
         [HttpDelete]
         //api/pharmacies/delete?id
-        public IHttpActionResult delete(int id) {
+        public IHttpActionResult delete(string id) {
             try
             {
                 var result = repository.deletePharmacy(id);

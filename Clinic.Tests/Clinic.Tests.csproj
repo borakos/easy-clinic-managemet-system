@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Clinic\Clinic.csproj">
-      <Project>{A99AA38B-B945-40A5-83BD-9D71BC5397C2}</Project>
+      <Project>{a99aa38b-b945-40a5-83bd-9d71bc5397c2}</Project>
       <Name>Clinic</Name>
     </ProjectReference>
   </ItemGroup>

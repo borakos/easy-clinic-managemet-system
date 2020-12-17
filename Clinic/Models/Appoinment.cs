@@ -8,7 +8,7 @@ namespace Clinic.Models
     public class Appoinment
     {
         public string description { get; set; }
-        public int eventId { get; set; }
+        public string eventId { get; set; }
         public Boolean preferOnline { get; set; }
     }
 }

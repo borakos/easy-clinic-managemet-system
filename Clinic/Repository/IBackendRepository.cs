@@ -14,22 +14,22 @@ namespace Clinic.Repository
         Boolean CreatPharmacy(Pharmacy pharmacy);
         Boolean UpdatePharmacy(Pharmacy pharmacy);
         List<Pharmacy> getAllPharmacy();
-        Boolean deletePharmacy(int id);
-        Pharmacy GetPharmacy(int id);
+        Boolean deletePharmacy(string id);
+        Pharmacy GetPharmacy(string id);
         Boolean CreatDoctor(Doctor doctor);
         Boolean UpdateDoctor(Doctor doctor);
         List<Doctor> getAllDoctor();
         List<Doctor> getFilterDoctor(string filter);
-        Boolean deleteDoctor(int id);
-        Doctor getDoctor(int id);
+        Boolean deleteDoctor(string id);
+        Doctor getDoctor(string id);
         Boolean UpdatePatient(Patient patient);
         Boolean CreatPatient(Patient patient);
         List<Patient> getAllPatient();
-        Boolean deletePatient(int id);
-        Patient getPatient(int id);
+        Boolean deletePatient(string id);
+        Patient getPatient(string id);
         List<Patient> patientApplicants();
-        Boolean acceptPatient(int id);
-        Boolean denyPatient(int id);
+        Boolean acceptPatient(string id);
+        Boolean denyPatient(string id);
         Boolean createAppointments(Appoinment appoinment);
     }
 }

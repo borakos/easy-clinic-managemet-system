@@ -304,3 +304,26 @@ C:\Users\x\Desktop\easy-clinic-managemet-system-merge-back-end_front-end\Clinic\
 C:\Users\x\Desktop\easy-clinic-managemet-system-merge-back-end_front-end\Clinic\obj\Debug\Clinic.csproj.CopyComplete
 C:\Users\x\Desktop\easy-clinic-managemet-system-merge-back-end_front-end\Clinic\obj\Debug\Clinic.dll
 C:\Users\x\Desktop\easy-clinic-managemet-system-merge-back-end_front-end\Clinic\obj\Debug\Clinic.pdb
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.Data.Tools.Schema.Sql.UnitTesting.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.Data.Tools.Schema.Sql.UnitTestingAdapter.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.Build.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\Microsoft.Build.Framework.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Collections.Immutable.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.IO.Compression.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Threading.Tasks.Dataflow.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\cs\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\de\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\en\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\es\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\fr\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\it\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\ja\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\ko\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\pl\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\pt-BR\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\ru\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\tr\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\zh-Hans\Microsoft.Build.resources.dll
+D:\ELTE\Software technology\easy-clinic-managemet-system\Clinic\bin\zh-Hant\Microsoft.Build.resources.dll

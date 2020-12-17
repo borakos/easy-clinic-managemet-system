@@ -47,15 +47,15 @@ namespace Clinic.Repository
 
         //creat new Pharmacy
         public Boolean CreatPharmacy(Pharmacy pharmacy) {
-            PHARMACIST newPHARMACIST = new PHARMACIST();
-            newPHARMACIST.support_delivery = pharmacy.supportDelivery;
+            PHARMACISTS newPHARMACISTS = new PHARMACISTS();
+            newPHARMACISTS.support_delivery = pharmacy.supportDelivery;
             var result = true;
             if (login.Exists(t => t.userName == pharmacy.userName))
             {
                 result = false;
             }
             else {
-                LinqToSQL.insert2PHARMACIST(newPHARMACIST);
+                LinqToSQL.insert2PHARMACIST(newPHARMACISTS);
                 listp.Add(pharmacy);
                 login.Add(new LoginRequest { userName = pharmacy.userName, password = pharmacy.password });
             }
@@ -67,9 +67,9 @@ namespace Clinic.Repository
             var result = false;
             var l = new LoginRequest();
 
-            PHARMACIST updatePHARMACIST = new PHARMACIST();
+            PHARMACISTS updatePHARMACISTS = new PHARMACISTS();
             string strID = pharmacy.id;
-            LinqToSQL.updatePHARMACIST(strID, updatePHARMACIST);
+            LinqToSQL.updatePHARMACIST(strID, updatePHARMACISTS);
 
             listp.ForEach(c =>
             {
@@ -115,9 +115,9 @@ namespace Clinic.Repository
             
             Pharmacy p = new Pharmacy();
 
-            PHARMACIST selectPHA = LinqToSQL.selectPHARMACISTByID(id);
+            PHARMACISTS selectPHA = LinqToSQL.selectPHARMACISTByID(id);
             p.id = selectPHA.id;
-            p.nativeName= selectPHA.native_name
+            p.nativeName = selectPHA.native_name;
 
 
 
@@ -243,13 +243,13 @@ namespace Clinic.Repository
             {
                 //listpa.Add(patient);
 
-                PATIENT newPatient = new PATIENT();
+                PATIENTS newPatient = new PATIENTS();
                 newPatient.id = patient.id;
                 newPatient.user_name = patient.userName;
                 newPatient.native_name = patient.nativeName;
-                newPatient.password = patient.password";
-                newPatient.gender = patient.gender;
-                LinqToSQL.insert2patient(newPatient)
+                newPatient.password = patient.password;
+                newPatient.gender = patient.gender.ToString();
+                LinqToSQL.insert2patient(newPatient);
                 login.Add(new LoginRequest { userName = patient.userName, password = patient.password });
             }
             return result;
@@ -261,7 +261,7 @@ namespace Clinic.Repository
             var result = false;
             var l = new LoginRequest();
 
-            PATIENT updatePATIENT = new PATIENT();
+            PATIENTS updatePATIENT = new PATIENTS();
             updatePATIENT.user_name = patient.userName;
             updatePATIENT.age = patient.age;
 
@@ -316,9 +316,9 @@ namespace Clinic.Repository
         {
             Patient p = new Patient();
 
-            PATIENT selectPatient = LinqToSQL.selectPatientById(id);
+            PATIENTS selectPatient = LinqToSQL.selectPatientById(id);
             p.userName = selectPatient.user_name;
-            p.weight = selectPatient.weight;
+            p.weight = selectPatient.weight.HasValue ? (double)selectPatient.weight : 0.1;
 
             //listpa.ForEach(c => {
             //    if (c.id == id)
@@ -336,7 +336,7 @@ namespace Clinic.Repository
         }
 
         //check the patient if accept by id
-        public Boolean acceptPatient(int id) {
+        public Boolean acceptPatient(string id) {
             var result = false;
             listpa.ForEach(c =>
             {
@@ -350,7 +350,7 @@ namespace Clinic.Repository
         }
 
         //check the patient if denied
-        public Boolean denyPatient(int id)
+        public Boolean denyPatient(string id)
         {
             var result = false;
             listpa.ForEach(c =>

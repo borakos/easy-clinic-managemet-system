@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="ECMS" Class="ECMSDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=LAPYOP-CR7\SQLEXPRESS;Initial Catalog=ECMS;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ECMSConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=AKOS-PC\TEW_SQLEXPRESS;Initial Catalog=ECMS;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="ECMSConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.APPLICATIONS" Member="APPLICATIONS">
     <Type Name="APPLICATIONS">
       <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -9,9 +9,17 @@
       <Column Name="accepted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="sympotoms" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="doucments_path" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="APPLICATIONS_EXAMINATIONS" Member="EXAMINATIONS" ThisKey="id" OtherKey="application_id" Type="EXAMINATIONS" />
-      <Association Name="DOCTORS_APPLICATIONS" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
-      <Association Name="PATIENT_APPLICATIONS" Member="PATIENT" ThisKey="patient_id" OtherKey="id" Type="PATIENT" IsForeignKey="true" />
+      <Association Name="APPLICATION_EXAMINATION" Member="EXAMINATIONS" ThisKey="id" OtherKey="application_id" Type="EXAMINATIONS" />
+      <Association Name="DOCTOR_APPLICATION" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
+      <Association Name="PATIENT_APPLICATION" Member="PATIENTS" ThisKey="patient_id" OtherKey="id" Type="PATIENTS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SYSTEM_ADMINS" Member="SYSTEM_ADMINS">
+    <Type Name="SYSTEM_ADMINS">
+      <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="username" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.DOCTOR_OPENTIMES" Member="DOCTOR_OPENTIMES">
@@ -20,7 +28,7 @@
       <Column Name="doctor_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="start" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="[end]" Member="end" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
-      <Association Name="DOCTORS_DOCTOR_OPENTIMES" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
+      <Association Name="DOCTOR_DOCTOR_OPENTIME" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.DOCTORS" Member="DOCTORS">
@@ -32,17 +40,9 @@
       <Column Name="gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="age" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="start_year_of_work" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="DOCTORS_APPLICATIONS" Member="APPLICATIONS" ThisKey="id" OtherKey="doctor_id" Type="APPLICATIONS" />
-      <Association Name="DOCTORS_DOCTOR_OPENTIMES" Member="DOCTOR_OPENTIMES" ThisKey="id" OtherKey="doctor_id" Type="DOCTOR_OPENTIMES" />
-      <Association Name="DOCTORS_SPECIALIZATIONS_OF_DOCTORS" Member="SPECIALIZATIONS_OF_DOCTORS" ThisKey="id" OtherKey="doctor_id" Type="SPECIALIZATIONS_OF_DOCTORS" />
-    </Type>
-  </Table>
-  <Table Name="dbo.SYSTEM_ADMINS" Member="SYSTEM_ADMINS">
-    <Type Name="SYSTEM_ADMINS">
-      <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="username" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="password" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="DOCTOR_APPLICATION" Member="APPLICATIONS" ThisKey="id" OtherKey="doctor_id" Type="APPLICATIONS" />
+      <Association Name="DOCTOR_DOCTOR_OPENTIME" Member="DOCTOR_OPENTIMES" ThisKey="id" OtherKey="doctor_id" Type="DOCTOR_OPENTIMES" />
+      <Association Name="DOCTOR_SPECIALIZATIONS_OF_DOCTOR" Member="SPECIALIZATIONS_OF_DOCTORS" ThisKey="id" OtherKey="doctor_id" Type="SPECIALIZATIONS_OF_DOCTORS" />
     </Type>
   </Table>
   <Table Name="dbo.EXAMINATIONS" Member="EXAMINATIONS">
@@ -51,8 +51,8 @@
       <Column Name="application_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="notes" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="doucments_path" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="EXAMINATIONS_PRESCRIPTIONS" Member="PRESCRIPTIONS" ThisKey="id" OtherKey="examination_id" Type="PRESCRIPTIONS" />
-      <Association Name="APPLICATIONS_EXAMINATIONS" Member="APPLICATIONS" ThisKey="application_id" OtherKey="id" Type="APPLICATIONS" IsForeignKey="true" />
+      <Association Name="EXAMINATION_PRESCRIPTION" Member="PRESCRIPTIONS" ThisKey="id" OtherKey="examination_id" Type="PRESCRIPTIONS" />
+      <Association Name="APPLICATION_EXAMINATION" Member="APPLICATIONS" ThisKey="application_id" OtherKey="id" Type="APPLICATIONS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.ORDERS" Member="ORDERS">
@@ -62,12 +62,12 @@
       <Column Name="pharmacy_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="notes" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="PHARMACIST_ORDERS" Member="PHARMACIST" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACIST" IsForeignKey="true" />
-      <Association Name="PRESCRIPTIONS_ORDERS" Member="PRESCRIPTIONS" ThisKey="prescription_id" OtherKey="id" Type="PRESCRIPTIONS" IsForeignKey="true" />
+      <Association Name="PHARMACIST_ORDER" Member="PHARMACISTS" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACISTS" IsForeignKey="true" />
+      <Association Name="PRESCRIPTION_ORDER" Member="PRESCRIPTIONS" ThisKey="prescription_id" OtherKey="id" Type="PRESCRIPTIONS" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.PATIENT" Member="PATIENT">
-    <Type Name="PATIENT">
+  <Table Name="dbo.PATIENT" Member="PATIENTS">
+    <Type Name="PATIENTS">
       <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="user_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
@@ -79,11 +79,11 @@
       <Column Name="city" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="postal_code" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="address" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="PATIENT_APPLICATIONS" Member="APPLICATIONS" ThisKey="id" OtherKey="patient_id" Type="APPLICATIONS" />
+      <Association Name="PATIENT_APPLICATION" Member="APPLICATIONS" ThisKey="id" OtherKey="patient_id" Type="APPLICATIONS" />
     </Type>
   </Table>
-  <Table Name="dbo.PHARMACIST" Member="PHARMACIST">
-    <Type Name="PHARMACIST">
+  <Table Name="dbo.PHARMACIST" Member="PHARMACISTS">
+    <Type Name="PHARMACISTS">
       <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="user_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
@@ -94,9 +94,9 @@
       <Column Name="city" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="postal_code" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="address" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="PHARMACIST_ORDERS" Member="ORDERS" ThisKey="id" OtherKey="pharmacy_id" Type="ORDERS" />
-      <Association Name="PHARMACIST_PHARMACIST_HOLIDAYS" Member="PHARMACIST_HOLIDAYS" ThisKey="id" OtherKey="pharmacy_id" Type="PHARMACIST_HOLIDAYS" />
-      <Association Name="PHARMACIST_PHARMACIST_OPENTIMES" Member="PHARMACIST_OPENTIMES" ThisKey="id" OtherKey="pharmacy_id" Type="PHARMACIST_OPENTIMES" />
+      <Association Name="PHARMACIST_ORDER" Member="ORDERS" ThisKey="id" OtherKey="pharmacy_id" Type="ORDERS" />
+      <Association Name="PHARMACIST_PHARMACIST_HOLIDAY" Member="PHARMACIST_HOLIDAYS" ThisKey="id" OtherKey="pharmacy_id" Type="PHARMACIST_HOLIDAYS" />
+      <Association Name="PHARMACIST_PHARMACIST_OPENTIME" Member="PHARMACIST_OPENTIMES" ThisKey="id" OtherKey="pharmacy_id" Type="PHARMACIST_OPENTIMES" />
     </Type>
   </Table>
   <Table Name="dbo.PHARMACIST_HOLIDAYS" Member="PHARMACIST_HOLIDAYS">
@@ -106,7 +106,7 @@
       <Column Name="date" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="away_start" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="away_close" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
-      <Association Name="PHARMACIST_PHARMACIST_HOLIDAYS" Member="PHARMACIST" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACIST" IsForeignKey="true" />
+      <Association Name="PHARMACIST_PHARMACIST_HOLIDAY" Member="PHARMACISTS" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACISTS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PHARMACIST_OPENTIMES" Member="PHARMACIST_OPENTIMES">
@@ -116,7 +116,7 @@
       <Column Name="day_of_the_week" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="opentime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="closetime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
-      <Association Name="PHARMACIST_PHARMACIST_OPENTIMES" Member="PHARMACIST" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACIST" IsForeignKey="true" />
+      <Association Name="PHARMACIST_PHARMACIST_OPENTIME" Member="PHARMACISTS" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACISTS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.PRESCRIPTIONS" Member="PRESCRIPTIONS">
@@ -125,8 +125,8 @@
       <Column Name="examination_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="notes" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="doucments_path" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="PRESCRIPTIONS_ORDERS" Member="ORDERS" ThisKey="id" OtherKey="prescription_id" Type="ORDERS" />
-      <Association Name="EXAMINATIONS_PRESCRIPTIONS" Member="EXAMINATIONS" ThisKey="examination_id" OtherKey="id" Type="EXAMINATIONS" IsForeignKey="true" />
+      <Association Name="PRESCRIPTION_ORDER" Member="ORDERS" ThisKey="id" OtherKey="prescription_id" Type="ORDERS" />
+      <Association Name="EXAMINATION_PRESCRIPTION" Member="EXAMINATIONS" ThisKey="examination_id" OtherKey="id" Type="EXAMINATIONS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.SPECIALIZATIONS" Member="SPECIALIZATIONS">
@@ -134,7 +134,7 @@
       <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="description" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
-      <Association Name="SPECIALIZATIONS_SPECIALIZATIONS_OF_DOCTORS" Member="SPECIALIZATIONS_OF_DOCTORS" ThisKey="id" OtherKey="specicalization_id" Type="SPECIALIZATIONS_OF_DOCTORS" />
+      <Association Name="SPECIALIZATION_SPECIALIZATIONS_OF_DOCTOR" Member="SPECIALIZATIONS_OF_DOCTORS" ThisKey="id" OtherKey="specicalization_id" Type="SPECIALIZATIONS_OF_DOCTORS" />
     </Type>
   </Table>
   <Table Name="dbo.SPECIALIZATIONS_OF_DOCTORS" Member="SPECIALIZATIONS_OF_DOCTORS">
@@ -142,8 +142,8 @@
       <Column Name="id" Type="System.String" DbType="VarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="doctor_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="specicalization_id" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Association Name="DOCTORS_SPECIALIZATIONS_OF_DOCTORS" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
-      <Association Name="SPECIALIZATIONS_SPECIALIZATIONS_OF_DOCTORS" Member="SPECIALIZATIONS" ThisKey="specicalization_id" OtherKey="id" Type="SPECIALIZATIONS" IsForeignKey="true" />
+      <Association Name="DOCTOR_SPECIALIZATIONS_OF_DOCTOR" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
+      <Association Name="SPECIALIZATION_SPECIALIZATIONS_OF_DOCTOR" Member="SPECIALIZATIONS" ThisKey="specicalization_id" OtherKey="id" Type="SPECIALIZATIONS" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

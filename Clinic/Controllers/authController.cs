@@ -31,7 +31,7 @@ namespace Clinic.Controllers
 				{
 					if (repository.checkPass(request.userName, request.password))
 					{
-						AuthInfo info = new AuthInfo { userName = request.userName, role = "admin", id = 1 };
+						AuthInfo info = new AuthInfo { userName = request.userName, role = "admin", id = "1" };
 						const string secret = "easy clinic managemet system";
 						IJwtAlgorithm algorithm = new HMACSHA256Algorithm();
 						IJsonSerializer serializer = new JsonNetSerializer();
