@@ -32,6 +32,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { MilitaryDateFormatter } from './_providers/military-date-provider';
 import { ApplyToAppointmentComponent } from './apply-to-appointment/apply-to-appointment.component';
 import { FormatDoctors } from './_providers/doctor-select-pipe';
+import { FormatPharmacies } from './_providers/pharmacies-select-pipe';
 import { FormatAppointmentEvents } from './_providers/appointment-event-pipe';
 import { ManageAppointmentComponent } from './manage-appointment/manage-appointment.component';
 import { FormatAppointmentEventDoctors } from './_providers/appointment-event-doctors-pipe';
@@ -56,7 +57,8 @@ import { OrderPatientComponent } from './order-patient/order-patient.component';
         EditPharmaciesComponent,
         CustomCalendarComponent,
         ApplyToAppointmentComponent,
-        FormatDoctors,
+		FormatDoctors,
+		FormatPharmacies,
         FormatAppointmentEvents,
         FormatAppointmentEventDoctors,
         ManageAppointmentComponent,

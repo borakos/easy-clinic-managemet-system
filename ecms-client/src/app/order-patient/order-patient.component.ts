@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Prescription } from '../_providers/types';
-import { Logger } from 'Api&Test/ecms-client/src/app/_services/logger-service';
+import { Logger } from '../_services/logger-service';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PrescriptionService } from '../_services/prescription-service';
+import { Pharmacy } from '../_providers/types';
+import { PharmacyService } from '../_services/pharmacy-service';
 
 @Component({
 	selector: 'app-order-patient',
@@ -14,14 +16,19 @@ import { PrescriptionService } from '../_services/prescription-service';
 export class OrderPatientComponent implements OnInit {
 
 	@ViewChild('orderPrescription', { static: true }) orderPrescription: TemplateRef<any>;
-    @ViewChild('editSuccess', { static: true }) editSuccess: TemplateRef<any>;
-    @ViewChild('editFailure', { static: true }) editFailure: TemplateRef<any>;
+    @ViewChild('orderSuccess', { static: true }) orderSuccess: TemplateRef<any>;
+    @ViewChild('orderFailure', { static: true }) orderFailure: TemplateRef<any>;
 	prescriptionObservable: Observable<Prescription[]>
     selectedPrescription: Prescription;
 	storedDescription: string;
+	pharmacyObservable: Observable<Pharmacy[]>;
+	selectedPharmacy: Pharmacy;
+	selectedLoading: string = 'notLoading';
+	onlinePay: boolean;
+	delivery: boolean;
     error = undefined;
 
-    constructor(private prescriptionService: PrescriptionService, private logger: Logger, private route: ActivatedRoute,  private modal: NgbModal) { }
+    constructor(private prescriptionService: PrescriptionService, private pharmacyService: PharmacyService, private logger: Logger, private route: ActivatedRoute,  private modal: NgbModal) { }
 
     ngOnInit(): void {
         this.updatePrescriptions();
@@ -31,77 +38,38 @@ export class OrderPatientComponent implements OnInit {
 	orederPrescriptionMenu(prescription: Prescription): void {
 		this.selectedPrescription = prescription;
 		this.storedDescription = prescription.notes;
+		this.pharmacyObservable = this.pharmacyService.listPharmaciesWithFilter(this.errorHandler('List pharmacies with filter'), '');
+		this.selectedLoading = 'notLoading';
 		this.modal.open(this.orderPrescription, { size: 'lg'}).closed
 		.subscribe((result) => {
 			if (result) {
-				//this.saveEditExaminationData(this.selectedExamination.id as number, result);
+				console.log(result);
+				this.onlinePay = result.onlinePay;
+				this.delivery = result.delivery;
+				this.modal.open(this.orderSuccess);
 			}
 		}, err => {
 			this.error = this.logger.errorLogWithReturnText('Edit event', err);
 		});
 	}
 
-	/*saveEditExaminationData(examinationId: number, data): void {
-        let editedAppointment;
-		let files = data.files;
-		let presciptionFiles = data.filesP;
-		let presciptionNotes = data.descriptionP;
-		delete data.filesP;
-		delete data.descriptionP;
-		delete data.files;
-		data.eventId = examinationId;
-		console.log(data)
-        if (this.fileIsSelected(files)) {
-            let template = <File>files[0];
-            let formData = new FormData();
-            let file = formData.append('file', template, template.name)
-            editedAppointment = this.prescriptionService.editExamination(data, file);
-        } else {
-            editedAppointment = this.examinationService.editExamination(data);
-        }
-        editedAppointment.subscribe((response) => {
-            if (response) {
-				if (this.fileIsSelected(presciptionFiles)) {
-					let template = <File>presciptionFiles[0];
-					let formData = new FormData();
-					let file = formData.append('file', template, template.name)
-					data = {
-						notes: presciptionNotes,
-						examinationId: examinationId
-					}
-					this.examinationService.editExamination(data, file).subscribe((result) => {
-                		this.modal.open(this.editSuccess);
-                    }, err => {
-                        this.error = this.logger.errorLogWithReturnText('Save prescription', err);
-                    });
-				} else {
-					this.modal.open(this.editSuccess);
-				}
-            } else {
-                this.modal.open(this.editFailure).closed
-                    .subscribe((result) => {
-                        if (result) {
-                            this.storedDescription = data.description;
-                        } else {
-                            this.storedDescription = '';
-                        }
-                    }, err => {
-                        this.error = this.logger.errorLogWithReturnText('Save description', err);
-                    });
-            }
-            this.updateExaminations();
+	filterPharmacies(filter: string): void {
+        this.pharmacyObservable = this.pharmacyService.listPharmaciesWithFilter(this.errorHandler('List pharmacies with filter'), filter);
+    }
+
+	getPharmacy(pharmacyId: number){
+		this.selectedLoading = 'loading';
+		this.pharmacyService.getPharmacy(pharmacyId)
+		.subscribe((result) => {
+			this.selectedPharmacy = result;
+            this.selectedLoading = 'loaded';
         }, err => {
-            this.error = this.logger.errorLogWithReturnText('Edit appointment', err);
+            this.error = this.logger.errorLogWithReturnText('Download exmaination', err);
         });
-	}*/
+	}
 
 	updatePrescriptions(): void {
-		this.prescriptionObservable = this.prescriptionService.loadPrescriptionsByPatients(this.route.snapshot.params['id'],
-            (err) => {
-                this.error = this.logger.errorLogWithReturnText('Loading Examinations', err);
-                return of();
-            }
-        );
+		this.prescriptionObservable = this.prescriptionService.loadPrescriptionsByPatients(this.route.snapshot.params['id'], this.errorHandler('Loading Examinations'));
         this.error = undefined;
 	}
 
@@ -119,6 +87,13 @@ export class OrderPatientComponent implements OnInit {
             return true;
         } else {
             return false;
+        }
+	}
+	
+	errorHandler(errorTag: string): (any) => Observable<any> {
+        return (err) => {
+            this.error = this.logger.errorLogWithReturnText(errorTag, err);
+            return of();
         }
     }
 

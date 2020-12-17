@@ -41,4 +41,10 @@ export class PharmacyService{
 	getPharmacy(id: number): Observable<Pharmacy> {
 		return this.http.get<Pharmacy>('api/pharmacies/' + id);
 	}
+
+	listPharmaciesWithFilter(loadingError: (any) => Observable<any>, filter: string = ''): Observable<Pharmacy[]> {
+		return this.http.post<Pharmacy[]>('api/pharmacies/list/filter', {filter: filter} ,{
+			headers: this.headerJson
+		}).pipe(catchError(loadingError));;
+	}
 }
