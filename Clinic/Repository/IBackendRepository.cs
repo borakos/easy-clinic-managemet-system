@@ -23,7 +23,7 @@ namespace Clinic.Repository
         Boolean deleteDoctor(int id);
         Doctor getDoctor(int id);
         Boolean UpdatePatient(Patient patient);
-        Boolean CreatPatient(Patient patient);
+        Boolean CreatPatient(Patient patient, bool isAccepted = false);
         List<Patient> getAllPatient();
         Boolean deletePatient(int id);
         Patient getPatient(int id);

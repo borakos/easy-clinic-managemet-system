@@ -29,8 +29,8 @@ export interface Patient {
 }
 
 export enum Gender {
-    Male = 'male',
-    Female = 'female'
+    Male = 0,
+    Female = 1
 }
 
 export interface Doctor {

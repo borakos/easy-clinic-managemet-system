@@ -234,7 +234,7 @@ namespace Clinic.Repository
         }
 
         //create a patient
-        public Boolean CreatPatient(Patient patient)
+        public Boolean CreatPatient(Patient patient, bool isAccepted = false)
         {
             var result = true;
             if (!IsUserUnique(patient.userName))
@@ -256,6 +256,7 @@ namespace Clinic.Repository
                 newPatient.city = patient.city;
                 newPatient.postal_code = patient.postalCode;
                 newPatient.address = patient.address;
+                newPatient.is_accepted = isAccepted;
                 LinqToSQL.insert2patient(newPatient);
                 //login.Add(new LoginRequest { userName = patient.userName, password = patient.password });
             }
@@ -265,108 +266,102 @@ namespace Clinic.Repository
         //update a patient
         public Boolean UpdatePatient(Patient patient)
         {
-            var result = false;
-            var l = new LoginRequest();
-
-            PATIENTS updatePATIENT = new PATIENTS();
-            updatePATIENT.user_name = patient.userName;
-
-            if (LinqToSQL.updatePatientById(patient.id, updatePATIENT))
-                result = true;
-
-            //listpa.ForEach(c =>
-            //{
-            //    if (c.userName == patient.userName)
-            //    {
-            //        listpa.Insert(listpa.IndexOf(c), patient);
-            //        result = true;
-            //    }
-            //});
-            login.ForEach(c =>
-            {
-                if (c.userName == patient.userName)
-                {
-                    l.userName = c.userName;
-                    l.password = c.password;
-                    login.Insert(login.IndexOf(c), l);
-                }
-            });
-            return result;
+            PATIENTS newPatient = new PATIENTS();
+            newPatient.user_name = patient.userName;
+            newPatient.native_name = patient.nativeName;
+            newPatient.password = patient.password;
+            newPatient.gender = patient.gender.ToString();
+            newPatient.birthday = patient.birthday;
+            newPatient.weight = patient.weight;
+            newPatient.country = patient.country;
+            newPatient.city = patient.city;
+            newPatient.postal_code = patient.postalCode;
+            newPatient.address = patient.address;
+            newPatient.is_accepted = true;
+            return LinqToSQL.updatePatientById(patient.id, newPatient);
         }
 
         //get all patients
         public List<Patient> getAllPatient() {
-            return listpa;
+            List<PATIENTS> dataBasePatients = LinqToSQL.getAllPatients();
+            List<Patient> patients = new List<Patient>();
+            foreach(PATIENTS pat in dataBasePatients) {
+                patients.Add(new Patient() {
+                    id = pat.id,
+                    userName = pat.user_name,
+                    nativeName = pat.native_name,
+                    gender = (Gender)Enum.Parse(typeof(Gender), pat.gender, true),
+                    birthday = pat.birthday ?? new DateTime(),
+                    weight = pat.weight ?? 0,
+                    country = pat.country ?? "",
+                    city = pat.city ?? "",
+                    postalCode = pat.postal_code ?? 0,
+                    address = pat.address ?? "",
+                    hasMedicalData = pat.medical_form_path != null,
+                    medicalDataPath = pat.medical_form_path
+                });
+            }
+            return patients;
         }
 
         //delete a patient by id
         public Boolean deletePatient(int id)
         {
-            var result = false;
-
-            if (LinqToSQL.deletePatient(id))
-                result = true;
-
-            //listpa.ForEach(c => {
-            //    if (c.id == id)
-            //    {
-            //        listpa.Remove(c);
-            //        result = true;
-            //    }
-            //});
-            return result;
+            return LinqToSQL.deletePatient(id);
         }
 
         //get a patient by id
         public Patient getPatient(int id)
         {
-            Patient p = new Patient();
-
-            PATIENTS selectPatient = LinqToSQL.selectPatientById(id);
-            p.userName = selectPatient.user_name;
-            p.weight = selectPatient.weight.HasValue ? (double)selectPatient.weight : 0.1;
-
-            //listpa.ForEach(c => {
-            //    if (c.id == id)
-            //    {
-            //        p = c;
-            //    }
-            //});
-
-            return p;
+            PATIENTS pat = LinqToSQL.selectPatientById(id);
+            return new Patient() {
+                id = pat.id,
+                userName = pat.user_name,
+                nativeName = pat.native_name,
+                gender = (Gender)Enum.Parse(typeof(Gender), pat.gender, true),
+                birthday = pat.birthday ?? new DateTime(),
+                weight = pat.weight ?? 0,
+                country = pat.country ?? "",
+                city = pat.city ?? "",
+                postalCode = pat.postal_code ?? 0,
+                address = pat.address ?? "",
+                hasMedicalData = pat.medical_form_path != null,
+                medicalDataPath = pat.medical_form_path
+            };
         }
 
         //get patients whose registration is not yet accepted
         public List<Patient> patientApplicants() {
-            return listpa;
+            List<PATIENTS> dataBasePatients = LinqToSQL.getAllUserApplication();
+            List<Patient> patients = new List<Patient>();
+            foreach (PATIENTS pat in dataBasePatients) {
+                patients.Add(new Patient() {
+                    id = pat.id,
+                    userName = pat.user_name,
+                    nativeName = pat.native_name,
+                    gender = (Gender)Enum.Parse(typeof(Gender), pat.gender, true),
+                    birthday = pat.birthday ?? new DateTime(),
+                    weight = pat.weight ?? 0,
+                    country = pat.country ?? "",
+                    city = pat.city ?? "",
+                    postalCode = pat.postal_code ?? 0,
+                    address = pat.address ?? "",
+                    hasMedicalData = pat.medical_form_path != null,
+                    medicalDataPath = pat.medical_form_path
+                });
+            }
+            return patients;
         }
 
         //check the patient if accept by id
         public Boolean acceptPatient(int id) {
-            var result = false;
-            listpa.ForEach(c =>
-            {
-                if (c.id == id && c.registration == true)
-                {
-                    result = true;
-                    return;
-                }
-            });
-            return result;
+            return LinqToSQL.acceptPatient(id);
         }
 
         //check the patient if denied
         public Boolean denyPatient(int id)
         {
-            var result = false;
-            listpa.ForEach(c =>
-            {
-                if (c.id == id && c.registration == false)
-                {
-                    result = true;
-                }
-            });
-            return result;
+            return LinqToSQL.deletePatient(id);
         }
 
         //create a appoinment

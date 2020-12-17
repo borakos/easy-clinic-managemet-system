@@ -11,7 +11,7 @@
       <Column Name="doucments_path" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Association Name="APPLICATIONS_EXAMINATIONS" Member="EXAMINATIONS" ThisKey="id" OtherKey="application_id" Type="EXAMINATIONS" />
       <Association Name="DOCTORS_APPLICATIONS" Member="DOCTORS" ThisKey="doctor_id" OtherKey="id" Type="DOCTORS" IsForeignKey="true" />
-      <Association Name="PATIENTS_APPLICATIONS" Member="PATIENTS" ThisKey="patient_id" OtherKey="id" Type="PATIENTS" IsForeignKey="true" />
+      <Association Name="PATIENT_APPLICATIONS" Member="PATIENTS" ThisKey="patient_id" OtherKey="id" Type="PATIENTS" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.DOCTOR_OPENTIMES" Member="DOCTOR_OPENTIMES">
@@ -56,22 +56,6 @@
       <Column Name="type" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Association Name="PHARMACISTS_ORDERS" Member="PHARMACISTS" ThisKey="pharmacy_id" OtherKey="id" Type="PHARMACISTS" IsForeignKey="true" />
       <Association Name="PRESCRIPTIONS_ORDERS" Member="PRESCRIPTIONS" ThisKey="prescription_id" OtherKey="id" Type="PRESCRIPTIONS" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.PATIENTS" Member="PATIENTS">
-    <Type Name="PATIENTS">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="user_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="password" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Column Name="gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="weight" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="country" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="city" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
-      <Column Name="postal_code" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="address" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
-      <Association Name="PATIENTS_APPLICATIONS" Member="APPLICATIONS" ThisKey="id" OtherKey="patient_id" Type="APPLICATIONS" />
     </Type>
   </Table>
   <Table Name="dbo.PHARMACIST_HOLIDAYS" Member="PHARMACIST_HOLIDAYS">
@@ -144,6 +128,24 @@
       <Column Name="user_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="password" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PATIENTS" Member="PATIENTS">
+    <Type Name="PATIENTS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="native_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="birthday" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="weight" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="country" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="postal_code" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="address" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="is_accepted" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="medical_form_path" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Association Name="PATIENT_APPLICATIONS" Member="APPLICATIONS" ThisKey="id" OtherKey="patient_id" Type="APPLICATIONS" />
     </Type>
   </Table>
 </Database>

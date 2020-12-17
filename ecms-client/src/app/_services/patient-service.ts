@@ -38,15 +38,15 @@ export class PatientService{
 	}
 
 	acceptPatientRegistration(id: number): Observable<boolean> {
-		return this.http.get<boolean>('api/patients/accept-patient/' + id);
+		return this.http.get<boolean>('api/patients/acceptPatient/' + id);
 	}
 
 	denyPatientRegistration(id: number): Observable<boolean> {
-		return this.http.delete<boolean>('api/patients/deny-patient/' + id);
+		return this.http.delete<boolean>('api/patients/denyPatient/' + id);
 	}
 
 	listPatients(loadingError: (any) => Observable<any>): Observable<Patient[]> {
-		return this.http.get<Patient[]>('api/patients',{
+		return this.http.get<Patient[]>('api/patients/allpatient',{
 			headers: this.headerJson
 		}).pipe(catchError(loadingError));
 	}
@@ -56,6 +56,6 @@ export class PatientService{
 	}
 
 	getPatient(id: number): Observable<Patient> {
-		return this.http.get<Patient>('api/patients/' + id);
+		return this.http.get<Patient>('api/patients/getPatient/' + id);
 	}
 }

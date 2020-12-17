@@ -39,7 +39,10 @@ export class EditPatientsComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    getDate(date: Date | undefined): string {
+    getDate(date: Date | string | undefined): string {
+		if(typeof(date) === 'string'){
+			return date.split('T')[0]
+		}
         return date?.toISOString().split('T')[0]
     }
 

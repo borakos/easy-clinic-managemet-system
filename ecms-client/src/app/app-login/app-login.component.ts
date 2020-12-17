@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
             })
         }).subscribe(response => {
 			this.jwtService.setActiveToken(response as string);
-			console.log(this.jwtService.getUserRole())
             this.invalidLogin = false;
             this.router.navigate(["/"]);
         }, err => {

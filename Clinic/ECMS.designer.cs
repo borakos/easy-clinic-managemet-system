@@ -45,9 +45,6 @@ namespace Clinic
     partial void InsertORDERS(ORDERS instance);
     partial void UpdateORDERS(ORDERS instance);
     partial void DeleteORDERS(ORDERS instance);
-    partial void InsertPATIENTS(PATIENTS instance);
-    partial void UpdatePATIENTS(PATIENTS instance);
-    partial void DeletePATIENTS(PATIENTS instance);
     partial void InsertPHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
     partial void UpdatePHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
     partial void DeletePHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS instance);
@@ -69,6 +66,9 @@ namespace Clinic
     partial void InsertSYSTEM_ADMINS(SYSTEM_ADMINS instance);
     partial void UpdateSYSTEM_ADMINS(SYSTEM_ADMINS instance);
     partial void DeleteSYSTEM_ADMINS(SYSTEM_ADMINS instance);
+    partial void InsertPATIENTS(PATIENTS instance);
+    partial void UpdatePATIENTS(PATIENTS instance);
+    partial void DeletePATIENTS(PATIENTS instance);
     #endregion
 		
 		public ECMSDataContext() : 
@@ -141,14 +141,6 @@ namespace Clinic
 			}
 		}
 		
-		public System.Data.Linq.Table<PATIENTS> PATIENTS
-		{
-			get
-			{
-				return this.GetTable<PATIENTS>();
-			}
-		}
-		
 		public System.Data.Linq.Table<PHARMACIST_HOLIDAYS> PHARMACIST_HOLIDAYS
 		{
 			get
@@ -202,6 +194,14 @@ namespace Clinic
 			get
 			{
 				return this.GetTable<SYSTEM_ADMINS>();
+			}
+		}
+		
+		public System.Data.Linq.Table<PATIENTS> PATIENTS
+		{
+			get
+			{
+				return this.GetTable<PATIENTS>();
 			}
 		}
 	}
@@ -455,7 +455,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATIONS", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
 		public PATIENTS PATIENTS
 		{
 			get
@@ -1427,336 +1427,6 @@ namespace Clinic
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PATIENTS")]
-	public partial class PATIENTS : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _user_name;
-		
-		private string _native_name;
-		
-		private string _password;
-		
-		private string _gender;
-		
-		private System.Nullable<System.DateTime> _birthday;
-		
-		private System.Nullable<double> _weight;
-		
-		private string _country;
-		
-		private string _city;
-		
-		private System.Nullable<int> _postal_code;
-		
-		private string _address;
-		
-		private EntitySet<APPLICATIONS> _APPLICATIONS;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Onuser_nameChanging(string value);
-    partial void Onuser_nameChanged();
-    partial void Onnative_nameChanging(string value);
-    partial void Onnative_nameChanged();
-    partial void OnpasswordChanging(string value);
-    partial void OnpasswordChanged();
-    partial void OngenderChanging(string value);
-    partial void OngenderChanged();
-    partial void OnbirthdayChanging(System.Nullable<System.DateTime> value);
-    partial void OnbirthdayChanged();
-    partial void OnweightChanging(System.Nullable<double> value);
-    partial void OnweightChanged();
-    partial void OncountryChanging(string value);
-    partial void OncountryChanged();
-    partial void OncityChanging(string value);
-    partial void OncityChanged();
-    partial void Onpostal_codeChanging(System.Nullable<int> value);
-    partial void Onpostal_codeChanged();
-    partial void OnaddressChanging(string value);
-    partial void OnaddressChanged();
-    #endregion
-		
-		public PATIENTS()
-		{
-			this._APPLICATIONS = new EntitySet<APPLICATIONS>(new Action<APPLICATIONS>(this.attach_APPLICATIONS), new Action<APPLICATIONS>(this.detach_APPLICATIONS));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_name", DbType="VarChar(100)")]
-		public string user_name
-		{
-			get
-			{
-				return this._user_name;
-			}
-			set
-			{
-				if ((this._user_name != value))
-				{
-					this.Onuser_nameChanging(value);
-					this.SendPropertyChanging();
-					this._user_name = value;
-					this.SendPropertyChanged("user_name");
-					this.Onuser_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_native_name", DbType="VarChar(100)")]
-		public string native_name
-		{
-			get
-			{
-				return this._native_name;
-			}
-			set
-			{
-				if ((this._native_name != value))
-				{
-					this.Onnative_nameChanging(value);
-					this.SendPropertyChanging();
-					this._native_name = value;
-					this.SendPropertyChanged("native_name");
-					this.Onnative_nameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(200)")]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gender", DbType="VarChar(50)")]
-		public string gender
-		{
-			get
-			{
-				return this._gender;
-			}
-			set
-			{
-				if ((this._gender != value))
-				{
-					this.OngenderChanging(value);
-					this.SendPropertyChanging();
-					this._gender = value;
-					this.SendPropertyChanged("gender");
-					this.OngenderChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthday", DbType="Date")]
-		public System.Nullable<System.DateTime> birthday
-		{
-			get
-			{
-				return this._birthday;
-			}
-			set
-			{
-				if ((this._birthday != value))
-				{
-					this.OnbirthdayChanging(value);
-					this.SendPropertyChanging();
-					this._birthday = value;
-					this.SendPropertyChanged("birthday");
-					this.OnbirthdayChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_weight", DbType="Float")]
-		public System.Nullable<double> weight
-		{
-			get
-			{
-				return this._weight;
-			}
-			set
-			{
-				if ((this._weight != value))
-				{
-					this.OnweightChanging(value);
-					this.SendPropertyChanging();
-					this._weight = value;
-					this.SendPropertyChanged("weight");
-					this.OnweightChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_country", DbType="VarChar(100)")]
-		public string country
-		{
-			get
-			{
-				return this._country;
-			}
-			set
-			{
-				if ((this._country != value))
-				{
-					this.OncountryChanging(value);
-					this.SendPropertyChanging();
-					this._country = value;
-					this.SendPropertyChanged("country");
-					this.OncountryChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_city", DbType="VarChar(100)")]
-		public string city
-		{
-			get
-			{
-				return this._city;
-			}
-			set
-			{
-				if ((this._city != value))
-				{
-					this.OncityChanging(value);
-					this.SendPropertyChanging();
-					this._city = value;
-					this.SendPropertyChanged("city");
-					this.OncityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="Int")]
-		public System.Nullable<int> postal_code
-		{
-			get
-			{
-				return this._postal_code;
-			}
-			set
-			{
-				if ((this._postal_code != value))
-				{
-					this.Onpostal_codeChanging(value);
-					this.SendPropertyChanging();
-					this._postal_code = value;
-					this.SendPropertyChanged("postal_code");
-					this.Onpostal_codeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="VarChar(200)")]
-		public string address
-		{
-			get
-			{
-				return this._address;
-			}
-			set
-			{
-				if ((this._address != value))
-				{
-					this.OnaddressChanging(value);
-					this.SendPropertyChanging();
-					this._address = value;
-					this.SendPropertyChanged("address");
-					this.OnaddressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
-		public EntitySet<APPLICATIONS> APPLICATIONS
-		{
-			get
-			{
-				return this._APPLICATIONS;
-			}
-			set
-			{
-				this._APPLICATIONS.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_APPLICATIONS(APPLICATIONS entity)
-		{
-			this.SendPropertyChanging();
-			entity.PATIENTS = this;
-		}
-		
-		private void detach_APPLICATIONS(APPLICATIONS entity)
-		{
-			this.SendPropertyChanging();
-			entity.PATIENTS = null;
 		}
 	}
 	
@@ -3184,6 +2854,384 @@ namespace Clinic
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PATIENTS")]
+	public partial class PATIENTS : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _user_name;
+		
+		private string _native_name;
+		
+		private string _password;
+		
+		private string _gender;
+		
+		private System.Nullable<System.DateTime> _birthday;
+		
+		private System.Nullable<double> _weight;
+		
+		private string _country;
+		
+		private string _city;
+		
+		private System.Nullable<int> _postal_code;
+		
+		private string _address;
+		
+		private System.Nullable<bool> _is_accepted;
+		
+		private string _medical_form_path;
+		
+		private EntitySet<APPLICATIONS> _APPLICATIONS;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onuser_nameChanging(string value);
+    partial void Onuser_nameChanged();
+    partial void Onnative_nameChanging(string value);
+    partial void Onnative_nameChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    partial void OngenderChanging(string value);
+    partial void OngenderChanged();
+    partial void OnbirthdayChanging(System.Nullable<System.DateTime> value);
+    partial void OnbirthdayChanged();
+    partial void OnweightChanging(System.Nullable<double> value);
+    partial void OnweightChanged();
+    partial void OncountryChanging(string value);
+    partial void OncountryChanged();
+    partial void OncityChanging(string value);
+    partial void OncityChanged();
+    partial void Onpostal_codeChanging(System.Nullable<int> value);
+    partial void Onpostal_codeChanged();
+    partial void OnaddressChanging(string value);
+    partial void OnaddressChanged();
+    partial void Onis_acceptedChanging(System.Nullable<bool> value);
+    partial void Onis_acceptedChanged();
+    partial void Onmedical_form_pathChanging(string value);
+    partial void Onmedical_form_pathChanged();
+    #endregion
+		
+		public PATIENTS()
+		{
+			this._APPLICATIONS = new EntitySet<APPLICATIONS>(new Action<APPLICATIONS>(this.attach_APPLICATIONS), new Action<APPLICATIONS>(this.detach_APPLICATIONS));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_name", DbType="VarChar(100)")]
+		public string user_name
+		{
+			get
+			{
+				return this._user_name;
+			}
+			set
+			{
+				if ((this._user_name != value))
+				{
+					this.Onuser_nameChanging(value);
+					this.SendPropertyChanging();
+					this._user_name = value;
+					this.SendPropertyChanged("user_name");
+					this.Onuser_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_native_name", DbType="VarChar(100)")]
+		public string native_name
+		{
+			get
+			{
+				return this._native_name;
+			}
+			set
+			{
+				if ((this._native_name != value))
+				{
+					this.Onnative_nameChanging(value);
+					this.SendPropertyChanging();
+					this._native_name = value;
+					this.SendPropertyChanged("native_name");
+					this.Onnative_nameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="VarChar(200)")]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gender", DbType="VarChar(50)")]
+		public string gender
+		{
+			get
+			{
+				return this._gender;
+			}
+			set
+			{
+				if ((this._gender != value))
+				{
+					this.OngenderChanging(value);
+					this.SendPropertyChanging();
+					this._gender = value;
+					this.SendPropertyChanged("gender");
+					this.OngenderChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthday", DbType="Date")]
+		public System.Nullable<System.DateTime> birthday
+		{
+			get
+			{
+				return this._birthday;
+			}
+			set
+			{
+				if ((this._birthday != value))
+				{
+					this.OnbirthdayChanging(value);
+					this.SendPropertyChanging();
+					this._birthday = value;
+					this.SendPropertyChanged("birthday");
+					this.OnbirthdayChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_weight", DbType="Float")]
+		public System.Nullable<double> weight
+		{
+			get
+			{
+				return this._weight;
+			}
+			set
+			{
+				if ((this._weight != value))
+				{
+					this.OnweightChanging(value);
+					this.SendPropertyChanging();
+					this._weight = value;
+					this.SendPropertyChanged("weight");
+					this.OnweightChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_country", DbType="VarChar(100)")]
+		public string country
+		{
+			get
+			{
+				return this._country;
+			}
+			set
+			{
+				if ((this._country != value))
+				{
+					this.OncountryChanging(value);
+					this.SendPropertyChanging();
+					this._country = value;
+					this.SendPropertyChanged("country");
+					this.OncountryChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_city", DbType="VarChar(100)")]
+		public string city
+		{
+			get
+			{
+				return this._city;
+			}
+			set
+			{
+				if ((this._city != value))
+				{
+					this.OncityChanging(value);
+					this.SendPropertyChanging();
+					this._city = value;
+					this.SendPropertyChanged("city");
+					this.OncityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postal_code", DbType="Int")]
+		public System.Nullable<int> postal_code
+		{
+			get
+			{
+				return this._postal_code;
+			}
+			set
+			{
+				if ((this._postal_code != value))
+				{
+					this.Onpostal_codeChanging(value);
+					this.SendPropertyChanging();
+					this._postal_code = value;
+					this.SendPropertyChanged("postal_code");
+					this.Onpostal_codeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="VarChar(200)")]
+		public string address
+		{
+			get
+			{
+				return this._address;
+			}
+			set
+			{
+				if ((this._address != value))
+				{
+					this.OnaddressChanging(value);
+					this.SendPropertyChanging();
+					this._address = value;
+					this.SendPropertyChanged("address");
+					this.OnaddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_accepted", DbType="Bit")]
+		public System.Nullable<bool> is_accepted
+		{
+			get
+			{
+				return this._is_accepted;
+			}
+			set
+			{
+				if ((this._is_accepted != value))
+				{
+					this.Onis_acceptedChanging(value);
+					this.SendPropertyChanging();
+					this._is_accepted = value;
+					this.SendPropertyChanged("is_accepted");
+					this.Onis_acceptedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_medical_form_path", DbType="VarChar(500)")]
+		public string medical_form_path
+		{
+			get
+			{
+				return this._medical_form_path;
+			}
+			set
+			{
+				if ((this._medical_form_path != value))
+				{
+					this.Onmedical_form_pathChanging(value);
+					this.SendPropertyChanging();
+					this._medical_form_path = value;
+					this.SendPropertyChanged("medical_form_path");
+					this.Onmedical_form_pathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
+		public EntitySet<APPLICATIONS> APPLICATIONS
+		{
+			get
+			{
+				return this._APPLICATIONS;
+			}
+			set
+			{
+				this._APPLICATIONS.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_APPLICATIONS(APPLICATIONS entity)
+		{
+			this.SendPropertyChanging();
+			entity.PATIENTS = this;
+		}
+		
+		private void detach_APPLICATIONS(APPLICATIONS entity)
+		{
+			this.SendPropertyChanging();
+			entity.PATIENTS = null;
 		}
 	}
 }

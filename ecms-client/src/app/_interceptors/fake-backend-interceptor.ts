@@ -27,7 +27,13 @@ export class FakeBackenInterceptor implements HttpInterceptor{
             switch (true) {
                 case url.endsWith('/auth/login') && method === 'POST': return next.handle(request);
                 case url.includes('/patients/free') && method === 'GET': return next.handle(request);
-                case url.endsWith('/patients/create') && method === 'PUT': return next.handle(request);
+				case url.endsWith('/patients/create') && method === 'PUT': return next.handle(request);
+				case url.endsWith('/patients/allpatient') && method === 'GET': return next.handle(request);
+				case url.includes('/patients/delete') && method === 'DELETE': return next.handle(request);
+				case url.endsWith('/patients/applicants') && method === 'GET': return next.handle(request);
+				case url.includes('/patients/acceptPatient') && method === 'GET': return next.handle(request);
+				case url.includes('/patients/denyPatient') && method === 'DELETE': return next.handle(request);
+				case url.includes('/patients/getPatient') && method === 'GET': return next.handle(request);
 			}/* */
 			console.log('fake response: ', url);
 

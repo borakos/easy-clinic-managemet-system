@@ -17,7 +17,7 @@ namespace Clinic
         /// </summary>
         public static SYSTEM_ADMINS selectByusername(string str_username)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
@@ -29,7 +29,7 @@ namespace Clinic
 
         public static void insert2admin(SYSTEM_ADMINS newADM)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             /*
@@ -49,7 +49,7 @@ namespace Clinic
 
         public static void updateadmin(string str_username, SYSTEM_ADMINS newADM)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -69,7 +69,7 @@ namespace Clinic
 
         public static void deleteadmin(string str_username)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -90,7 +90,7 @@ namespace Clinic
 
         public static DOCTORS selectDocByID(int id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
@@ -101,7 +101,7 @@ namespace Clinic
         }
         public static void insert2doctors(DOCTORS newDOCTORS)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             /*
@@ -129,7 +129,7 @@ namespace Clinic
         public static bool updateDoc(int id, DOCTORS newDOCTORS)
         {
             bool result = true;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             try
@@ -152,7 +152,7 @@ namespace Clinic
         public static bool deleteDoc(int id)
         {
             bool result = false;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             try { 
@@ -180,7 +180,7 @@ namespace Clinic
 
         public static PATIENTS selectPatientById(int id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
@@ -190,24 +190,42 @@ namespace Clinic
 
         }
 
+        public static List<PATIENTS> getAllPatients() {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user           
+            return db.PATIENTS.ToList();
+
+        }
+
+        public static List<PATIENTS> getAllUserApplication() {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user
+            return db.PATIENTS.Where(e => e.is_accepted == false).ToList();
+
+        }
+
         public static bool checkPassword(string name, string password) {
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user  
-            var selectedP = db.PATIENTS.FirstOrDefault(e => e.user_name.Equals(name));
+            var selectedP = db.PATIENTS.FirstOrDefault(e => e.user_name.Equals(name) && e.password.Equals(password) && (e.is_accepted ?? false));
             if (selectedP != null) {
                 return true;
             }
-            var selectedA = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(name));
+            var selectedA = db.SYSTEM_ADMINS.FirstOrDefault(e => e.user_name.Equals(name) && e.password.Equals(password));
             if (selectedA != null) {
                 return true;
             }
-            var selectedD = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(name));
+            var selectedD = db.DOCTORS.FirstOrDefault(e => e.user_name.Equals(name) && e.password.Equals(password));
             if (selectedD != null) {
                 return true;
             }
-            var selectedPH = db.PHARMACISTS.FirstOrDefault(e => e.user_name.Equals(name));
+            var selectedPH = db.PHARMACISTS.FirstOrDefault(e => e.user_name.Equals(name) && e.password.Equals(password));
             if (selectedPH != null) {
                 return true;
             }
@@ -273,48 +291,47 @@ namespace Clinic
 
         public static bool updatePatientById(int id, PATIENTS newPatient)
         {
-            bool result = true;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
-            try
-            {
-                //Get Patient for update
-                PATIENTS oldPatient = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
+            //Get Patient for update
+            PATIENTS oldPatient = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
 
-                oldPatient = newPatient;
+            oldPatient = newPatient;
 
-                //Save changes to Database.
-                db.SubmitChanges();
-            }
-            catch
-            {
-                result = false;
-            }
-            return result;
+            //Save changes to Database.
+            db.SubmitChanges();
+            return true;
+        }
+
+        public static bool acceptPatient(int id) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get PATIENT to Delete
+            PATIENTS oldPatient = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
+
+            oldPatient.is_accepted = true;
+
+            //Save changes to Database.
+            db.SubmitChanges();
+            return true;
         }
 
         public static bool deletePatient(int id)
         {
-            bool result = true;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
-            try { 
-                //Get PATIENT to Delete
-                PATIENTS deletePATIENT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
+            //Get PATIENT to Delete
+            PATIENTS deletePATIENT = db.PATIENTS.FirstOrDefault(e => e.id.Equals(id));
 
-                //Delete PATIENT
-                db.PATIENTS.DeleteOnSubmit(deletePATIENT);
+            //Delete PATIENT
+            db.PATIENTS.DeleteOnSubmit(deletePATIENT);
 
-                //Save changes to Database.
-                db.SubmitChanges();
-            }
-            catch
-            {
-                result = false;
-            }
-            return result;
+            //Save changes to Database.
+            db.SubmitChanges();
+            return true;
         }
 
         ///<summary>
@@ -322,7 +339,7 @@ namespace Clinic
         /// </summary>
         public static void insert2applications(APPLICATIONS newAPPLICATIONS)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -335,7 +352,7 @@ namespace Clinic
 
         public static void updateAPPLICATIONS(string str_id, APPLICATIONS newapplication)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -350,7 +367,7 @@ namespace Clinic
 
         public static void deleteapplication(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -371,7 +388,7 @@ namespace Clinic
         /// </summary>
         public static void insert2examination(EXAMINATIONS newExamination)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -384,7 +401,7 @@ namespace Clinic
 
         public static void updateexamination(string str_id, EXAMINATIONS newExamination)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -399,7 +416,7 @@ namespace Clinic
 
         public static void deleteexamination(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -418,7 +435,7 @@ namespace Clinic
         /// </summary>
         public static void insert2doctimes(DOCTOR_OPENTIMES newDoctime)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -431,7 +448,7 @@ namespace Clinic
 
         public static void updatedoctime(string str_id, DOCTOR_OPENTIMES updateDoctime)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -446,7 +463,7 @@ namespace Clinic
 
         public static void deleteDoctime(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -465,7 +482,7 @@ namespace Clinic
         /// </summary>
         public static void insert2speci(SPECIALIZATIONS newSpeci)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -478,7 +495,7 @@ namespace Clinic
 
         public static void updatespeci(string str_id, SPECIALIZATIONS updateSpeci)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -493,7 +510,7 @@ namespace Clinic
 
         public static void deletespeci(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -512,7 +529,7 @@ namespace Clinic
         /// </summary>
         public static void insert2Docspeci(SPECIALIZATIONS_OF_DOCTORS newDocSpeci)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -525,7 +542,7 @@ namespace Clinic
 
         public static void updateDocspeci(string str_id, SPECIALIZATIONS_OF_DOCTORS updateDocSpeci)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -540,7 +557,7 @@ namespace Clinic
 
         public static void deleteDocspeci(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -559,7 +576,7 @@ namespace Clinic
         /// </summary>
         public static void insert2Precription(PRESCRIPTIONS newPrescription)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -572,7 +589,7 @@ namespace Clinic
 
         public static void updatePrecription(string str_id, PRESCRIPTIONS updatePrescription)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -587,7 +604,7 @@ namespace Clinic
 
         public static void deletePrecription(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -606,7 +623,7 @@ namespace Clinic
         /// </summary>
         public static void insert2Order(ORDERS newOrder)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -619,7 +636,7 @@ namespace Clinic
 
         public static void updatePrecription(string str_id, ORDERS updateOrder)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -634,7 +651,7 @@ namespace Clinic
 
         public static void deleteOrder(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -655,7 +672,7 @@ namespace Clinic
 
         public static PHARMACISTS selectPHARMACISTByID(int id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             //Get selected user            
@@ -666,7 +683,7 @@ namespace Clinic
         }
         public static void insert2PHARMACIST(PHARMACISTS newPHARMACIST)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -680,7 +697,7 @@ namespace Clinic
         public static bool updatePHARMACIST(int id, PHARMACISTS updatePHARMACIST)
         {
             bool result = false;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -705,7 +722,7 @@ namespace Clinic
         public static bool deletePHARMACIST(int id)
         {
             bool result = false;
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -732,7 +749,7 @@ namespace Clinic
         /// </summary>
         public static void insert2PHARMACIST_HOLIDAYS(PHARMACIST_HOLIDAYS newPHARMACIST_HOLIDAYS)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -745,7 +762,7 @@ namespace Clinic
 
         public static void updatePHARMACIST_HOLIDAYS(string str_id, PHARMACIST_HOLIDAYS updatePHARMACIST_HOLIDAYS)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -760,7 +777,7 @@ namespace Clinic
 
         public static void deletePHARMACIST_HOLIDAYS(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
             
@@ -779,7 +796,7 @@ namespace Clinic
         /// </summary>
         public static void insert2PHARMACIST_OPENTIMES(PHARMACIST_OPENTIMES newPHARMACIST_OPENTIMES)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -792,7 +809,7 @@ namespace Clinic
 
         public static void updatePHARMACIST_OPENTIMES(string str_id, PHARMACIST_OPENTIMES updatePHARMACIST_OPENTIMES)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 
@@ -807,7 +824,7 @@ namespace Clinic
 
         public static void deletePHARMACIST_OPENTIMES(string str_id)
         {
-            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["LinqToSQLDBConnectionString"].ToString();
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
 
             ECMSDataContext db = new ECMSDataContext(connectString);
 

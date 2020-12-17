@@ -11,6 +11,7 @@ namespace Clinic.Models
         public DateTime birthday { get; set; }
         public double weight { get; set; }
         public Boolean hasMedicalData { get; set; }
+        public string medicalDataPath { get; set; }
         public Boolean registration { get; set; }
     }
 }

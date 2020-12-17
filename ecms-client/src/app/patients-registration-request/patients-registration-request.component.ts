@@ -18,19 +18,24 @@ export class PatientsRegistrationRequestComponent implements OnInit {
     constructor(private logger: Logger, private patientService: PatientService) { }
 
     ngOnInit(): void {
-        this.patientsObservable = this.patientService.listApplicants(
+        this.loadPatients();
+	}
+	
+	loadPatients(): void {
+		this.patientsObservable = this.patientService.listApplicants(
             (err) => {
                 this.error = this.logger.errorLogWithReturnText('Loading pending registration requests', err);
                 return of();
             }
         );
         this.error = undefined;
-    }
+	}
     
     acceptPatient(id: number): void {
         this.patientService.acceptPatientRegistration(id)
-        .subscribe(response => {}
-        , err => {
+        .subscribe(response => {
+			this.loadPatients();
+		}, err => {
             this.error = this.logger.errorLogWithReturnText('Accept patient', err);
         });
         this.error = undefined;
@@ -38,8 +43,9 @@ export class PatientsRegistrationRequestComponent implements OnInit {
 
     denyPatient(id: number): void {
         this.patientService.denyPatientRegistration(id)
-        .subscribe(response => {}
-        , err => {
+        .subscribe(response => {
+			this.loadPatients();
+		}, err => {
             this.error = this.logger.errorLogWithReturnText('Deny patient', err);
         });
         this.error = undefined;

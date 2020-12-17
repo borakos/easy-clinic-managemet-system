@@ -24,7 +24,7 @@
             <ng-template #female>
                 <td class="text-center"><fa-icon [icon]="['fas', 'venus']"></fa-icon></td>
             </ng-template>
-            <td>{{ patient.birthday.toISOString().split('T')[0] }}</td>
+            <td>{{ patient.birthday.split('T')[0] }}</td>
             <td>{{ patient.weight }} kg</td>
             <td>{{ patient.country }}, {{ patient.city }}</td>
             <td *ngIf="patient.hasMedicalData; else noForm" class="text-center"><fa-icon [icon]="['fas', 'check']"></fa-icon></td>

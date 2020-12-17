@@ -18,22 +18,34 @@ export class PatientsComponent implements OnInit {
     constructor(private logger: Logger, private patientService: PatientService) { }
 
     ngOnInit(): void {
-        this.patientsObservable = this.patientService.listPatients(
+		/*this.patientService.listPatients(
+            (err) => {
+                this.error = this.logger.errorLogWithReturnText('Loading patients', err);
+                return of();
+            }
+        ).subscribe(result => {
+			console.log(result)
+		})*/
+        this.loadPatients();
+    }
+
+    deletePatient(id: number): void {
+        this.patientService.deletePatient(id)
+        .subscribe(response => {
+			this.loadPatients();
+		}, err => {
+                this.error = this.logger.errorLogWithReturnText('Delete patient', err);
+        });
+        this.error = undefined;
+    }
+
+	loadPatients(): void {
+		this.patientsObservable = this.patientService.listPatients(
             (err) => {
                 this.error = this.logger.errorLogWithReturnText('Loading patients', err);
                 return of();
             }
         );
         this.error = undefined;
-    }
-
-    deletePatient(id: number): void {
-        this.patientService.deletePatient(id)
-        .subscribe(response => {}
-            , err => {
-                this.error = this.logger.errorLogWithReturnText('Delete patient', err);
-        });
-        this.error = undefined;
-    }
-
+	}
 }

@@ -47,16 +47,16 @@ namespace Clinic.Controllers
 
         [HttpPut]
         //api/patients/update?patient
-        public IHttpActionResult update(Patient patient)
+        public IHttpActionResult update(string patient)
         {
             try
             {
-                var result = repository.UpdatePatient(patient);
+                var result = repository.UpdatePatient(JsonConvert.DeserializeObject<Patient>(patient));
                 return Ok(result);
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -77,16 +77,16 @@ namespace Clinic.Controllers
 
         [HttpGet]
         //api/patients/getAllPatient
-        public IHttpActionResult getAllPatient()
+        public IHttpActionResult allpatient()
         {
             try
             {
                 var result = repository.getAllPatient();
-                return Ok(result);
+                return Ok(result.ToArray());
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -101,7 +101,7 @@ namespace Clinic.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Clinic.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Clinic.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest();
+                return InternalServerError(e);
             }
         }
 
@@ -148,7 +148,7 @@ namespace Clinic.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         //api/patients/denyPatient?id
         public IHttpActionResult denyPatient(int id)
         {
