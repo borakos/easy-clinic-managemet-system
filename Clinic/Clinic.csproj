@@ -130,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LinqToSQL.cs" />
+    <Compile Include="Models\AppoinmentEvent.cs" />
     <Compile Include="Models\Appoinment.cs" />
     <Compile Include="Models\AuthInfo.cs" />
     <Compile Include="Models\Basic.cs" />

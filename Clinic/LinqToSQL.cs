@@ -88,6 +88,27 @@ namespace Clinic
         /// </summary>
         /// 
 
+        public static List<DOCTORS> getDoctors() {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user            
+            return db.DOCTORS.ToList();
+        }
+
+        public static List<SPECIALIZATIONS> getSpecializationsByDoctorId(int id) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            //Get selected user     
+            List<SPECIALIZATIONS_OF_DOCTORS> connectors = db.SPECIALIZATIONS_OF_DOCTORS.Where(e => e.doctor_id.Equals(id)).ToList();
+            List<SPECIALIZATIONS> specs = new List<SPECIALIZATIONS>();
+            foreach (var con in connectors) {
+                specs.AddRange(db.SPECIALIZATIONS.Where(e => e.id.Equals(con.specicalization_id)));
+            }
+            return specs;
+        }
+
         public static DOCTORS selectDocByID(int id)
         {
             string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
@@ -172,6 +193,13 @@ namespace Clinic
                 result = false;
             }
             return result;
+        }
+
+        public static List<DOCTOR_OPENTIMES> selectAppointmentEventByDoctorIds(List<int> ids) {
+            string connectString = System.Configuration.ConfigurationManager.ConnectionStrings["ECMSConnectionString"].ToString();
+
+            ECMSDataContext db = new ECMSDataContext(connectString);
+            return db.DOCTOR_OPENTIMES.Where(e => ids.Contains(e.doctor_id ?? -1)).ToList();
         }
 
         /// <summary>

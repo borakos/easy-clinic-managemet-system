@@ -33,5 +33,6 @@ namespace Clinic.Repository
         Boolean createAppointments(Appoinment appoinment);
         Role getUserRoleByName(string username);
         int getUserIdByName(string username);
+        AppoinmentEvent[] GetAppoinmentEventsByDoctors(int[] doctorIds);
     }
 }

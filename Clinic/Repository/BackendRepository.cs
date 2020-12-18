@@ -192,7 +192,48 @@ namespace Clinic.Repository
 
         //get doctors by filter
         public List<Doctor> getFilterDoctor(string filter) {
-            return listd;
+            var docts = LinqToSQL.getDoctors();
+            List<Doctor> doctors = new List<Doctor>();
+            foreach(var doct in docts) {
+                var specs = LinqToSQL.getSpecializationsByDoctorId(doct.id);
+                List<string> specilizations = new List<string>();
+                foreach(var spec in specs) {
+                    specilizations.Add(spec.name);
+                }
+                if (doct.native_name.Contains(filter) || (String.Join(",", specilizations).Contains(filter))) {
+                    doctors.Add(new Doctor() {
+                        id = doct.id,
+                        gender = (Gender)Enum.Parse(typeof(Gender), doct.gender, true),
+                        birthday = doct.birthday ?? new DateTime(),
+                        startOfPractice = doct.start_year_of_work ?? new DateTime(),
+                        specializations = specilizations.ToArray(),
+                        nativeName = doct.native_name,
+                        userName = doct.user_name
+                    });
+                }
+            }
+            return doctors;
+        }
+
+        public AppoinmentEvent[] GetAppoinmentEventsByDoctors(int[] doctorIds) {
+            List<int> ids = new List<int>(doctorIds);
+            var openTimes = LinqToSQL.selectAppointmentEventByDoctorIds(ids);
+            Debug.WriteLine(openTimes.Count());
+            List<AppoinmentEvent> appointments = new List<AppoinmentEvent>();
+            foreach(var opt in openTimes) {
+                var doct = LinqToSQL.selectDocByID(opt.doctor_id ?? -1);
+                if(doct != null) {
+                    appointments.Add(new AppoinmentEvent() {
+                        id = opt.id,
+                        label = doct.native_name,
+                        isAccepted = opt.is_accepted ?? false,
+                        isFree = opt.is_free ?? false,
+                        start = opt.start ?? new DateTime(),
+                        end = opt.end ?? new DateTime()
+                    });
+                }
+            }
+            return appointments.ToArray();
         }
 
         //delete a doctor by id

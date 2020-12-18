@@ -34,6 +34,8 @@ export class FakeBackenInterceptor implements HttpInterceptor{
 				case url.includes('/patients/acceptPatient') && method === 'GET': return next.handle(request);
 				case url.includes('/patients/denyPatient') && method === 'DELETE': return next.handle(request);
 				case url.includes('/patients/getPatient') && method === 'GET': return next.handle(request);
+				case url.includes('/doctors/filter') && method === 'GET': return next.handle(request);
+				case url.includes('appointments/listByDoctors') && method === 'POST': return next.handle(request);
 			}/* */
 			console.log('fake response: ', url);
 

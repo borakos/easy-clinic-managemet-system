@@ -34,8 +34,9 @@ export class DoctorService{
 		}).pipe(catchError(loadingError));
 	}
 
-	listDoctorsWithFilter(loadingError: (any) => Observable<any>, filter: string = ''): Observable<Doctor[]> {
-		return this.http.post<Doctor[]>('api/doctors/list/filter', {filter: filter},{
+	listDoctorsWithFilter(loadingError: (any) => Observable<any>, filter: string = '.'): Observable<Doctor[]> {
+		return this.http.get<Doctor[]>('api/doctors/filter',{
+			params: {filter: filter},
 			headers: this.headerJson
 		}).pipe(catchError(loadingError));
 	}

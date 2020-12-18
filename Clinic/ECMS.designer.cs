@@ -33,9 +33,6 @@ namespace Clinic
     partial void InsertAPPLICATIONS(APPLICATIONS instance);
     partial void UpdateAPPLICATIONS(APPLICATIONS instance);
     partial void DeleteAPPLICATIONS(APPLICATIONS instance);
-    partial void InsertDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
-    partial void UpdateDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
-    partial void DeleteDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
     partial void InsertDOCTORS(DOCTORS instance);
     partial void UpdateDOCTORS(DOCTORS instance);
     partial void DeleteDOCTORS(DOCTORS instance);
@@ -69,6 +66,9 @@ namespace Clinic
     partial void InsertPATIENTS(PATIENTS instance);
     partial void UpdatePATIENTS(PATIENTS instance);
     partial void DeletePATIENTS(PATIENTS instance);
+    partial void InsertDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
+    partial void UpdateDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
+    partial void DeleteDOCTOR_OPENTIMES(DOCTOR_OPENTIMES instance);
     #endregion
 		
 		public ECMSDataContext() : 
@@ -106,14 +106,6 @@ namespace Clinic
 			get
 			{
 				return this.GetTable<APPLICATIONS>();
-			}
-		}
-		
-		public System.Data.Linq.Table<DOCTOR_OPENTIMES> DOCTOR_OPENTIMES
-		{
-			get
-			{
-				return this.GetTable<DOCTOR_OPENTIMES>();
 			}
 		}
 		
@@ -202,6 +194,14 @@ namespace Clinic
 			get
 			{
 				return this.GetTable<PATIENTS>();
+			}
+		}
+		
+		public System.Data.Linq.Table<DOCTOR_OPENTIMES> DOCTOR_OPENTIMES
+		{
+			get
+			{
+				return this.GetTable<DOCTOR_OPENTIMES>();
 			}
 		}
 	}
@@ -455,7 +455,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATIONS", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_PATIENTS", ThisKey="patient_id", OtherKey="id", IsForeignKey=true)]
 		public PATIENTS PATIENTS
 		{
 			get
@@ -522,181 +522,6 @@ namespace Clinic
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DOCTOR_OPENTIMES")]
-	public partial class DOCTOR_OPENTIMES : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private System.Nullable<int> _doctor_id;
-		
-		private System.Nullable<System.TimeSpan> _start;
-		
-		private System.Nullable<System.TimeSpan> _end;
-		
-		private EntityRef<DOCTORS> _DOCTORS;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Ondoctor_idChanging(System.Nullable<int> value);
-    partial void Ondoctor_idChanged();
-    partial void OnstartChanging(System.Nullable<System.TimeSpan> value);
-    partial void OnstartChanged();
-    partial void OnendChanging(System.Nullable<System.TimeSpan> value);
-    partial void OnendChanged();
-    #endregion
-		
-		public DOCTOR_OPENTIMES()
-		{
-			this._DOCTORS = default(EntityRef<DOCTORS>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="Int")]
-		public System.Nullable<int> doctor_id
-		{
-			get
-			{
-				return this._doctor_id;
-			}
-			set
-			{
-				if ((this._doctor_id != value))
-				{
-					if (this._DOCTORS.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Ondoctor_idChanging(value);
-					this.SendPropertyChanging();
-					this._doctor_id = value;
-					this.SendPropertyChanged("doctor_id");
-					this.Ondoctor_idChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start", DbType="Time")]
-		public System.Nullable<System.TimeSpan> start
-		{
-			get
-			{
-				return this._start;
-			}
-			set
-			{
-				if ((this._start != value))
-				{
-					this.OnstartChanging(value);
-					this.SendPropertyChanging();
-					this._start = value;
-					this.SendPropertyChanged("start");
-					this.OnstartChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[end]", Storage="_end", DbType="Time")]
-		public System.Nullable<System.TimeSpan> end
-		{
-			get
-			{
-				return this._end;
-			}
-			set
-			{
-				if ((this._end != value))
-				{
-					this.OnendChanging(value);
-					this.SendPropertyChanging();
-					this._end = value;
-					this.SendPropertyChanged("end");
-					this.OnendChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIMES", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
-		public DOCTORS DOCTORS
-		{
-			get
-			{
-				return this._DOCTORS.Entity;
-			}
-			set
-			{
-				DOCTORS previousValue = this._DOCTORS.Entity;
-				if (((previousValue != value) 
-							|| (this._DOCTORS.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._DOCTORS.Entity = null;
-						previousValue.DOCTOR_OPENTIMES.Remove(this);
-					}
-					this._DOCTORS.Entity = value;
-					if ((value != null))
-					{
-						value.DOCTOR_OPENTIMES.Add(this);
-						this._doctor_id = value.id;
-					}
-					else
-					{
-						this._doctor_id = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("DOCTORS");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DOCTORS")]
 	public partial class DOCTORS : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -719,9 +544,9 @@ namespace Clinic
 		
 		private EntitySet<APPLICATIONS> _APPLICATIONS;
 		
-		private EntitySet<DOCTOR_OPENTIMES> _DOCTOR_OPENTIMES;
-		
 		private EntitySet<SPECIALIZATIONS_OF_DOCTORS> _SPECIALIZATIONS_OF_DOCTORS;
+		
+		private EntitySet<DOCTOR_OPENTIMES> _DOCTOR_OPENTIMES;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -746,8 +571,8 @@ namespace Clinic
 		public DOCTORS()
 		{
 			this._APPLICATIONS = new EntitySet<APPLICATIONS>(new Action<APPLICATIONS>(this.attach_APPLICATIONS), new Action<APPLICATIONS>(this.detach_APPLICATIONS));
-			this._DOCTOR_OPENTIMES = new EntitySet<DOCTOR_OPENTIMES>(new Action<DOCTOR_OPENTIMES>(this.attach_DOCTOR_OPENTIMES), new Action<DOCTOR_OPENTIMES>(this.detach_DOCTOR_OPENTIMES));
 			this._SPECIALIZATIONS_OF_DOCTORS = new EntitySet<SPECIALIZATIONS_OF_DOCTORS>(new Action<SPECIALIZATIONS_OF_DOCTORS>(this.attach_SPECIALIZATIONS_OF_DOCTORS), new Action<SPECIALIZATIONS_OF_DOCTORS>(this.detach_SPECIALIZATIONS_OF_DOCTORS));
+			this._DOCTOR_OPENTIMES = new EntitySet<DOCTOR_OPENTIMES>(new Action<DOCTOR_OPENTIMES>(this.attach_DOCTOR_OPENTIMES), new Action<DOCTOR_OPENTIMES>(this.detach_DOCTOR_OPENTIMES));
 			OnCreated();
 		}
 		
@@ -904,19 +729,6 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIMES", Storage="_DOCTOR_OPENTIMES", ThisKey="id", OtherKey="doctor_id")]
-		public EntitySet<DOCTOR_OPENTIMES> DOCTOR_OPENTIMES
-		{
-			get
-			{
-				return this._DOCTOR_OPENTIMES;
-			}
-			set
-			{
-				this._DOCTOR_OPENTIMES.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_SPECIALIZATIONS_OF_DOCTORS", Storage="_SPECIALIZATIONS_OF_DOCTORS", ThisKey="id", OtherKey="doctor_id")]
 		public EntitySet<SPECIALIZATIONS_OF_DOCTORS> SPECIALIZATIONS_OF_DOCTORS
 		{
@@ -927,6 +739,19 @@ namespace Clinic
 			set
 			{
 				this._SPECIALIZATIONS_OF_DOCTORS.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIME", Storage="_DOCTOR_OPENTIMES", ThisKey="id", OtherKey="doctor_id")]
+		public EntitySet<DOCTOR_OPENTIMES> DOCTOR_OPENTIMES
+		{
+			get
+			{
+				return this._DOCTOR_OPENTIMES;
+			}
+			set
+			{
+				this._DOCTOR_OPENTIMES.Assign(value);
 			}
 		}
 		
@@ -962,18 +787,6 @@ namespace Clinic
 			entity.DOCTORS = null;
 		}
 		
-		private void attach_DOCTOR_OPENTIMES(DOCTOR_OPENTIMES entity)
-		{
-			this.SendPropertyChanging();
-			entity.DOCTORS = this;
-		}
-		
-		private void detach_DOCTOR_OPENTIMES(DOCTOR_OPENTIMES entity)
-		{
-			this.SendPropertyChanging();
-			entity.DOCTORS = null;
-		}
-		
 		private void attach_SPECIALIZATIONS_OF_DOCTORS(SPECIALIZATIONS_OF_DOCTORS entity)
 		{
 			this.SendPropertyChanging();
@@ -981,6 +794,18 @@ namespace Clinic
 		}
 		
 		private void detach_SPECIALIZATIONS_OF_DOCTORS(SPECIALIZATIONS_OF_DOCTORS entity)
+		{
+			this.SendPropertyChanging();
+			entity.DOCTORS = null;
+		}
+		
+		private void attach_DOCTOR_OPENTIMES(DOCTOR_OPENTIMES entity)
+		{
+			this.SendPropertyChanging();
+			entity.DOCTORS = this;
+		}
+		
+		private void detach_DOCTOR_OPENTIMES(DOCTOR_OPENTIMES entity)
 		{
 			this.SendPropertyChanging();
 			entity.DOCTORS = null;
@@ -3189,7 +3014,7 @@ namespace Clinic
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENT_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PATIENTS_APPLICATIONS", Storage="_APPLICATIONS", ThisKey="id", OtherKey="patient_id")]
 		public EntitySet<APPLICATIONS> APPLICATIONS
 		{
 			get
@@ -3232,6 +3057,229 @@ namespace Clinic
 		{
 			this.SendPropertyChanging();
 			entity.PATIENTS = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.DOCTOR_OPENTIMES")]
+	public partial class DOCTOR_OPENTIMES : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private System.Nullable<int> _doctor_id;
+		
+		private System.Nullable<System.DateTime> _end;
+		
+		private System.Nullable<System.DateTime> _start;
+		
+		private System.Nullable<bool> _is_free;
+		
+		private System.Nullable<bool> _is_accepted;
+		
+		private EntityRef<DOCTORS> _DOCTORS;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Ondoctor_idChanging(System.Nullable<int> value);
+    partial void Ondoctor_idChanged();
+    partial void OnendChanging(System.Nullable<System.DateTime> value);
+    partial void OnendChanged();
+    partial void OnstartChanging(System.Nullable<System.DateTime> value);
+    partial void OnstartChanged();
+    partial void Onis_freeChanging(System.Nullable<bool> value);
+    partial void Onis_freeChanged();
+    partial void Onis_acceptedChanging(System.Nullable<bool> value);
+    partial void Onis_acceptedChanged();
+    #endregion
+		
+		public DOCTOR_OPENTIMES()
+		{
+			this._DOCTORS = default(EntityRef<DOCTORS>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_doctor_id", DbType="Int")]
+		public System.Nullable<int> doctor_id
+		{
+			get
+			{
+				return this._doctor_id;
+			}
+			set
+			{
+				if ((this._doctor_id != value))
+				{
+					if (this._DOCTORS.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Ondoctor_idChanging(value);
+					this.SendPropertyChanging();
+					this._doctor_id = value;
+					this.SendPropertyChanged("doctor_id");
+					this.Ondoctor_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[end]", Storage="_end", DbType="DateTime")]
+		public System.Nullable<System.DateTime> end
+		{
+			get
+			{
+				return this._end;
+			}
+			set
+			{
+				if ((this._end != value))
+				{
+					this.OnendChanging(value);
+					this.SendPropertyChanging();
+					this._end = value;
+					this.SendPropertyChanged("end");
+					this.OnendChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start", DbType="DateTime")]
+		public System.Nullable<System.DateTime> start
+		{
+			get
+			{
+				return this._start;
+			}
+			set
+			{
+				if ((this._start != value))
+				{
+					this.OnstartChanging(value);
+					this.SendPropertyChanging();
+					this._start = value;
+					this.SendPropertyChanged("start");
+					this.OnstartChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_free", DbType="Bit")]
+		public System.Nullable<bool> is_free
+		{
+			get
+			{
+				return this._is_free;
+			}
+			set
+			{
+				if ((this._is_free != value))
+				{
+					this.Onis_freeChanging(value);
+					this.SendPropertyChanging();
+					this._is_free = value;
+					this.SendPropertyChanged("is_free");
+					this.Onis_freeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_is_accepted", DbType="Bit")]
+		public System.Nullable<bool> is_accepted
+		{
+			get
+			{
+				return this._is_accepted;
+			}
+			set
+			{
+				if ((this._is_accepted != value))
+				{
+					this.Onis_acceptedChanging(value);
+					this.SendPropertyChanging();
+					this._is_accepted = value;
+					this.SendPropertyChanged("is_accepted");
+					this.Onis_acceptedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="DOCTORS_DOCTOR_OPENTIME", Storage="_DOCTORS", ThisKey="doctor_id", OtherKey="id", IsForeignKey=true)]
+		public DOCTORS DOCTORS
+		{
+			get
+			{
+				return this._DOCTORS.Entity;
+			}
+			set
+			{
+				DOCTORS previousValue = this._DOCTORS.Entity;
+				if (((previousValue != value) 
+							|| (this._DOCTORS.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._DOCTORS.Entity = null;
+						previousValue.DOCTOR_OPENTIMES.Remove(this);
+					}
+					this._DOCTORS.Entity = value;
+					if ((value != null))
+					{
+						value.DOCTOR_OPENTIMES.Add(this);
+						this._doctor_id = value.id;
+					}
+					else
+					{
+						this._doctor_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("DOCTORS");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

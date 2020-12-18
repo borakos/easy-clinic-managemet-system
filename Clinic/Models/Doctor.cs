@@ -10,5 +10,6 @@ namespace Clinic.Models
         public DateTime birthday { get; set; }
         public DateTime startOfPractice { get; set; }
         public Gender gender { get; set; }
+        public string[] specializations { get; set; }
     }
 }
